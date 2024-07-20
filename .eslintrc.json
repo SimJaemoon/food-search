@@ -1,3 +1,7 @@
+// .eslintignore[현재는 eslint.config.js 로 ignore 관리 파일 변경됨]
+
+// By default, Next.js will run ESLint for all files in the pages/, app/, components/, lib/, and src/ directories.
+
 {
-  "extends": "next/core-web-vitals"
+  "extends": ["next/core-web-vitals", "prettier"]
 }
