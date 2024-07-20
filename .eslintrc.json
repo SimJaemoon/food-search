@@ -2,6 +2,11 @@
 
 // By default, Next.js will run ESLint for all files in the pages/, app/, components/, lib/, and src/ directories.
 
+// airbnb 같은 config 설정 사용하지 않고, 최대한 적은 rule로 작업 진행함
+// "rules": {
+//   "prefer-const": "error"
+// },
+
 {
   "extends": ["next/core-web-vitals", "prettier"]
 }
