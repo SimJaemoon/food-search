@@ -2,32 +2,62 @@
 @tailwind components;
 @tailwind utilities;
 
-:root {
-  --foreground-rgb: 0, 0, 0;
-  --background-start-rgb: 214, 219, 220;
-  --background-end-rgb: 255, 255, 255;
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --foreground-rgb: 255, 255, 255;
-    --background-start-rgb: 0, 0, 0;
-    --background-end-rgb: 0, 0, 0;
+@layer base {
+  body {
+    @apply text-body-sm min-w-[360px] text-onBackground;
   }
-}
 
-body {
-  color: rgb(var(--foreground-rgb));
-  background: linear-gradient(
-      to bottom,
-      transparent,
-      rgb(var(--background-end-rgb))
-    )
-    rgb(var(--background-start-rgb));
-}
+  .typography-default {
+    @apply leading-125p not-italic;
+  }
 
-@layer utilities {
-  .text-balance {
-    text-wrap: balance;
+  .text-display-lg {
+    @apply text-48px typography-default font-normal;
+  }
+  .text-display-md {
+    @apply text-40px typography-default font-normal;
+  }
+  .text-display-sm {
+    @apply text-32px typography-default font-normal;
+  }
+
+  .text-headline-lg {
+    @apply text-32px typography-default font-normal;
+  }
+  .text-headline-md {
+    @apply text-28px typography-default font-normal;
+  }
+  .text-headline-sm {
+    @apply text-24px typography-default font-normal;
+  }
+
+  .text-title-lg {
+    @apply text-28px typography-default font-bold;
+  }
+  .text-title-md {
+    @apply text-24px typography-default font-bold;
+  }
+  .text-title-sm {
+    @apply text-20px typography-default font-bold;
+  }
+
+  .text-body-lg {
+    @apply text-24px typography-default font-normal;
+  }
+  .text-body-md {
+    @apply text-20px typography-default font-normal;
+  }
+  .text-body-sm {
+    @apply text-16px typography-default font-normal;
+  }
+
+  .text-label-lg {
+    @apply text-24px typography-default font-bold;
+  }
+  .text-label-md {
+    @apply text-20px typography-default font-bold;
+  }
+  .text-label-sm {
+    @apply text-16px typography-default font-bold;
   }
 }
