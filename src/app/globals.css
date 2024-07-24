@@ -4,60 +4,60 @@
 
 @layer base {
   body {
-    @apply text-body-sm min-w-[360px] text-onBackground;
+    @apply text-body-sm h-screen min-h-[640px] w-full min-w-[360px] px-4 text-onBackground;
   }
 
   .typography-default {
-    @apply leading-125p not-italic;
+    @apply not-italic leading-125p;
   }
 
   .text-display-lg {
-    @apply text-48px typography-default font-normal;
+    @apply typography-default text-48px font-normal;
   }
   .text-display-md {
-    @apply text-40px typography-default font-normal;
+    @apply typography-default text-40px font-normal;
   }
   .text-display-sm {
-    @apply text-32px typography-default font-normal;
+    @apply typography-default text-32px font-normal;
   }
 
   .text-headline-lg {
-    @apply text-32px typography-default font-normal;
+    @apply typography-default text-32px font-normal;
   }
   .text-headline-md {
-    @apply text-28px typography-default font-normal;
+    @apply typography-default text-28px font-normal;
   }
   .text-headline-sm {
-    @apply text-24px typography-default font-normal;
+    @apply typography-default text-24px font-normal;
   }
 
   .text-title-lg {
-    @apply text-28px typography-default font-bold;
+    @apply typography-default text-28px font-bold;
   }
   .text-title-md {
-    @apply text-24px typography-default font-bold;
+    @apply typography-default text-24px font-bold;
   }
   .text-title-sm {
-    @apply text-20px typography-default font-bold;
+    @apply typography-default text-20px font-bold;
   }
 
   .text-body-lg {
-    @apply text-24px typography-default font-normal;
+    @apply typography-default text-24px font-normal;
   }
   .text-body-md {
-    @apply text-20px typography-default font-normal;
+    @apply typography-default text-20px font-normal;
   }
   .text-body-sm {
-    @apply text-16px typography-default font-normal;
+    @apply typography-default text-16px font-normal;
   }
 
   .text-label-lg {
-    @apply text-24px typography-default font-bold;
+    @apply typography-default text-24px font-bold;
   }
   .text-label-md {
-    @apply text-20px typography-default font-bold;
+    @apply typography-default text-20px font-bold;
   }
   .text-label-sm {
-    @apply text-16px typography-default font-bold;
+    @apply typography-default text-16px font-bold;
   }
 }
