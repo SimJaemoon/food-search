@@ -1,0 +1,37 @@
+<TODO>
+- common
+> Hold : vh || dvh 단위 적용 > body + 필요시 main 태그에서만 수정하면 하위 태그들은 반응형으로 작성되서 자동 반영될 것으로 예상
+>> 현재 body에 vh 사용 중(global.css) -- 우측, 하단 스크롤바로 인한 Re-Layout 문제 고려하기
+
+> Hold : body 태그에 margin 16px을 padding으로 설정해놓음
+
+
+- page
+-- Splash
+> Add : Useeffect unmount func &  dependancy arr 
+> Add : 사람 element 에 z-index 
+
+
+
+- Component
+-- ProductCategoryBox
+> Rework : Image 의 이미지 크기, 위치 [현재 : fill 속성만 적용, So sizes prop 없다고 경고]
+> Fix : clip-path 이용한 frame 생성에 있어 측면에만 작은 문제(i.e., 상단 외곽선 어긋나는 현상)가 존재해 현재 미적용 [ref: clipPathFrameGenerator.ts]
+
+
+
+- function
+-- clipPathFrameGenerator
+> Fix : y축에 평행한 두 직선의 경우에 대한 계산 문제 존재 >> 구현 흐름을 참고해 처음부터 코드 재작성 예정
+
+
+
+
+<Remind>
+> absolute도 absolute의 기준이 될 수 있음 -- padding 이 기준
+>> box-sizing : border로 설정해도 padding 값이 기준이됨
+
+> width: auto = width: 100% : 사용가능한 최대 가로너비를 사용(=요소의 부모요소 너비 기준으로 가득찬다)
+>> but height: auto는 높이값이 0부터 시작해서 필요한 만큼의 값을 갖도록 해석(=요소의 자식높이 기준으로 자동 조절됨)
+>>> height: 100% vs 100vh : 100%를 body에 적용하면 하위 element 중 %로 설정된 tag들에서 높이를 잡지 못 함
+
