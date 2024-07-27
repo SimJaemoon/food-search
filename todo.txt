@@ -8,8 +8,7 @@
 
 - page
 -- Splash
-> Add : Useeffect unmount func &  dependancy arr 
-> Add : 사람 element 에 z-index 
+> Hold : timer 동작 전 서버 컴포넌트로 이동했을 때, useEffect의 CleanUp 함수로 timer 를 clear 하지 않아도 해당 timer가 동작하지 않음?
 
 
 
@@ -22,7 +21,7 @@
 
 - function
 -- clipPathFrameGenerator
-> Fix : y축에 평행한 두 직선의 경우에 대한 계산 문제 존재 >> 구현 흐름을 참고해 처음부터 코드 재작성 예정
+> Fix : y축에 평행한 두 직선의 경우에 대한 계산 문제 존재 >> 기존 구현 흐름을 참고해 처음부터 코드 재작성 예정
 
 
 

@@ -5,11 +5,15 @@ import { useRouter } from 'next/navigation';
 
 export default function Splash() {
   const router = useRouter();
+
   useEffect(() => {
-    setTimeout(() => {
+    const timeoutID = setTimeout(() => {
       router.push('/Landing');
-    }, 2000);
+    }, 3000);
+
+    return () => clearTimeout(timeoutID);
   });
+
   return (
     <main className="relative h-full w-full">
       {/* 배경 */}
@@ -35,7 +39,7 @@ export default function Splash() {
       </div>
       {/* 사람 */}
       <div className="text-label-md absolute left-1/2 top-1/2 h-1/5 w-1/5 -translate-x-1/2 bg-[#74FF8A]">
-        <div className="relative top-1/2 -translate-y-1/2 text-center">
+        <div className="relative top-1/2 z-50 -translate-y-1/2 text-center">
           Person
         </div>
       </div>
