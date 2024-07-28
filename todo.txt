@@ -10,7 +10,12 @@
 -- Splash
 > Hold : timer 동작 전 서버 컴포넌트로 이동했을 때, useEffect의 CleanUp 함수로 timer 를 clear 하지 않아도 해당 timer가 동작하지 않음?
 
+-- Landing
+> TODO : 개발용 Link 제거하기
 
+-- ProductList
+> Hold : 매대 박스 전체에 shadow-3 적용할 수 없어서, clip-path를 사용하지 않은 정면에 shadow-figma[Drop Shadow]를 적용함
+>> clip-path를 사용한 좌측 측면의 사선에 shadow를 적용하면 clip-path에 의해 잘리는 상황을 해결하지 못 함
 
 - Component
 -- ProductCategoryBox
@@ -27,9 +32,17 @@
 
 
 <Remind>
+- Layout
+-- position
 > absolute도 absolute의 기준이 될 수 있음 -- padding 이 기준
 >> box-sizing : border로 설정해도 padding 값이 기준이됨
 
+-- box sizing[모든 tag에 border-box 적용 중]
+> border-box 적용 중에는 margin 사용 지양
+>> e.g., height 100% + margin 값이 설정되기에 동작 예측에 혼동을 줌
+
+- Sizing
+-- common
 > width: auto = width: 100% : 사용가능한 최대 가로너비를 사용(=요소의 부모요소 너비 기준으로 가득찬다)
 >> but height: auto는 높이값이 0부터 시작해서 필요한 만큼의 값을 갖도록 해석(=요소의 자식높이 기준으로 자동 조절됨)
 >>> height: 100% vs 100vh : 100%를 body에 적용하면 하위 element 중 %로 설정된 tag들에서 높이를 잡지 못 함
