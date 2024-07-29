@@ -49,7 +49,7 @@ export default function ProductCategroyBox({
         >
           {/* frame */}
           <div
-            className={'h-full w-full border-[0.5px] border-background'}
+            className={`h-full w-full border-background ${rowOrder === 'third' ? 'border-l-[0.5px] border-r-[0.5px] border-t-[0.5px]' : 'border-[0.5px]'}`}
           ></div>
         </div>
         {/* FIXME: todo.txt 참고  */}
