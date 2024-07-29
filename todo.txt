@@ -17,12 +17,15 @@
 > Hold : 매대 박스 전체에 shadow-3 적용할 수 없어서, clip-path를 사용하지 않은 정면에 shadow-figma[Drop Shadow]를 적용함
 >> clip-path를 사용한 좌측 측면의 사선에 shadow를 적용하면 clip-path에 의해 잘리는 상황을 해결하지 못 함
 
+
+
 - Component
 -- ProductCategoryBox
 > Rework : Image 의 이미지 크기, 위치 [현재 : fill 속성만 적용, So sizes prop 없다고 경고]
 > Fix : clip-path 이용한 frame 생성에 있어 측면에만 작은 문제(i.e., 상단 외곽선 어긋나는 현상)가 존재해 현재 미적용 [ref: clipPathFrameGenerator.ts]
 
-
+-- IconButton
+> Hold : text-shadow 로 대체 - home 텍스트 외곽선 표현에 text-strok를 사용하려 했으나, vendor prefix가 요구됨 [theme color 사용 불가 So, hardcode 사용]
 
 - function
 -- clipPathFrameGenerator
@@ -40,6 +43,7 @@
 -- box sizing[모든 tag에 border-box 적용 중]
 > border-box 적용 중에는 margin 사용 지양
 >> e.g., height 100% + margin 값이 설정되기에 동작 예측에 혼동을 줌
+
 
 - Sizing
 -- common
