@@ -1,4 +1,5 @@
 import ProductCategroyBox from '@/components/ProductCategoryBox';
+import Footer from '@/components/Footer';
 
 // TODO: 개발용 Link 제거하기
 import Link from 'next/link';
@@ -59,7 +60,7 @@ export default function Landing() {
           </ol>
         </Link>
       </main>
-      <footer className="h-12 w-full bg-[#475bce]">footer area</footer>
+      <Footer />
     </>
   );
 }

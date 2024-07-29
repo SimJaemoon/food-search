@@ -1,3 +1,5 @@
+import Footer from '@/components/Footer';
+
 export default function ProductList() {
   return (
     <>
@@ -25,7 +27,7 @@ export default function ProductList() {
         {/* 상품 목록 */}
         <ol className="absolute left-[0] top-[0] h-[calc(100%-16px-148px+28px)] w-full bg-highlight opacity-50"></ol>
       </main>
-      <footer className="h-12 w-full bg-[#475bce]">footer area</footer>
+      <Footer />
     </>
   );
 }
