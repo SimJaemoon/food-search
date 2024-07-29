@@ -7,24 +7,24 @@ export default function ProductCategroyBox({
   rowOrder: 'first' | 'second' | 'third';
   direction: 'left' | 'right';
 }) {
-  const code = tailwindCSSCode[rowOrder];
+  const rowCSSObject = tailwindCSSCode[rowOrder];
   const reversal =
     direction === 'left' ? '' : direction === 'right' ? '-scale-x-100' : '';
   const textAlignment = rowOrder === 'third' ? 'left-1/3' : 'left-1/2';
 
   return (
     <button
-      className={`absolute h-full ${code.li.position[direction]} top-[0] ${code.li.css} ${reversal}`}
+      className={`absolute h-full ${rowCSSObject.li.position[direction]} top-[0] ${rowCSSObject.li.css} ${reversal}`}
     >
       {/* 상품 카테고리 이름 */}
       <div
-        className={`text-label-md absolute z-50 -translate-x-1/2 -translate-y-1/2 whitespace-pre-wrap text-background ${code.li.categoryName.css} ${reversal} ${textAlignment}`}
+        className={`text-label-md absolute z-50 -translate-x-1/2 -translate-y-1/2 whitespace-pre-wrap text-background ${rowCSSObject.li.categoryName.css} ${reversal} ${textAlignment}`}
       >
-        {code.li.categoryName.text[direction]}
+        {rowCSSObject.li.categoryName.text[direction]}
       </div>
       <Image
-        src={code.li.image.url[direction]}
-        alt={code.li.image.alt[direction]}
+        src={rowCSSObject.li.image.url[direction]}
+        alt={rowCSSObject.li.image.alt[direction]}
         fill={true}
         className={`absolute -left-[57px] top-[67px] ${reversal}`}
       />
@@ -32,19 +32,21 @@ export default function ProductCategroyBox({
       <div>
         {/* 윗면 */}
         <div
-          className={`absolute left-[0] top-[0] z-20 w-full ${code.li.outline.top.css}`}
+          className={`absolute left-[0] top-[0] z-20 w-full ${rowCSSObject.li.outline.top.css}`}
         >
           {/* frame */}
           <div
-            className={`absolute left-[0] top-[0] h-full w-full bg-background ${code.li.outline.top.frameCSS}`}
+            className={`absolute left-[0] top-[0] h-full w-full bg-background ${rowCSSObject.li.outline.top.frameCSS}`}
           ></div>
           {/* frame content */}
           <div
-            className={`absolute left-[0] top-[0] h-full w-full bg-onBackground opacity-70 ${code.li.outline.top.frameContentCSS}`}
+            className={`absolute left-[0] top-[0] h-full w-full bg-onBackground opacity-70 ${rowCSSObject.li.outline.top.frameContentCSS}`}
           ></div>
         </div>
         {/* 정면 */}
-        <div className={`absolute left-[0] ${code.li.outline.front.css}`}>
+        <div
+          className={`absolute left-[0] ${rowCSSObject.li.outline.front.css}`}
+        >
           {/* frame */}
           <div
             className={'h-full w-full border-[0.5px] border-background'}
@@ -53,11 +55,11 @@ export default function ProductCategroyBox({
         {/* FIXME: todo.txt 참고  */}
         {/* 측면 */}
         {/* <div
-            className={`absolute top-[0] z-20 h-full ${code.li.outline.side.css}`}
+            className={`absolute top-[0] z-20 h-full ${rowCSSObject.li.outline.side.css}`}
           > */}
         {/* frame */}
         {/* <div
-              className={`h-full w-full bg-background ${code.li.outline.side.frameCSS}`}
+              className={`h-full w-full bg-background ${rowCSSObject.li.outline.side.frameCSS}`}
             ></div>
           </div> */}
       </div>
