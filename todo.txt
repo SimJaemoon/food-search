@@ -1,53 +1,95 @@
-<TODO>
+[UI]---------------------------------------------
+
 - common
-> Hold : vh || dvh 단위 적용 > body + 필요시 main 태그에서만 수정하면 하위 태그들은 반응형으로 작성되서 자동 반영될 것으로 예상
+> TODO: clsx 도입 고려해보기 [md file - Tailwind Support 참고]
+>> className 내부에서 Template literals 사용시, undefined OR boolean 같은 자료형을 eval 값이 그대로 className에 포함됨(e.g. 단축평가)
+>> clsx 사용시, Template literals 사용전 항시 공백을 제거할 수 있는지 확인해보기(e.g.,`h-full -(eval 값에 상관없이 공백 항상 포함)- ${}`)
+
+> HOLD: vh || dvh 단위 적용 > body + 필요시 main 태그에서만 수정하면 하위 태그들은 반응형으로 작성되서 자동 반영될 것으로 예상
 >> 현재 body에 vh 사용 중(global.css) -- 우측, 하단 스크롤바로 인한 Re-Layout 문제 고려하기
 
-> Hold : body 태그에 margin 16px을 padding으로 설정해놓음
+> HOLD: body 태그에 margin 16px을 padding으로 설정해놓음
+> HOLD: global.css 의 body 태그에 대한 속성을 global Layout 내 body 태그의 className으로 직접 주입시, error page의 font 색상에도 영향을 줌[본래 흰색 => 검정 text-onBackground]
+>> 현재는 global.css에 body 태그에 대한 css 정의해 둠
 
+> HOLD: gap 사용시 width 영역 침범하는 경우 추가 조사 필요 [width보다 gap의 크기 보존이 우선시 되는 듯]
+>> (모든 gap + 모든 item width) > 100% 면 각 item 이 가지는 width가 감소됨 [모든 item이 %, px 같은 단위의 width를 가진 경우]
+>> [현 상황] 우선 gap 사용 대신, 반응형 item에 각 item의 width 들과 item간 분배될 추가할 gap 개수를 고려해 반응형 width 계산 및 justify-between 적용함
+>>> "w-[calc(100%-32px(item1)-16px(item2)-32px(ite3)-24px(gap'8' x 3))]" [ref: SearchBox comp]
+
+> HOLD: flex 박스 내 grow 중첩 상황 예상 오류 조사
+>> [추측] flex 박스 중 item2에 grow가 적용되어 있는데, item2가 flex 박스가 되어 자식 subItem2가 또 grow 가 적용되면 부모 박스 크기 100% 까지 확장되는 듯
+>>> 부모 : [item1, item2(grow), item3]    자식 : [subItem1, subItem2(grow), subItem3] [ref: SearchBox comp - input에 grow 적용시 위 문제 발생]
+
+------------------------
 
 - page
--- Splash
-> Hold : timer 동작 전 서버 컴포넌트로 이동했을 때, useEffect의 CleanUp 함수로 timer 를 clear 하지 않아도 해당 timer가 동작하지 않음?
-
--- Landing
-> TODO : 개발용 Link 제거하기
-
 -- ProductList
-> Hold : 매대 박스 전체에 shadow-3 적용할 수 없어서, clip-path를 사용하지 않은 정면에 shadow-figma[Drop Shadow]를 적용함
+> HOLD: 매대 박스 전체에 shadow-3 적용할 수 없어서, clip-path를 사용하지 않은 정면에 shadow-figma[Drop Shadow]를 적용함
 >> clip-path를 사용한 좌측 측면의 사선에 shadow를 적용하면 clip-path에 의해 잘리는 상황을 해결하지 못 함
 
-
+------------------------
 
 - Component
 -- ProductCategoryBox
-> Rework : Image 의 이미지 크기, 위치 [현재 : fill 속성만 적용, So sizes prop 없다고 경고]
-> Fix : clip-path 이용한 frame 생성에 있어 측면에만 작은 문제(i.e., 상단 외곽선 어긋나는 현상)가 존재해 현재 미적용 [ref: clipPathFrameGenerator.ts]
+> FIXME: Image 의 이미지 크기, 위치 [현재 : fill 속성만 적용, So sizes prop 없다고 경고]
+> HOLD: clip-path 이용한 frame 생성에 있어 측면에만 작은 문제(i.e., 상단 외곽선 어긋나는 현상)가 존재해 현재 미적용 [ref: clipPathFrameGenerator.ts]
 
 -- IconButton
-> Hold : text-shadow 로 대체 - home 텍스트 외곽선 표현에 text-strok를 사용하려 했으나, vendor prefix가 요구됨 [theme color 사용 불가 So, hardcode 사용]
+> HOLD: text-shadow 로 대체 - home 텍스트 외곽선 표현에 text-strok를 사용하려 했으나, vendor prefix가 요구됨 [theme color 사용 불가 So, hardcode 사용]
+
+-- SearchBox
+> NOTE: Typography : Header comp에서 column 2에서 text-label-sm을 적용하고 있기에, body-sm으로 override
+
+------------------------
 
 - function
 -- clipPathFrameGenerator
-> Fix : y축에 평행한 두 직선의 경우에 대한 계산 문제 존재 >> 기존 구현 흐름을 참고해 처음부터 코드 재작성 예정
+> HOLD: y축에 평행한 두 직선의 경우에 대한 계산 문제 존재 >> 기존 구현 흐름을 참고해 처음부터 코드 재작성 예정
 
 
 
 
-<Remind>
-- Layout
--- position
-> absolute도 absolute의 기준이 될 수 있음 -- padding 이 기준
->> box-sizing : border로 설정해도 padding 값이 기준이됨
-
--- box sizing[모든 tag에 border-box 적용 중]
-> border-box 적용 중에는 margin 사용 지양
->> e.g., height 100% + margin 값이 설정되기에 동작 예측에 혼동을 줌
 
 
-- Sizing
--- common
-> width: auto = width: 100% : 사용가능한 최대 가로너비를 사용(=요소의 부모요소 너비 기준으로 가득찬다)
->> but height: auto는 높이값이 0부터 시작해서 필요한 만큼의 값을 갖도록 해석(=요소의 자식높이 기준으로 자동 조절됨)
->>> height: 100% vs 100vh : 100%를 body에 적용하면 하위 element 중 %로 설정된 tag들에서 높이를 잡지 못 함
 
+
+
+
+
+[Feature]---------------------------------------------
+
+- common
+> TODO: 미로그인 상태에서 접근 권한이 없는 페이지 접근시, 자동 routing 구현하기(e.g. '/My' 이동시 미로그인 경우, /Login 페이지로 이동)
+
+------------------------
+
+- page
+-- Landing
+> TODO: 개발용 Link 제거하기
+> TODO: 상품 카테고리 목록 2page[event : swipe OR drag]
+
+-- Order
+> NOTE: 주문 프로세스 중간 난입 대처 방법 1. Order 과정 중간 url에 대해 진입 가로채기  2. 단일 url로 구성해 display: none 활용
+
+------------------------
+
+- Component
+-- Splash
+> FIXME: 첫 집입 후 진입 경로(='/')로 재이동했을 때, Splash comp가 재등장 
+>> 예상 해결 방법 : 1. Layout에서 context API로 state 주입해 1회 mount 유무 기록   2. window.sessionStorage 사용해 방문 기록 남기기(client comp 이기에 가능)
+>> 대안 시도 실패 기록 : Splash comp를 Layout에 import해 unmount가 발생하지 않도록 시도 -- But, error 발생(e.g., 존재하지 않은 경로 진입)시 Splash 가 Re-mount됨
+
+> HOLD: timer 동작 전 서버 컴포넌트로 이동했을 때, useEffect의 CleanUp 함수로 timer 를 clear 하지 않아도 해당 timer가 동작하지 않음?
+>> Splash comp가 entry page 로 사용될 때, routing 함수를 useEffect 내부에서 사용할 때 나온 의문점
+
+-- Header
+> TODO: badgeContet State 추가하기 [Header 를 import 하는 Layout 에서 state 주입하는 방식 예상]
+> TODO: 로그인 feat 추가 후 isLogin 변수 수정
+
+-- SearchBox
+> TODO: url search params input 방식 적용해보기
+> TODO: [CSS => JS 교체 고려] input value.length = 0[html required attr?] || 허용되지 않는 입력값 발생시, border-color[red] & placeholder 교체 
+>> [현 상황] css 가상 클래스를 이용해 4가지 case 구현(1. 비focus + 미입력  2. focus + 미입력  3. focus + 입력내용 유 4. 비focus + 입력내용 유)
+>> NOTE: placeholder이 표시 유무에 따라 visibility가 결정됨 So, close button(focus에 관련된 btn)과 별개로 동작함 
+>>> [JS 구현시] focus-within 처럼 close, closeCircle, magnifer 를 키보드 tab으로 focus 했을 때도 border를 emphasize되도록 JS에서도 반영
