@@ -1,4 +1,4 @@
-import Footer from '@/components/Footer';
+import Header from '@/components/organisms/Header';
 
 export default function ProductList() {
   return (
@@ -27,7 +27,6 @@ export default function ProductList() {
         {/* 상품 목록 */}
         <ol className="absolute left-[0] top-[0] h-[calc(100%-16px-148px+28px)] w-full bg-highlight opacity-50"></ol>
       </main>
-      <Footer />
     </>
   );
 }
