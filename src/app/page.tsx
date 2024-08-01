@@ -12,6 +12,7 @@ export default function Landing() {
       <Splash />
       <Header pageName="Landing" />
       <div className="h-[32px] w-full">
+        <SearchBox pageName="Landing" />
       </div>
       <main className="relative h-[calc(100%-128px)] w-full">
         {/* TODO: 개발용 Link 제거하기 */}
