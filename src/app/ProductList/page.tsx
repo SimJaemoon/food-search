@@ -3,7 +3,7 @@ import Header from '@/components/organisms/Header';
 export default function ProductList() {
   return (
     <>
-      <header className="h-12 w-full bg-[#348560]">header area</header>
+      <Header pageName="ProductList" />
       <nav className="h-[80px] w-full">
         <div className="h-8 w-full bg-[#85344c]">nav area 1</div>
         <div className="h-12 w-full bg-[#af4f7fc9]">nav area 2</div>
