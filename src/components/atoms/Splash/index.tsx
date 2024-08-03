@@ -15,7 +15,7 @@ export default function Splash() {
   return (
     <div
       ref={mainRef}
-      className="absolute z-50 h-[calc(100%-80px)] w-[calc(100%-32px)]"
+      className="absolute z-50 h-[calc(100%-32px)] w-[calc(100%-32px)]"
     >
       {/* 배경 */}
       <div>
@@ -39,7 +39,7 @@ export default function Splash() {
         </div>
       </div>
       {/* 사람 */}
-      <div className="text-label-md absolute left-1/2 top-1/2 h-1/5 w-1/5 -translate-x-1/2 bg-[#74FF8A]">
+      <div className="text-label-sm absolute left-1/2 top-1/2 h-1/5 w-1/5 -translate-x-1/2 bg-[#74FF8A]">
         <div className="relative top-1/2 z-50 -translate-y-1/2 text-center">
           Person
         </div>
