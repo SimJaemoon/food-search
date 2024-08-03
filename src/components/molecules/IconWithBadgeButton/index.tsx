@@ -1,6 +1,6 @@
 import { iconData, type IconName } from '@/lib/data/iconData';
 import Link from 'next/link';
-import Icon from '../atoms/Icon';
+import Icon from '../../atoms/Icon';
 
 export default function IconWithBadgeButton({
   iconName,

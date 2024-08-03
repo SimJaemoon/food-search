@@ -1,4 +1,4 @@
-import IconWithTextButton from '../molecules/IconWithTextButton';
+import IconWithTextButton from '../../molecules/IconWithTextButton';
 
 export default function Footer() {
   return (

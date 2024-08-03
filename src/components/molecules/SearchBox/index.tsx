@@ -1,6 +1,6 @@
 'use client';
 
-import Icon from '../atoms/Icon';
+import Icon from '../../atoms/Icon';
 
 export default function SearchBox({
   pageName,

@@ -1,8 +1,8 @@
-import IconButton from '../molecules/IconButton';
-import IconButtonBack from '../molecules/IconButtonBack';
-import IconWithBadgeButton from '../molecules/IconWithBadgeButton';
-import TextButton from '../atoms/TextButton';
-import SearchBox from '../molecules/SearchBox';
+import IconButton from '../../molecules/IconButton';
+import IconButtonBack from '../../molecules/IconButtonBack';
+import IconWithBadgeButton from '../../molecules/IconWithBadgeButton';
+import TextButton from '../../atoms/TextButton';
+import SearchBox from '../../molecules/SearchBox';
 
 export default function Header({
   pageName,
