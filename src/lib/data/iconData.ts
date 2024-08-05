@@ -77,4 +77,18 @@ export const iconData = {
     width: 20,
     height: 14,
   },
+  keyboardArrowLeft: {
+    url: '',
+    text: '이전 항목 보기',
+    src: '/icon/keyboardArrowLeft.png',
+    width: 7,
+    height: 12,
+  },
+  keyboardArrowRight: {
+    url: '',
+    text: '다음 항목 보기',
+    src: '/icon/keyboardArrowRight.png',
+    width: 7,
+    height: 12,
+  },
 };
