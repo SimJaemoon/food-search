@@ -28,6 +28,13 @@ export const iconData = {
     width: 24,
     height: 24,
   },
+  walker: {
+    url: '/My',
+    text: '내 정보',
+    src: '/icon/walker.png',
+    width: 80,
+    height: 80,
+  },
   noticeBubble: {
     url: '/Notice',
     text: '알림',
@@ -62,5 +69,12 @@ export const iconData = {
     src: '/icon/magnifier.png',
     width: 24,
     height: 24,
+  },
+  next: {
+    url: '',
+    text: '다음으로 가기',
+    src: '/icon/east.png',
+    width: 20,
+    height: 14,
   },
 };
