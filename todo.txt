@@ -1,4 +1,4 @@
-[UI]---------------------------------------------
+[UI]------------------------------------------------------------------------------------------
 
 - common
 > TODO: clsx 도입 고려해보기 [md file - Tailwind Support 참고]
@@ -33,20 +33,32 @@
 ------------------------
 
 - Component
--- ProductCategoryBox
+-- atoms
+--- ProductCategoryBox
 > FIXME: Image 의 이미지 크기, 위치 [현재 : fill 속성만 적용, So sizes prop 없다고 경고]
 > HOLD: clip-path 이용한 frame 생성에 있어 측면에만 작은 문제(i.e., 상단 외곽선 어긋나는 현상)가 존재해 현재 미적용 [ref: clipPathFrameGenerator.ts]
 
--- IconButton
-> HOLD: text-shadow 로 대체 - home 텍스트 외곽선 표현에 text-strok를 사용하려 했으나, vendor prefix가 요구됨 [theme color 사용 불가 So, hardcode 사용]
+-- molecules
+--- IconWithTextButton
+> FIXME: text-shadow 로 대체 - home 텍스트 외곽선 표현에 text-strok를 사용하려 했으나, vendor prefix가 요구됨 [theme color 사용 불가 So, hardcode 사용]
 
--- SearchBox
+
+
+--- SearchBox
 > NOTE: Typography : Header comp에서 column 2에서 text-label-sm을 적용하고 있기에, body-sm으로 override
 
 ------------------------
 
-- function
--- clipPathFrameGenerator
+- container
+-- ProductCategoryGroupContainer
+> FIXME: 사용자 이름 text-shadow 로 대체 [ref: todo-UI-comp-molecules-IconWithTextButton 참고]
+
+
+------------------------
+
+- lib
+-- utility
+--- UI/clipPathFrameGenerator
 > HOLD: y축에 평행한 두 직선의 경우에 대한 계산 문제 존재 >> 기존 구현 흐름을 참고해 처음부터 코드 재작성 예정
 
 
@@ -59,9 +71,10 @@
 
 
 
-[Feature]---------------------------------------------
+[Feature]------------------------------------------------------------------------------------------
 
 - common
+> TODO: Server comp 로 사용되는 Container 에서 fetch 함수를 호출 가능 여부 확인하기(page에서 fetch가 불필요한 건 아님)
 > TODO: 미로그인 상태에서 접근 권한이 없는 페이지 접근시, 자동 routing 구현하기(e.g. '/My' 이동시 미로그인 경우, /Login 페이지로 이동)
 
 ------------------------
@@ -77,8 +90,9 @@
 ------------------------
 
 - Component
--- Splash
-> FIXME: 첫 index 진입 후 진입 경로(i.e., '/')로 재이동했을 때, Splash comp가 재등장 
+-- atoms
+--- Splash[container file로 logic 이전?]
+> FIXME: 첫 index 진입 후 진입 경로(i.e., '/')로 재이동했을 때, Splash comp가 재등장
 >> 예상 해결 방법 : 1. Layout에서 context API로 state 주입해 1회 mount 유무 기록   2. window.sessionStorage 사용해 방문 기록 남기기(client comp 이기에 가능)
 >> 해결 시도 실패 기록
 >>> [1] Splash comp를 Layout에 import해 unmount가 발생하지 않도록 시도 성공 -- But, error 발생(e.g., 존재하지 않은 경로 진입)해 error page 진입시 Splash 가 Re-mount되는 현상 발생
@@ -87,13 +101,36 @@
 > HOLD: timer 동작 전 서버 컴포넌트로 이동했을 때, useEffect의 CleanUp 함수로 timer 를 clear 하지 않아도 해당 timer가 동작하지 않음?
 >> Splash comp가 entry page 로 사용될 때, routing 함수를 useEffect 내부에서 사용할 때 나온 의문점
 
--- Header
-> TODO: badgeContet State 추가하기 [Header 를 import 하는 Layout 에서 state 주입하는 방식 예상]
-> TODO: 로그인 feat 추가 후 isLogin 변수 수정
 
--- SearchBox
+-- molecules
+--- SearchBox
 > TODO: url search params input 방식 적용해보기
 > TODO: [CSS => JS 교체 고려] input value.length = 0[html required attr?] || 허용되지 않는 입력값 발생시, border-color[red] & placeholder 교체 
 >> [현 상황] css 가상 클래스를 이용해 4가지 case 구현(1. 비focus + 미입력  2. focus + 미입력  3. focus + 입력내용 유 4. 비focus + 입력내용 유)
 >> NOTE: placeholder이 표시 유무에 따라 visibility가 결정됨 So, close button(focus에 관련된 btn)과 별개로 동작함 
 >>> [JS 구현시] focus-within 처럼 close, closeCircle, magnifer 를 키보드 tab으로 focus 했을 때도 border를 emphasize되도록 JS에서도 반영
+
+--- ProductCategoryGroup
+> TODO: pagination 의 변수 변화에 따른 image, text 교체시, animation 적용하기
+
+
+
+-- organisms
+--- Header
+> TODO: badgeContent State 추가하기 [Header 를 import 하는 Layout 에서 state 주입하는 방식 예상]
+> TODO: 로그인 feat 추가 후 isLogin 변수 수정
+
+
+------------------------
+
+- container
+-- ProductCategoryGroupContainer
+> TODO: 데이터 습득 방식에 맞게 각 hard-code 교체
+>> 1. 로그인 상태 2. user 이름 3. 새로운 알림 수신 여부 4, 배송 점포명
+> TODO: '알림이 도착했습니다' 0.x초 뒤 display: none으로 설정
+> FIXME: IconWithTextButton 표시될 경우, walker 이미지에 의해 ProductCategory 조작 영역을 침범함
+>> 예상 해결 방법 : 1. 이미지 변경 2. absolute 적용을 통한 box 크기 결정 요인에서 배제 3. clip-path
+> FIXME: type 단언 Type Assertion 제거하도록 수정 [ref : ProductCategroyBox, ProductCategoryGroup]
+>> 객체 key들의 union과 pagination 의 number 연산 간 불일치로 인한 문제로 추측 
+>>> 해결 예상 방향 : readonly array - tuple & 재정의 { type ProductCategroyPagination, totalPageNumber }
+> HOLD: return 하는 comp 각각에 대해 필요시 메모이제이션(Memoization) 작업 수행
