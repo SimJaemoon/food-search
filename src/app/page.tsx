@@ -1,3 +1,4 @@
+import ProductCategoryGroupContainer from '@/components/containers/ProductCategoryGroupContainer';
 import Header from '@/components/organisms/Header';
 import Splash from '@/components/atoms/Splash';
 import SearchBox from '@/components/molecules/SearchBox';
@@ -23,6 +24,8 @@ export default function Landing() {
           {/* 하단 */}
           <div className="h-[63.5%] w-full bg-[#74FF8A]"></div>
         </div>
+        {/* 상품 카테고리 목록 */}
+        <ProductCategoryGroupContainer />
         {/* </Link> */}
       </main>
     </>

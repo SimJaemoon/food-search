@@ -5,9 +5,11 @@ import { iconData, type IconName } from '@/lib/data/iconData';
 export default function IconWithTextButton({
   iconName,
   iconPosition,
+  textContent = '',
 }: {
   iconName: IconName;
   iconPosition: keyof typeof tailwindCSS.iconPosition;
+  textContent?: string;
 }) {
   return (
     <button className="h-full w-full">
@@ -18,7 +20,7 @@ export default function IconWithTextButton({
         <span
           className={`text-label-sm ${tailwindCSS.iconPosition[iconPosition].text}`}
         >
-          {iconData[iconName].text}
+          {textContent || iconData[iconName].text}
         </span>
         <Icon iconName={iconName} />
       </Link>
@@ -39,6 +41,10 @@ const tailwindCSS = {
     right: {
       Link: '',
       text: 'pr-1',
+    },
+    top: {
+      Link: 'flex-col-reverse text-onPrimaryEmphasize [text-shadow:_0px_0px_2px_#7E3E22]',
+      text: 'pt-1',
     },
   },
 };
