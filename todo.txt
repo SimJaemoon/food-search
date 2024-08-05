@@ -42,10 +42,11 @@
 --- IconWithTextButton
 > FIXME: text-shadow 로 대체 - home 텍스트 외곽선 표현에 text-strok를 사용하려 했으나, vendor prefix가 요구됨 [theme color 사용 불가 So, hardcode 사용]
 
-
-
 --- SearchBox
 > NOTE: Typography : Header comp에서 column 2에서 text-label-sm을 적용하고 있기에, body-sm으로 override
+
+--- CategoryDetailCarousel
+> HOLD: 현재 png 이미지 색상을 css filter 속성으로 변형했지만, 필요한 색상의 png file을 변형 없이 사용 고려하기
 
 ------------------------
 
@@ -84,8 +85,15 @@
 > TODO: 개발용 Link 제거하기
 > TODO: 상품 카테고리 목록 2page[event : swipe OR drag]
 
+-- ProductList
+> FIXME: mock data 교체
+>> 데이터 병합? 일관성 유지 작업 수행 : ProductCategoryBox - tailwindCSS 객체(categoryName)
+> FIXME: 선택된 item 탐색 code 개선(with 접근 불가능한 param 값 처리 e.g., 0/9999/0)
+
 -- Order
 > NOTE: 주문 프로세스 중간 난입 대처 방법 1. Order 과정 중간 url에 대해 진입 가로채기  2. 단일 url로 구성해 display: none 활용
+
+
 
 ------------------------
 
@@ -113,6 +121,9 @@
 --- ProductCategoryGroup
 > TODO: pagination 의 변수 변화에 따른 image, text 교체시, animation 적용하기
 
+--- CategoryDetailCarousel
+> TODO: 1. drag 방향, 이동 거리에 따라 css left, right 속성 추가(left 만 사용 고려)
+> TODO: 2. 좌우측 12px 이상 이동시 setIsOverflow 호출 - relative이기에 inset 속성(e.g., left) 기준 위치 = 부모가 아닌 요소 자신 본래 위치
 
 
 -- organisms
@@ -127,6 +138,7 @@
 -- ProductCategoryGroupContainer
 > TODO: 데이터 습득 방식에 맞게 각 hard-code 교체
 >> 1. 로그인 상태 2. user 이름 3. 새로운 알림 수신 여부 4, 배송 점포명
+>> HOLD: container 에서 page로 끌어올려 server comp로 사용될 가능성이 재고려하기 [e.g., user status, delivery store]
 > TODO: '알림이 도착했습니다' 0.x초 뒤 display: none으로 설정
 > FIXME: IconWithTextButton 표시될 경우, walker 이미지에 의해 ProductCategory 조작 영역을 침범함
 >> 예상 해결 방법 : 1. 이미지 변경 2. absolute 적용을 통한 box 크기 결정 요인에서 배제 3. clip-path
