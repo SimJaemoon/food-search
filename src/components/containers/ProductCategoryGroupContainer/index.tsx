@@ -29,7 +29,7 @@ export default function ProductCategoryGroupContainer() {
         (prevPN > 1 ? prevPN - 1 : prevPN) as ProductCategroyPagination, // FIXME: type 단언 Type Assertion 제거되도록 수정
     );
   }
-  // TODO: 데이터 습득 방식에 맞게 각 hard-code 교체 (1. 로그인 상태 2. user 이름 3. 새로운 알림 수신 여부 4, 배송 점포명)
+  // TODO: 데이터 습득 방식에 맞게 각 hard-code 교체 (1. 로그인 상태 2. user 이름 3. 새로운 알림 수신 여부 4. 배송 점포명)
   const isLogin = true;
   const userName = '김홍길동';
   const [isNotifying, setIsNotifying] = useState(false);
