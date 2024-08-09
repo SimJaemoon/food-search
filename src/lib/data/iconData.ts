@@ -91,4 +91,18 @@ export const iconData = {
     width: 7,
     height: 12,
   },
+  switchLeft: {
+    url: '',
+    text: '이전 항목 보기',
+    src: '/icon/switchLeft.png',
+    width: 7,
+    height: 14,
+  },
+  switchRight: {
+    url: '',
+    text: '다음 항목 보기',
+    src: '/icon/switchRight.png',
+    width: 7,
+    height: 14,
+  },
 };
