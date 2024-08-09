@@ -42,7 +42,7 @@ export default function ProductCard({
       onClick={handleCardClick}
     >
       <div className="flex h-[11.5%] w-full items-center border-b-[0.5px] border-secondary px-1">
-        <div className="leading-1 line-clamp-1 w-full break-all pb-[2px]">
+        <div className="line-clamp-1 w-full break-all pb-[2px]">
           {/* NOTE: g 같은 영어는 줄 하단 경계 아래로 내려가서 , pb-[2px]로 공간 확보  */}
           {brand}
         </div>
