@@ -88,7 +88,7 @@ export const iconData = {
     url: '',
     text: '다음 항목 보기',
     src: '/icon/keyboardArrowRight.png',
-    width: 7,
+    width: 8,
     height: 12,
   },
   switchLeft: {
