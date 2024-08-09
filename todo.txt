@@ -27,6 +27,7 @@
 
 - page
 -- ProductList
+> TODO: 검색어를 통한 page 진입시 nav 가 1줄로 바뀜으로 인한 main tag height의 176px 에 변화 발생 예상됨 OR 2번째 row 공간 그대로 냅두는 방향도 고려
 > HOLD: 매대 박스 전체에 shadow-3 적용할 수 없어서, clip-path를 사용하지 않은 정면에 shadow-figma[Drop Shadow]를 적용함
 >> clip-path를 사용한 좌측 측면의 사선에 shadow를 적용하면 clip-path에 의해 잘리는 상황을 해결하지 못 함
 
@@ -38,6 +39,7 @@
 > FIXME: Image 의 이미지 크기, 위치 [현재 : fill 속성만 적용, So sizes prop 없다고 경고]
 > HOLD: clip-path 이용한 frame 생성에 있어 측면에만 작은 문제(i.e., 상단 외곽선 어긋나는 현상)가 존재해 현재 미적용 [ref: clipPathFrameGenerator.ts]
 
+
 -- molecules
 --- IconWithTextButton
 > FIXME: text-shadow 로 대체 - home 텍스트 외곽선 표현에 text-strok를 사용하려 했으나, vendor prefix가 요구됨 [theme color 사용 불가 So, hardcode 사용]
@@ -47,6 +49,8 @@
 
 --- CategoryDetailCarousel
 > HOLD: 현재 png 이미지 색상을 css filter 속성으로 변형했지만, 필요한 색상의 png file을 변형 없이 사용 고려하기
+
+
 
 ------------------------
 
@@ -86,9 +90,11 @@
 > TODO: 상품 카테고리 목록 2page[event : swipe OR drag]
 
 -- ProductList
-> FIXME: mock data 교체
->> 데이터 병합? 일관성 유지 작업 수행 : ProductCategoryBox - tailwindCSS 객체(categoryName)
-> FIXME: 선택된 item 탐색 code 개선(with 접근 불가능한 param 값 처리 e.g., 0/9999/0)
+> TODO: 데이터 fetch로 변경[검색 방식 : 1. params  2. 검색어[기존 categoryGroupId, categorySingleId 목록이 아닌 categoryId 목록을 표시 - 즉, nav를 2줄에서 1줄에 대한 데이터만 취득(UI memo 참고)]]
+> TODO: 선택된 category item 탐색 code 개선(with 접근 불가능한 param 값 처리 e.g., 0/9999/0)
+> TODO: mock data 교체
+>> 데이터 병합? 일관성 유지 작업 수행 : ProductCategoryBox - tailwindCSS 객체(categoryName --- mock data : categoryId)
+
 
 -- Order
 > NOTE: 주문 프로세스 중간 난입 대처 방법 1. Order 과정 중간 url에 대해 진입 가로채기  2. 단일 url로 구성해 display: none 활용
@@ -110,6 +116,11 @@
 >> Splash comp가 entry page 로 사용될 때, routing 함수를 useEffect 내부에서 사용할 때 나온 의문점
 
 
+--- ProductCard
+> TODO: d.ts 파일에 SearchProduct type 정의하고 가져오기[ref : ProductList page]
+
+
+
 -- molecules
 --- SearchBox
 > TODO: url search params input 방식 적용해보기
@@ -125,6 +136,9 @@
 > TODO: 1. drag 방향, 이동 거리에 따라 css left, right 속성 추가(left 만 사용 고려)
 > TODO: 2. 좌우측 12px 이상 이동시 setIsOverflow 호출 - relative이기에 inset 속성(e.g., left) 기준 위치 = 부모가 아닌 요소 자신 본래 위치
 
+--- ProductCardGroup
+> TODO: 42.5%[카드 크기]-2%[gap] 를 swipe or drag or seemorebar click 시 eventHandler로 css 조작 with animation
+> TODO: 불투명 card를 포함한 4장 card 외 (overflow된 card들의 display: none) OR (visibility: hidden) OR (displayed item 기준 좌우 6개씩만 렌더링) 고려해보기 [if, item 수 999개 경우 Load]
 
 -- organisms
 --- Header
@@ -146,3 +160,15 @@
 >> 객체 key들의 union과 pagination 의 number 연산 간 불일치로 인한 문제로 추측 
 >>> 해결 예상 방향 : readonly array - tuple & 재정의 { type ProductCategroyPagination, totalPageNumber }
 > HOLD: return 하는 comp 각각에 대해 필요시 메모이제이션(Memoization) 작업 수행
+
+-- ProductCardGroupContainer
+> TODO: Product page 접근 방식 현재 Link가 아닌 onClick 이벤트로 container에서 modal tag 뭉치를 추가하는 리렌더링으로 생각 중
+
+-- ProductListStandContainer
+> TODO: pageNumber 획득 방법 : useState 대신 useSearchParams - url을 사용
+>> ProductCardGroupContainer 의 "displayedProductCardStartIndex" state value 를 url param을 통해 취득해 두 container를 연동시킬 계획(Instead of Context API)
+>> e.g., url param(displayedProductCardStartIndex)을 통해 pageNumber = Math.floor(displayedProductCardStartIndex) + displayedProductCardStartIndex % 2 [0인 경우 page 1로 취급 조건 고려]
+>>> HOLD: url param에 page number OR index number 를 사용할지 고민하기 - index number로 param이 작성된다는 건 하나의 card의 위치가 first, second 둘 다 가능함을 의미, 즉 0을 포함한 짝수 index만 first card로 표시되지 않을 수 있음
+> TODO: 정렬 filter 값 저장/취득 방법 : useRouter, useSearchParams
+> TODO: see more sign, blur effect가 "page number cards" 의 eventHandler - inset property 조작에 따라 표시, 비표시 조건 추가
+>> Case : 1.left-[0] 2.right-[0] 
