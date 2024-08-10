@@ -23,6 +23,8 @@
 >> [추측] flex 박스 중 item2에 grow가 적용되어 있는데, item2가 flex 박스가 되어 자식 subItem2가 또 grow 가 적용되면 부모 박스 크기 100% 까지 확장되는 듯
 >>> 부모 : [item1, item2(grow), item3]    자식 : [subItem1, subItem2(grow), subItem3] [ref: SearchBox comp - input에 grow 적용시 위 문제 발생]
 
+> HOLD: iconData.ts 의 keyboardArrowRight icon의 width가 8px로 png 크기에 맞춰서 작성됨 <-불일치-> figma에서는 7px로 확인됨
+
 ------------------------
 
 - page
@@ -95,6 +97,10 @@
 > TODO: mock data 교체
 >> 데이터 병합? 일관성 유지 작업 수행 : ProductCategoryBox - tailwindCSS 객체(categoryName --- mock data : categoryId)
 
+
+-- Cart
+> TODO: 데이터 주입 - 배송지명, 배송 점포, 상세 주소, 가장 빠른 배송 날짜/시간
+> TODO: 배송지 변경 Link로 수정하기
 
 -- Order
 > NOTE: 주문 프로세스 중간 난입 대처 방법 1. Order 과정 중간 url에 대해 진입 가로채기  2. 단일 url로 구성해 display: none 활용
@@ -172,3 +178,14 @@
 > TODO: 정렬 filter 값 저장/취득 방법 : useRouter, useSearchParams
 > TODO: see more sign, blur effect가 "page number cards" 의 eventHandler - inset property 조작에 따라 표시, 비표시 조건 추가
 >> Case : 1.left-[0] 2.right-[0] 
+
+
+-- CardReceiptContainer
+> TODO: prop - {cartItems} : ProductCard type과 연동 & cart 담긴 item & 수량 global state로 유지해서 사용
+> TODO: 무료배송 문구 교체 : 4만원 - 장바구니 상품들 총 가격 > 0 ? 면 해당 값 표시 : '무료배송이 가능합니다' 
+> TODO: edge case 점검 - 모든 grid item이 overflow일 경우, 줄바꿈 or 말줄임 적용 재고려
+>> 수량 : value < 100 로 제한 예상 = 99 이하
+>> 상품명, 가격 : line-clamp-2 break-all
+>>> 돈과 관련된 데이터 표시 정책 수립 후 수정하기(e.g., 1억 이상 구매 발생시 대처 방법) : 말 줄임표 대신 '999,999,999+' 표시 고려해보기 - 돈이기 때문에 줄임표 사용시 오해 가능성 존재
+>>>> <-> ProductCard comp의 price, unit price는 Product page가 존재하기에 말줄임표로 표시
+> TODO: button 이벤트 핸들러 부착하기 - '품절 제거', '+', '-', 'trashCan', 'See More Sign - Up & Down', '주문하기'
