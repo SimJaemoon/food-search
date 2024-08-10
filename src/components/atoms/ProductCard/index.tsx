@@ -30,7 +30,7 @@ export default function ProductCard({
   handleCardClick?: () => void;
   opaqueCardPosition: 'left' | 'right' | null;
 }) {
-  const opaqueCard =
+  const opaqueCardCSS =
     opaqueCardPosition === 'left'
       ? 'origin-[100%_50%] scale-75 opacity-50'
       : opaqueCardPosition === 'right'
@@ -38,7 +38,7 @@ export default function ProductCard({
         : '';
   return (
     <div
-      className={`flex h-full w-full flex-wrap rounded-md border-2 border-secondary bg-background text-center ${opaqueCard}`}
+      className={`flex h-full w-full flex-wrap rounded-md border-2 border-secondary bg-background text-center ${opaqueCardCSS}`}
       onClick={handleCardClick}
     >
       <div className="flex h-[11.5%] w-full items-center border-b-[0.5px] border-secondary px-1">
@@ -63,7 +63,7 @@ export default function ProductCard({
       <div className="flex h-1/5 w-full flex-wrap content-center border-b-[0.5px] border-secondary px-1">
         <div className="text-label-md line-clamp-1 w-full break-all pb-[2%]">
           {`${price.toLocaleString('ko-KR')}원`}
-          {/* NOTE: 상품 가격이 억 단위일 경우, 줄바꿈이 발생할 수 있어, "line-clamp-1 break-all" 속성을 적용해놓음*/}
+          {/* NOTE: 상품 가격이 억 단위일 경우, 줄바꿈이 발생할 수 있어, "line-clamp-1 break-all" 속성을 적용해놓음 */}
           {/* {'300,000,000원'} */}
         </div>
         <div className="line-clamp-1 w-full break-all pb-[2px]">
