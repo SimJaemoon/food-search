@@ -105,4 +105,11 @@ export const iconData = {
     width: 7,
     height: 14,
   },
+  trashCan: {
+    url: '',
+    text: '제거하기',
+    src: '/icon/trashCan.png',
+    width: 16,
+    height: 20,
+  },
 };
