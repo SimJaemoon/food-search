@@ -45,26 +45,22 @@ export default function CategoryDetailCarousel({
         ))}
       </div>
       {/* See More Bar */}
-      <div
-        className={`absolute left-[0] top-[0] z-10 flex h-full w-full justify-between`}
+      <button
+        className={`absolute left-[0] top-[0] z-10 flex h-full w-4 items-center justify-center bg-background/80 ${isOverflow.left ? 'visible' : 'invisible'}`}
       >
-        <button
-          className={`flex h-full w-4 items-center justify-center bg-background/80 ${isOverflow.left ? 'visible' : 'invisible'}`}
-        >
-          {/* HOLD: 현재 png 이미지 색상을 css filter 속성으로 변형했지만, 필요한 색상의 png file을 변형 없이 사용 고려하기 */}
-          <div className="[filter:_invert(35%)_sepia(49%)_saturate(598%)_hue-rotate(334deg)_brightness(94%)_contrast(88%)]">
-            <Icon iconName="keyboardArrowLeft" />
-          </div>
-        </button>
-        <button
-          className={`flex h-full w-4 items-center justify-center bg-background/80 ${isOverflow.right ? 'visible' : 'invisible'}`}
-        >
-          {/* HOLD: 현재 png 이미지 색상을 css filter 속성으로 변형했지만, 필요한 색상의 png file을 변형 없이 사용 고려하기 */}
-          <div className="[filter:_invert(35%)_sepia(49%)_saturate(598%)_hue-rotate(334deg)_brightness(94%)_contrast(88%)]">
-            <Icon iconName="keyboardArrowRight" />
-          </div>
-        </button>
-      </div>
+        {/* HOLD: 현재 png 이미지 색상을 css filter 속성으로 변형했지만, 필요한 색상의 png file을 변형 없이 사용 고려하기 */}
+        <div className="[filter:_invert(35%)_sepia(49%)_saturate(598%)_hue-rotate(334deg)_brightness(94%)_contrast(88%)]">
+          <Icon iconName="keyboardArrowLeft" />
+        </div>
+      </button>
+      <button
+        className={`absolute right-[0] top-[0] z-10 flex h-full w-4 items-center justify-center bg-background/80 ${isOverflow.right ? 'visible' : 'invisible'}`}
+      >
+        {/* HOLD: 현재 png 이미지 색상을 css filter 속성으로 변형했지만, 필요한 색상의 png file을 변형 없이 사용 고려하기 */}
+        <div className="[filter:_invert(35%)_sepia(49%)_saturate(598%)_hue-rotate(334deg)_brightness(94%)_contrast(88%)]">
+          <Icon iconName="keyboardArrowRight" />
+        </div>
+      </button>
     </>
   );
 }

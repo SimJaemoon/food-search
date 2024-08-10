@@ -37,7 +37,7 @@ export default function ProductCard({
         ? 'origin-[0%_50%] scale-75 opacity-50'
         : '';
   return (
-    <div
+    <button
       className={`flex h-full w-full flex-wrap rounded-md border-2 border-secondary bg-background text-center ${opaqueCardCSS}`}
       onClick={handleCardClick}
     >
@@ -81,6 +81,6 @@ export default function ProductCard({
           )}
         </span>
       </div>
-    </div>
+    </button>
   );
 }

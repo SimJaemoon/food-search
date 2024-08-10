@@ -41,10 +41,10 @@ export default function Cart() {
                 {'000아파트 000동 000호 가나다라마바사'}
               </div>
             </div>
-            <div className="text-label-sm flex h-full w-1/5 items-center justify-center break-keep bg-secondary text-center text-onSecondary shadow-2">
+            <button className="text-label-sm flex h-full w-1/5 items-center justify-center break-keep bg-secondary text-center text-onSecondary shadow-2">
               {/* TODO: 배송지 변경 Link로 수정하기 */}
               {'배송지 변경'}
-            </div>
+            </button>
           </div>
           <div className="relative z-10 h-[40px] w-full border-b-[2px] border-secondary bg-background text-center leading-[40px] shadow-1">
             {/* TODO: 데이터 주입 */}
