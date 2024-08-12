@@ -14,7 +14,7 @@ export default function Header({
 
   return (
     <header
-      className={`flex h-12 w-full justify-between border-t-[3px] border-primary ${['Landing', 'ProductList'].includes(pageName) ? '' : 'border-b-2'}`}
+      className={`flex h-12 w-full justify-between border-t-[3px] border-primary ${['Landing', 'ProductList', 'Order'].includes(pageName) ? '' : 'border-b-2'}`}
     >
       {/* column 1 */}
       <div
