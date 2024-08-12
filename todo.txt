@@ -33,6 +33,9 @@
 > HOLD: 매대 박스 전체에 shadow-3 적용할 수 없어서, clip-path를 사용하지 않은 정면에 shadow-figma[Drop Shadow]를 적용함
 >> clip-path를 사용한 좌측 측면의 사선에 shadow를 적용하면 clip-path에 의해 잘리는 상황을 해결하지 못 함
 
+-- Order
+> layout - TODO: see more bar - both side
+
 ------------------------
 
 - Component
@@ -103,6 +106,8 @@
 > TODO: 배송지 변경 Link로 수정하기
 
 -- Order
+> TODO: Link, button을 통한 Order 하위 page 이동 설계하기[현재 : index = OrderAddress page]
+> layout - NOTE: order navigation bar = container로 분리 with context api
 > NOTE: 주문 프로세스 중간 난입 대처 방법 1. Order 과정 중간 url에 대해 진입 가로채기  2. 단일 url로 구성해 display: none 활용
 
 
