@@ -1,9 +1,9 @@
 import Icon from '@/components/atoms/Icon';
-import ProductCategroyBox, {
-  type ProductCategroyPagination,
-  totalPageNumber,
-} from '@/components/atoms/ProductCategoryBox';
-
+import ProductCategroyBox from '@/components/atoms/ProductCategoryBox';
+import {
+  type ProductCategoryBoxPagination,
+  productCategoryBoxTotalPageNumber,
+} from '@/lib/data/productCategoryBoxData';
 import { iconData } from '@/lib/data/iconData';
 
 export default function ProductCategoryGroup({
@@ -11,7 +11,7 @@ export default function ProductCategoryGroup({
   handleNextButtonClick,
   handleBackButtonClick,
 }: {
-  pageNumber: ProductCategroyPagination;
+  pageNumber: ProductCategoryBoxPagination;
   handleNextButtonClick: () => void;
   handleBackButtonClick: () => void;
 }) {
@@ -68,7 +68,7 @@ export default function ProductCategoryGroup({
           <Icon iconName="back" />
         </button>
         <button
-          className={`${pageNumber === totalPageNumber ? 'invisible' : ''} flex w-[20%] items-center justify-center pr-2`}
+          className={`${pageNumber === productCategoryBoxTotalPageNumber ? 'invisible' : ''} flex w-[20%] items-center justify-center pr-2`}
           aria-label={iconData.next.text}
           onClick={handleNextButtonClick}
         >
