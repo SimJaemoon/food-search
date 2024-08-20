@@ -8,6 +8,7 @@ export default function Splash() {
   const router = useRouter();
 
   useEffect(() => {
+    router.prefetch('/Landing');
     const timeoutID = setTimeout(() => {
       if (splashScreenRef.current) {
         splashScreenRef.current.style.display = 'none';
