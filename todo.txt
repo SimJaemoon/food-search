@@ -45,8 +45,8 @@
 - Component
 -- atoms
 --- ProductCategoryBox
-> FIXME: Image 의 이미지 크기, 위치 [현재 : fill 속성만 적용, So sizes prop 없다고 경고]
-> HOLD: clip-path 이용한 frame 생성에 있어 측면에만 작은 문제(i.e., 상단 외곽선 어긋나는 현상)가 존재해 현재 미적용 [ref: clipPathFrameGenerator.ts]
+> HOLD: Image 의 이미지 크기, 위치 [현재 : fill 속성만 적용, So sizes prop 없다고 경고]
+> HOLD: clip-path 이용한 frame 생성에 있어 측면에만 문제(i.e., 상단 외곽선 어긋나는 현상)가 존재해 현재 미적용 [ref: clipPathFrameGenerator.ts]
 
 
 -- molecules
