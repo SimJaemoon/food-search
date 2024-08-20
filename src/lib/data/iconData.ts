@@ -8,7 +8,7 @@ export const iconData = {
     height: 24,
   },
   home: {
-    url: '/',
+    url: '/Landing',
     text: '입구로 이동',
     src: '/icon/home.png',
     width: 40,

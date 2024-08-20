@@ -20,7 +20,9 @@ export default function Header({
       <div
         className={`flex h-full justify-center ${pageName === 'Landing' ? 'text-title-md w-[108px] text-primary' : 'w-[10%] min-w-[48px]'}`}
       >
-        {pageName === 'Landing' && <TextButton textContent="XX Mart" url="/" />}
+        {pageName === 'Landing' && (
+          <TextButton textContent="XX Mart" url="/Landing" />
+        )}
         {pageName !== 'Landing' && <IconButtonBack />}
       </div>
       {/* column 2 */}

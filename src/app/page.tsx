@@ -1,33 +1,56 @@
-import ProductCategoryGroupContainer from '@/components/containers/ProductCategoryGroupContainer';
-import Header from '@/components/organisms/Header';
-import Splash from '@/components/atoms/Splash';
-import SearchBox from '@/components/molecules/SearchBox';
+'use client';
 
-// TODO: 개발용 Link 제거하기
-import Link from 'next/link';
+import { useRouter } from 'next/navigation';
+import { useRef, useEffect } from 'react';
 
-export default function Landing() {
+export default function Splash() {
+  const splashScreenRef = useRef<HTMLDivElement>(null);
+  const router = useRouter();
+
+  useEffect(() => {
+    const timeoutID = setTimeout(() => {
+      if (splashScreenRef.current) {
+        splashScreenRef.current.style.display = 'none';
+      }
+      router.replace('/Landing');
+    }, 3000);
+    return () => clearTimeout(timeoutID);
+  });
+
   return (
     <>
-      <Splash />
-      <Header pageName="Landing" />
-      <div className="h-[32px] w-full">
-        <SearchBox pageName="Landing" />
-      </div>
-      <main className="relative h-[calc(100%-128px)] w-full">
-        {/* TODO: 개발용 Link 제거하기 */}
-        {/* <Link href={'/ProductList'}> */}
+      <div
+        ref={splashScreenRef}
+        className={`absolute z-50 h-[calc(100%-32px)] w-[calc(100%-32px)]`}
+      >
         {/* 배경 */}
-        <div className="h-full w-full">
-          {/* 상단 */}
-          <div className="h-[36.5%] w-full bg-[#FFD159]"></div>
-          {/* 하단 */}
-          <div className="h-[63.5%] w-full bg-[#74FF8A]"></div>
+        <div>
+          {/* 천장 */}
+          <div className="absolute left-[0%] top-[0%] h-[35%] w-full bg-[#0FC5FF] [clip-path:polygon(0%_0%,_100%_0%,_100%_100%,_0%_100%)]"></div>
+          {/* 측벽 */}
+          <div>
+            {/* 완쪽 */}
+            <div className="absolute left-[0%] top-[20%] h-4/5 w-2/5 bg-[#FFD159] [clip-path:polygon(0%_0%,_100%_12.5%,_100%_31.25%,_0%_100%)]"></div>
+            {/* 오른쪽 */}
+            <div className="absolute left-[60%] top-[20%] h-4/5 w-2/5 bg-[#FFD159] [clip-path:polygon(0%_12.5%,_100%_0%,_100%_100%,_0%_31.25%)]"></div>
+          </div>
+          {/* 길 */}
+          <div className="absolute left-[0%] top-[45%] h-[55%] w-full bg-[#848484] [clip-path:polygon(40%_0%,_60%_0%,_100%_100%,_0%_100%)]"></div>
+          {/* 입구 */}
+          <div>
+            {/* 원 */}
+            <div className="absolute left-[40%] top-[30%] h-[10%] w-[20%] bg-[#E3E2E2] [clip-path:ellipse(50%_50%_at_50%_50%)]"></div>
+            {/* 사각형 */}
+            <div className="absolute left-[40%] top-[35%] h-[10%] w-[20%] bg-[#E3E2E2]"></div>
+          </div>
         </div>
-        {/* 상품 카테고리 목록 */}
-        <ProductCategoryGroupContainer />
-        {/* </Link> */}
-      </main>
+        {/* 사람 */}
+        <div className="text-label-sm absolute left-1/2 top-1/2 h-1/5 w-1/5 -translate-x-1/2 bg-[#74FF8A]">
+          <div className="relative top-1/2 z-50 -translate-y-1/2 text-center">
+            Person
+          </div>
+        </div>
+      </div>
     </>
   );
 }
