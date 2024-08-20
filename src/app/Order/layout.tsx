@@ -1,4 +1,5 @@
 import Header from '@/components/organisms/Header';
+import Footer from '@/components/organisms/Footer';
 import Link from 'next/link';
 
 const orderPageNameKO = [
@@ -52,6 +53,7 @@ export default function OrderLayout({
         {/* TODO: see more bar - both side */}
       </nav>
       {children}
+      <Footer />
     </>
   );
 }

@@ -1,4 +1,3 @@
-import Header from '@/components/organisms/Header';
 import CategoryDetailCarousel from '@/components/molecules/CategoryDetailCarousel';
 import { mockProductCategoryData } from '@/lib/data/productCategoryData';
 import ProductCardGroupContainer from '@/components/containers/ProductCardGroupContainer';
@@ -61,7 +60,6 @@ export default function ProductList({
 
   return (
     <>
-      <Header pageName="ProductList" />
       <nav className="h-[80px] w-full">
         {/* 세부 카테고리 - 그룹 */}
         <div className="relative flex h-8 w-full items-center overflow-hidden px-3">

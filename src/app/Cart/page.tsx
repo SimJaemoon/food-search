@@ -1,10 +1,8 @@
-import Header from '@/components/organisms/Header';
 import CartReceiptContainer from '@/components/containers/CartReceiptContainer';
 
 export default function Cart() {
   return (
     <>
-      <Header pageName="Cart" />
       <main className="h-[calc(100%-96px)] w-full overflow-hidden">
         {/* delivery information */}
         <div className="relative z-10">
