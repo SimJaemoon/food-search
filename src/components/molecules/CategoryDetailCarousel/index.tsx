@@ -1,22 +1,27 @@
 'use client';
 
-import { useState } from 'react';
+import {
+  productCategoryDetailData,
+  type ProductCategory,
+} from '@/lib/data/productCategoryDetailData';
+
+import { useState, Fragment } from 'react';
 
 import TextWithBorderButton, {
   type ButtonType,
 } from '../../atoms/TextWithBorderButton';
 import Icon from '@/components/atoms/Icon';
 
-import { type ProductCategory } from '@/lib/data/productCategoryData';
-
 export default function CategoryDetailCarousel({
-  items,
+  categoryKey,
+  categoryGroupIndex,
+  categorySingleIndex,
   type,
-  selectedItem,
 }: {
-  items: ProductCategory;
+  categoryKey: ProductCategory;
+  categoryGroupIndex: number;
+  categorySingleIndex: number;
   type: ButtonType;
-  selectedItem?: number;
 }) {
   const [positionX, setPositionX] = useState(0);
   const [isOverflow, setIsOverflow] = useState({ left: true, right: true });
@@ -34,15 +39,37 @@ export default function CategoryDetailCarousel({
         className="relative flex flex-nowrap items-center justify-between gap-2"
         onDrag={handleDrag}
       >
-        {items.map((v, i) => (
-          <TextWithBorderButton
-            key={v.name}
-            textContent={v.name}
-            url={v.url}
-            type={type}
-            status={selectedItem === i ? 'selected' : 'normal'}
-          />
-        ))}
+        {type === 'categoryDetailGroup'
+          ? productCategoryDetailData[categoryKey].children.map((v, i) => (
+              <TextWithBorderButton
+                key={v.groupName}
+                textContent={v.groupName}
+                url={`/ProductList/${categoryKey}/${i}/0`}
+                type={type}
+                status={categoryGroupIndex === i ? 'selected' : 'normal'}
+              />
+            ))
+          : productCategoryDetailData[categoryKey].children[
+              categoryGroupIndex
+            ].children.map((v, i) => (
+              <Fragment key={v}>
+                {/* NOTE: 배열 data의 0 index를 "전체" btn에 할당 */}
+                {i === 0 && (
+                  <TextWithBorderButton
+                    textContent={'전체'}
+                    url={`/ProductList/${categoryKey}/${categoryGroupIndex}/0`}
+                    type={type}
+                    status={categorySingleIndex === 0 ? 'selected' : 'normal'}
+                  />
+                )}
+                <TextWithBorderButton
+                  textContent={v}
+                  url={`/ProductList/${categoryKey}/${categoryGroupIndex}/${i + 1}`}
+                  type={type}
+                  status={categorySingleIndex === i + 1 ? 'selected' : 'normal'}
+                />
+              </Fragment>
+            ))}
       </div>
       {/* See More Bar */}
       <button
