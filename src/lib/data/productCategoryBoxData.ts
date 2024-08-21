@@ -1,3 +1,5 @@
+import { productCategoryDetailData } from './productCategoryDetailData';
+
 export type ProductCategoryBoxRowOrder = keyof typeof productCategoryBoxData;
 export type ProductCategoryBoxDirection =
   keyof typeof productCategoryBoxData.firstRow;
@@ -9,47 +11,53 @@ export const productCategoryBoxData = {
   firstRow: {
     left: {
       1: {
-        text: '정육\n계란',
+        id: 'meatEgg',
+        text: productCategoryDetailData['meatEgg'].categoryName.join('\n'),
         image: {
           url: 'meat-egg.png',
-          alt: '정육 계란',
+          alt: productCategoryDetailData['meatEgg'].categoryName.join(' '),
         },
       },
       2: {
-        text: '면류\n통조림',
+        id: 'noodlesCan',
+        text: productCategoryDetailData['noodlesCan'].categoryName.join('\n'),
         image: {
           url: 'noodles-can.png',
-          alt: '면류 통조림',
+          alt: productCategoryDetailData['noodlesCan'].categoryName.join(' '),
         },
       },
       3: {
-        text: '커피/차',
+        id: 'coffee',
+        text: productCategoryDetailData['coffee'].categoryName.join('/'),
         image: {
           url: 'coffee.webp',
-          alt: '커피 차',
+          alt: productCategoryDetailData['coffee'].categoryName.join(' '),
         },
       },
     },
     right: {
       1: {
-        text: '수산물',
+        id: 'seafood',
+        text: productCategoryDetailData['seafood'].categoryName.join(),
         image: {
           url: 'seafood.png',
-          alt: '수산물',
+          alt: productCategoryDetailData['seafood'].categoryName.join(),
         },
       },
       2: {
-        text: '양념\n오일',
+        id: 'seasoning',
+        text: productCategoryDetailData['seasoning'].categoryName.join('\n'),
         image: {
           url: 'seasoning.png',
-          alt: '양념 오일',
+          alt: productCategoryDetailData['seasoning'].categoryName.join(' '),
         },
       },
       3: {
-        text: '베이커리',
+        id: 'bakery',
+        text: productCategoryDetailData['bakery'].categoryName.join(),
         image: {
           url: 'bakery.jpg',
-          alt: '베이커리',
+          alt: productCategoryDetailData['bakery'].categoryName.join(),
         },
       },
     },
@@ -57,43 +65,49 @@ export const productCategoryBoxData = {
   secondRow: {
     left: {
       1: {
-        text: '과일',
+        id: 'fruit',
+        text: productCategoryDetailData['seafood'].categoryName.join(),
         image: {
           url: 'fruit.png',
-          alt: '과일',
+          alt: productCategoryDetailData['seafood'].categoryName.join(),
         },
       },
       2: {
-        text: '생수/음료',
+        id: 'drink',
+        text: productCategoryDetailData['drink'].categoryName.join('/'),
         image: {
           url: 'drink.png',
-          alt: '생수 음료',
+          alt: productCategoryDetailData['drink'].categoryName.join(' '),
         },
       },
       3: {
-        text: '유기농',
+        id: 'organic',
+        text: productCategoryDetailData['organic'].categoryName.join(),
         image: {
           url: 'organic.jfif',
-          alt: '유기농',
+          alt: productCategoryDetailData['organic'].categoryName.join(),
         },
       },
     },
     right: {
       1: {
-        text: '채소',
+        id: 'vegetable',
+        text: productCategoryDetailData['vegetable'].categoryName.join(),
         image: {
           url: 'vegetable.png',
-          alt: '채소',
+          alt: productCategoryDetailData['vegetable'].categoryName.join(),
         },
       },
       2: {
-        text: '간편식',
+        id: 'convenienceFood',
+        text: productCategoryDetailData['convenienceFood'].categoryName.join(),
         image: {
           url: 'convenience-food.png',
-          alt: '간편식',
+          alt: productCategoryDetailData['convenienceFood'].categoryName.join(),
         },
       },
       3: {
+        id: '',
         text: '',
         image: {
           url: '',
@@ -105,20 +119,23 @@ export const productCategoryBoxData = {
   thirdRow: {
     left: {
       1: {
-        text: '곡물\n견과',
+        id: 'grain',
+        text: productCategoryDetailData['grain'].categoryName.join('\n'),
         image: {
           url: 'grain.png',
-          alt: '곡물 견과',
+          alt: productCategoryDetailData['grain'].categoryName.join(' '),
         },
       },
       2: {
-        text: '김치\n반찬',
+        id: 'kimchi',
+        text: productCategoryDetailData['kimchi'].categoryName.join('\n'),
         image: {
           url: 'kimchi.png',
-          alt: '김치 반찬',
+          alt: productCategoryDetailData['kimchi'].categoryName.join(' '),
         },
       },
       3: {
+        id: '',
         text: '',
         image: {
           url: '',
@@ -128,20 +145,23 @@ export const productCategoryBoxData = {
     },
     right: {
       1: {
-        text: '우유\n유제품',
+        id: 'dairy',
+        text: productCategoryDetailData['dairy'].categoryName.join('\n'),
         image: {
           url: 'dairy.png',
-          alt: '우유 유제품',
+          alt: productCategoryDetailData['dairy'].categoryName.join(' '),
         },
       },
       2: {
-        text: '과자\n간식',
+        id: 'snack',
+        text: productCategoryDetailData['snack'].categoryName.join('\n'),
         image: {
           url: 'snack.png',
-          alt: '과자 간식',
+          alt: productCategoryDetailData['snack'].categoryName.join(' '),
         },
       },
       3: {
+        id: '',
         text: '',
         image: {
           url: '',
