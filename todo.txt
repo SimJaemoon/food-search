@@ -32,6 +32,9 @@
 > TODO: Landing으로 넘어갈 때 깜박임 현상 
 >> production에서만 router.prefetch('/Landing'); 해당 코드 동작하는 듯 [ref : https://nextjs.org/docs/app/api-reference/components/link#prefetch]
 
+-- Landing
+> TODO: modal - w,h padding 값 제거 [모든 side 16px]
+
 -- ProductList
 > TODO: 검색어를 통한 page 진입시 nav 가 1줄로 바뀜으로 인한 main tag height의 176px 에 변화 발생 예상됨 OR 2번째 row 공간 그대로 냅두는 방향도 고려
 > HOLD: 매대 박스 전체에 shadow-3 적용할 수 없어서, clip-path를 사용하지 않은 정면에 shadow-figma[Drop Shadow]를 적용함
@@ -95,14 +98,11 @@
 
 - page
 -- Landing
-> TODO: 개발용 Link 제거하기
 > TODO: 상품 카테고리 목록 2page[event : swipe OR drag]
 
 -- ProductList
 > TODO: 데이터 fetch로 변경[검색 방식 : 1. params  2. 검색어[기존 categoryGroupId, categorySingleId 목록이 아닌 categoryId 목록을 표시 - 즉, nav를 2줄에서 1줄에 대한 데이터만 취득(UI memo 참고)]]
-> TODO: 선택된 category item 탐색 code 개선(with 접근 불가능한 param 값 처리 e.g., 0/9999/0)
-> TODO: mock data 교체
->> 데이터 병합? 일관성 유지 작업 수행 : ProductCategoryBox - tailwindCSS 객체(categoryName --- mock data : categoryId)
+> TODO: 접근 불가능한 url param 값 처리 e.g., fru00it/9999/0 -- error page[미존재 page]
 
 
 -- Cart
