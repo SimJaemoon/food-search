@@ -1,8 +1,8 @@
 import CategoryDetailCarousel from '@/components/molecules/CategoryDetailCarousel';
-import { mockProductCategoryData } from '@/lib/data/productCategoryData';
 import ProductCardGroupContainer from '@/components/containers/ProductCardGroupContainer';
 import { type SearchedProduct } from '@/components/atoms/ProductCard';
 import ProductListStandContainer from '@/components/containers/ProductListStandContainer';
+import { type ProductCategory } from '@/lib/data/productCategoryDetailData';
 
 // TODO: 데이터 fetch로 변경[검색 방식 : 1. params  2. 검색어[기존 categoryGroupId, categorySingleId 목록이 아닌 categoryId 목록을 표시 - 즉, nav를 2줄에서 1줄에 대한 데이터만 취득]]
 const searchedProducts: SearchedProduct[] = Array.from(
@@ -28,58 +28,35 @@ export default function ProductList({
   params,
 }: {
   params: {
-    categoryId: string;
-    categoryGroupId: string;
-    categorySingleId: string;
+    categoryKey: ProductCategory;
+    categoryGroupIndex: string;
+    categorySingleIndex: string;
   };
 }) {
-  // TODO: 선택된 category item 탐색 code 개선(with 접근 불가능한 param 값 처리)
-  const { categoryId, categoryGroupId, categorySingleId } = params;
-  const [categoryIdNumber, categoryGroupIdNumber, categorySingleIdNumber] = [
-    categoryId,
-    categoryGroupId,
-    categorySingleId,
-  ].map((v) => parseInt(v));
-
-  const selectedCategory =
-    categoryIdNumber <= mockProductCategoryData.length - 1
-      ? categoryIdNumber
-      : 0;
-  const selectedGroupItem =
-    categoryGroupIdNumber <=
-    mockProductCategoryData[selectedCategory].children.length - 1
-      ? categoryGroupIdNumber
-      : 0;
-  const selectedSingleItem =
-    categorySingleIdNumber <=
-    mockProductCategoryData[selectedCategory].children[selectedGroupItem]
-      .children.length -
-      1
-      ? categorySingleIdNumber
-      : 0;
+  // TODO: 접근 불가능한 url param 값 처리 - error page
+  const categoryKey = params.categoryKey;
+  const categoryGroupIndex = parseInt(params.categoryGroupIndex);
+  const categorySingleIndex = parseInt(params.categorySingleIndex);
 
   return (
     <>
       <nav className="h-[80px] w-full">
         {/* 세부 카테고리 - 그룹 */}
         <div className="relative flex h-8 w-full items-center overflow-hidden px-3">
-          {/* TODO: mock data 교체 */}
           <CategoryDetailCarousel
-            items={mockProductCategoryData[selectedCategory].children}
+            categoryKey={categoryKey}
+            categoryGroupIndex={categoryGroupIndex}
+            categorySingleIndex={categorySingleIndex}
             type="categoryDetailGroup"
-            selectedItem={selectedGroupItem}
           />
         </div>
         {/* 세부 카테고리 - 단일 */}
         <div className="relative flex h-12 w-full items-center overflow-hidden px-3">
           <CategoryDetailCarousel
-            items={
-              mockProductCategoryData[selectedCategory].children[
-                selectedSingleItem
-              ].children
-            }
+            categoryKey={categoryKey}
+            categoryGroupIndex={categoryGroupIndex}
+            categorySingleIndex={categorySingleIndex}
             type="categoryDetailSingle"
-            selectedItem={selectedSingleItem}
           />
         </div>
       </nav>
