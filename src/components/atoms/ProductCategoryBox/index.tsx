@@ -6,6 +6,8 @@ import {
   productCategoryBoxData,
 } from '@/lib/data/productCategoryBoxData';
 
+import Link from 'next/link';
+
 export default function ProductCategroyBox({
   rowOrder,
   direction,
@@ -25,56 +27,69 @@ export default function ProductCategroyBox({
     <button
       className={`absolute top-[0] h-full ${tailwindCSS[rowOrder].css} ${tailwindCSS[rowOrder].position[direction]} ${reversal}`}
     >
-      {/* 상품 카테고리 이름 */}
-      <div
-        className={`text-label-md absolute z-50 w-full -translate-x-1/2 -translate-y-1/2 whitespace-pre-wrap text-background ${tailwindCSS[rowOrder].categoryName} ${reversal} ${textAlignment}`}
+      <Link
+        href={{
+          pathname: '/Landing',
+          query: {
+            category:
+              productCategoryBoxData[rowOrder][direction][pageNumber].id,
+          },
+        }}
+        className="h-full w-full"
       >
-        {productCategoryBoxData[rowOrder][direction][pageNumber].text}
-      </div>
-
-      <Image
-        src={`/product-category/p${pageNumber}/${productCategoryBoxData[rowOrder][direction][pageNumber].image.url}`}
-        alt={productCategoryBoxData[rowOrder][direction][pageNumber].image.alt}
-        fill={true}
-        // HOLD: fill 속성만 적용, So sizes prop 없다고 경고 발생
-        className={`absolute -left-[57px] top-[67px] ${reversal}`}
-      />
-
-      {/* 외곽선 */}
-      <div>
-        {/* 윗면 */}
+        {/* 상품 카테고리 이름 */}
         <div
-          className={`absolute left-[0] top-[0] z-20 w-full ${tailwindCSS[rowOrder].outline.top.css}`}
+          className={`text-label-md absolute z-50 w-full -translate-x-1/2 -translate-y-1/2 whitespace-pre-wrap text-background ${tailwindCSS[rowOrder].categoryName} ${reversal} ${textAlignment}`}
         >
-          {/* frame */}
-          <div
-            className={`absolute left-[0] top-[0] h-full w-full bg-background ${tailwindCSS[rowOrder].outline.top.frameCSS}`}
-          ></div>
-          {/* frame content */}
-          <div
-            className={`absolute left-[0] top-[0] h-full w-full bg-onBackground opacity-70 ${tailwindCSS[rowOrder].outline.top.frameContentCSS}`}
-          ></div>
+          {productCategoryBoxData[rowOrder][direction][pageNumber].text}
         </div>
-        {/* 정면 */}
-        <div
-          className={`absolute left-[0] ${tailwindCSS[rowOrder].outline.front}`}
-        >
-          {/* frame */}
+
+        <Image
+          src={`/product-category/p${pageNumber}/${productCategoryBoxData[rowOrder][direction][pageNumber].image.url}`}
+          alt={
+            productCategoryBoxData[rowOrder][direction][pageNumber].image.alt
+          }
+          fill={true}
+          // HOLD: fill 속성만 적용, So sizes prop 없다고 경고 발생
+          className={`absolute -left-[57px] top-[67px] ${reversal}`}
+        />
+
+        {/* 외곽선 */}
+        <div>
+          {/* 윗면 */}
           <div
-            className={`h-full w-full border-background ${rowOrder === 'thirdRow' ? 'border-l-[0.5px] border-r-[0.5px] border-t-[0.5px]' : 'border-[0.5px]'}`}
-          ></div>
-        </div>
-        {/* HOLD: clip-path 이용한 frame 생성에 있어 측면에만 문제 존재  */}
-        {/* 측면 */}
-        {/* <div
+            className={`absolute left-[0] top-[0] z-20 w-full ${tailwindCSS[rowOrder].outline.top.css}`}
+          >
+            {/* frame */}
+            <div
+              className={`absolute left-[0] top-[0] h-full w-full bg-background ${tailwindCSS[rowOrder].outline.top.frameCSS}`}
+            ></div>
+            {/* frame content */}
+            <div
+              className={`absolute left-[0] top-[0] h-full w-full bg-onBackground opacity-70 ${tailwindCSS[rowOrder].outline.top.frameContentCSS}`}
+            ></div>
+          </div>
+          {/* 정면 */}
+          <div
+            className={`absolute left-[0] ${tailwindCSS[rowOrder].outline.front}`}
+          >
+            {/* frame */}
+            <div
+              className={`h-full w-full border-background ${rowOrder === 'thirdRow' ? 'border-l-[0.5px] border-r-[0.5px] border-t-[0.5px]' : 'border-[0.5px]'}`}
+            ></div>
+          </div>
+          {/* HOLD: clip-path 이용한 frame 생성에 있어 측면에만 문제 존재  */}
+          {/* 측면 */}
+          {/* <div
             className={`absolute top-[0] z-20 h-full ${tailwindCSS[rowOrder].outline.side.css}`}
           > */}
-        {/* frame */}
-        {/* <div
+          {/* frame */}
+          {/* <div
               className={`h-full w-full bg-background ${tailwindCSS[rowOrder].outline.side.frameCSS}`}
             ></div>
           </div> */}
-      </div>
+        </div>
+      </Link>
     </button>
   );
 }

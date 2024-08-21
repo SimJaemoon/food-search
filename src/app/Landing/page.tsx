@@ -1,9 +1,6 @@
 import ProductCategoryGroupContainer from '@/components/containers/ProductCategoryGroupContainer';
 import SearchBox from '@/components/molecules/SearchBox';
 
-// TODO: 개발용 Link 제거하기
-import Link from 'next/link';
-
 export default function Landing() {
   return (
     <>
@@ -11,8 +8,6 @@ export default function Landing() {
         <SearchBox pageName="Landing" />
       </div>
       <main className="relative h-[calc(100%-128px)] w-full">
-        {/* TODO: 개발용 Link 제거하기 */}
-        {/* <Link href={'/ProductList'}> */}
         {/* 배경 */}
         <div className="h-full w-full">
           {/* 상단 */}
@@ -22,7 +17,6 @@ export default function Landing() {
         </div>
         {/* 상품 카테고리 목록 */}
         <ProductCategoryGroupContainer />
-        {/* </Link> */}
       </main>
     </>
   );
