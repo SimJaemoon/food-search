@@ -13,9 +13,9 @@ export default function TextWithBorderButton({
 }) {
   return (
     <button
-      className={`rounded-sm px-2 shadow-1 ${tailwindCSS[type].css} ${status === 'selected' ? 'text-label-sm bg-primary text-onPrimary' : 'border-primary bg-background'}`}
+      className={`shrink-0 rounded-sm px-2 shadow-1 ${tailwindCSS[type].css} ${status === 'selected' ? 'text-label-sm bg-primary text-onPrimary' : 'border-primary bg-background'}`}
     >
-      <Link href={url} className={`h-full`}>
+      <Link href={url} replace={true} className={`h-full`}>
         {textContent}
       </Link>
     </button>
