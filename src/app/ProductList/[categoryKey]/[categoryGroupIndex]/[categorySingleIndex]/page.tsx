@@ -42,16 +42,15 @@ export default function ProductList({
     <>
       <nav className="h-[80px] w-full">
         {/* 세부 카테고리 - 그룹 */}
-        <div className="relative flex h-8 w-full items-center overflow-hidden px-3">
+        <div className="h-8 w-full">
           <CategoryDetailCarousel
             categoryKey={categoryKey}
             categoryGroupIndex={categoryGroupIndex}
-            categorySingleIndex={categorySingleIndex}
             type="categoryDetailGroup"
           />
         </div>
         {/* 세부 카테고리 - 단일 */}
-        <div className="relative flex h-12 w-full items-center overflow-hidden px-3">
+        <div className="h-12 w-full">
           <CategoryDetailCarousel
             categoryKey={categoryKey}
             categoryGroupIndex={categoryGroupIndex}
