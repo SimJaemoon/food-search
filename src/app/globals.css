@@ -3,6 +3,11 @@
 @tailwind utilities;
 
 @layer base {
+  /* Chrome, Edge, and Safari */
+  *::-webkit-scrollbar {
+    display: none;
+  }
+
   body {
     @apply text-body-sm relative mx-auto h-screen min-h-[672px] w-full min-w-[360px] max-w-[639px] p-4 text-onBackground;
   }
