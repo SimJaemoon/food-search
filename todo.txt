@@ -59,10 +59,8 @@
 --- SearchBox
 > NOTE: Typography : Header comp에서 column 2에서 text-label-sm을 적용하고 있기에, body-sm으로 override
 
---- CategoryDetailCarousel
+--- SeeMoreButton
 > HOLD: 현재 png 이미지 색상을 css filter 속성으로 변형했지만, 필요한 색상의 png file을 변형 없이 사용 고려하기
-
-
 
 ------------------------
 
@@ -98,7 +96,9 @@
 
 - page
 -- Landing
-> TODO: 상품 카테고리 목록 2page[event : swipe OR drag]
+> TODO: 상품 카테고리 목록 2page 이벤트(swipe OR drag) 대응 interaction 추가
+> TODO: modal - See More Button 표시 animation 추가
+
 
 -- ProductList
 > TODO: 데이터 fetch로 변경[검색 방식 : 1. params  2. 검색어[기존 categoryGroupId, categorySingleId 목록이 아닌 categoryId 목록을 표시 - 즉, nav를 2줄에서 1줄에 대한 데이터만 취득(UI memo 참고)]]
@@ -137,8 +137,11 @@
 > TODO: pagination 의 변수 변화에 따른 image, text 교체시, animation 적용하기
 
 --- CategoryDetailCarousel
-> TODO: 1. drag 방향, 이동 거리에 따라 css left, right 속성 추가(left 만 사용 고려)
-> TODO: 2. 좌우측 12px 이상 이동시 setIsOverflow 호출 - relative이기에 inset 속성(e.g., left) 기준 위치 = 부모가 아닌 요소 자신 본래 위치
+> HOLD: 각 item의 좌측면을 가시 영역에 좌측면에 정렬해보기 - 문제 : 각 item의 OffsetLeft 값이 필요
+> HOLD: first, last item의 좌측, 우측면의 그림자가 잘리는 느낌을 받음, 착각?
+> HOLD: see more bar 표시 useLayoutEffct logic이 viewport 크기 조정시 어긋남 - 본래 scroll 있었는데 viewport 크기 증가로 scroll 없어져도 see more bar 그대로 유지됨
+>> viewport 크기 변화를 감지해 useEffect에서 변화에 대응하는 code 추가 고려해보기
+
 
 --- ProductCardGroup
 > TODO: 42.5%[카드 크기]-2%[gap] 를 swipe or drag or seemorebar click 시 eventHandler로 css 조작 with animation
