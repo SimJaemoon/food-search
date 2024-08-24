@@ -1,26 +1,28 @@
 import Link from 'next/link';
 
-export default function TextWithBorderButton({
-  textContent,
-  url,
-  type,
-  status,
-}: {
+import { forwardRef } from 'react';
+
+type Prop = {
   textContent: string;
   url: string;
   type: ButtonType;
   status: ButtonStatus;
-}) {
-  return (
-    <button
-      className={`shrink-0 rounded-sm px-2 shadow-1 ${tailwindCSS[type].css} ${status === 'selected' ? 'text-label-sm bg-primary text-onPrimary' : 'border-primary bg-background'}`}
-    >
-      <Link href={url} replace={true} className={`h-full`}>
-        {textContent}
-      </Link>
-    </button>
-  );
-}
+};
+
+const TextWithBorderButton = forwardRef<HTMLButtonElement, Prop>(
+  ({ textContent, url, type, status }, ref) => {
+    return (
+      <button
+        ref={ref}
+        className={`shrink-0 rounded-sm px-2 shadow-1 ${tailwindCSS[type].css} ${status === 'selected' ? 'text-label-sm bg-primary text-onPrimary' : 'border-primary bg-background'}`}
+      >
+        <Link href={url} replace={true} className={`h-full`}>
+          {textContent}
+        </Link>
+      </button>
+    );
+  },
+);
 
 const tailwindCSS = {
   categoryDetailGroup: {
@@ -31,5 +33,9 @@ const tailwindCSS = {
   },
 };
 
+TextWithBorderButton.displayName = 'TextWithBorderButton';
+
 export type ButtonType = keyof typeof tailwindCSS;
 export type ButtonStatus = 'normal' | 'selected';
+
+export default TextWithBorderButton;
