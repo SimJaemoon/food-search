@@ -1,48 +1,54 @@
-export type ProductCategory = keyof typeof productCategoryDetailData;
+export type ProductCategoryData = keyof typeof productCategoryData;
 
-const mockData = Array.from({ length: 10 }, (_, i1) => ({
-  groupName: 'groupName-' + i1,
-  children: Array.from({ length: 10 }, (_, i2) => 'item-' + i2),
-}));
-
-export const productCategoryDetailData = {
+// HOLD: product data 추가 후 productId 속성을 mockProductCategoryData.ts 참고해 추가하기
+export const productCategoryData = {
   meatEgg: {
+    displayOrder: 0,
     categoryName: ['정육', '계란'],
-    children: mockData,
+    children: [],
   },
   noodlesCan: {
+    displayOrder: 6,
     categoryName: ['면류', '통조림'],
-    children: mockData,
+    children: [],
   },
   coffee: {
+    displayOrder: 12,
     categoryName: ['커피', '차'],
-    children: mockData,
+    children: [],
   },
   seafood: {
+    displayOrder: 1,
     categoryName: ['수산물'],
-    children: mockData,
+    children: [],
   },
   seasoning: {
+    displayOrder: 7,
     categoryName: ['양념', '오일'],
-    children: mockData,
+    children: [],
   },
   bakery: {
+    displayOrder: 13,
     categoryName: ['베이커리'],
-    children: mockData,
+    children: [],
   },
   fruit: {
+    displayOrder: 2,
     categoryName: ['과일'],
-    children: mockData,
+    children: [],
   },
   drink: {
+    displayOrder: 8,
     categoryName: ['생수', '음료'],
-    children: mockData,
+    children: [],
   },
   organic: {
+    displayOrder: 14,
     categoryName: ['유기농'],
-    children: mockData,
+    children: [],
   },
   vegetable: {
+    displayOrder: 3,
     categoryName: ['채소'],
     children: [
       {
@@ -128,23 +134,28 @@ export const productCategoryDetailData = {
     ],
   },
   convenienceFood: {
+    displayOrder: 9,
     categoryName: ['간편식'],
-    children: mockData,
+    children: [],
   },
   grain: {
+    displayOrder: 4,
     categoryName: ['곡물', '견과'],
-    children: mockData,
+    children: [],
   },
   kimchi: {
+    displayOrder: 10,
     categoryName: ['김치', '반찬'],
-    children: mockData,
+    children: [],
   },
   dairy: {
+    displayOrder: 5,
     categoryName: ['우유', '유제품'],
-    children: mockData,
+    children: [],
   },
   snack: {
+    displayOrder: 11,
     categoryName: ['과자', '간식'],
-    children: mockData,
+    children: [],
   },
 };
