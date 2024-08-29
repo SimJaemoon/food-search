@@ -27,6 +27,14 @@
 
 ------------------------
 
+- lib
+-- UI
+--- clipPathFrameGenerator
+> HOLD: y축에 평행한 두 직선의 경우에 대한 계산 문제 존재 >> 기존 구현 흐름을 참고해 처음부터 코드 재작성 예정
+
+------------------------
+
+
 - page
 -- Splash
 > TODO: Landing으로 넘어갈 때 깜박임 현상 
@@ -69,17 +77,6 @@
 > FIXME: 사용자 이름 text-shadow 로 대체 [ref: todo-UI-comp-molecules-IconWithTextButton 참고]
 
 
-------------------------
-
-- lib
--- utility
---- UI/clipPathFrameGenerator
-> HOLD: y축에 평행한 두 직선의 경우에 대한 계산 문제 존재 >> 기존 구현 흐름을 참고해 처음부터 코드 재작성 예정
-
-
-
-
-
 
 
 
@@ -91,13 +88,35 @@
 - common
 > TODO: Server comp 로 사용되는 Container 에서 fetch 함수를 호출 가능 여부 확인하기(page에서 fetch가 불필요한 건 아님)
 > TODO: 미로그인 상태에서 접근 권한이 없는 페이지 접근시, 자동 routing 구현하기(e.g. '/My' 이동시 미로그인 경우, /Login 페이지로 이동)
+> TODO: api 데이터 비동기 통신 관련 error, loading 대응 코드 추가하기 with nextjs error|loading.tsx  [ ref : lib > action.ts  |  route > seed, productCategoryGroups  |  page > Landing & Landing/Modal ]
+> TODO: cache 방식 고민하기(route.ts, action.ts, useSWR) e.g., no cache fetch case
+>> sql 함수에 cache 옵션 없기에 해당 route 자체에 대해 cache 방식 결정?
+
+------------------------
+- lib
+-- data
+--- productCategoryData.ts
+> HOLD: product data 추가 후 productId 속성을 mockProductCategoryData.ts 참고해 추가하기
+
+--- mockProductCategoryData.ts
+> HOLD: 1.  현재는 외부키 FK = productId 중복 X but 서로 다른 row에 중복 할당하는 case 허용 예상   2. product table의 PK인 productId 와 reference 관계임을 sql로 명시하기
 
 ------------------------
 
 - page
 -- Landing
 > TODO: 상품 카테고리 목록 2page 이벤트(swipe OR drag) 대응 interaction 추가
-> TODO: modal - See More Button 표시 animation 추가
+
+-- Landing/Modal
+> FIXME: 구경가기 btn : 1. item 미선택시 이동 url 문제 해결(with error.tsx) 2. '선택되지 않았습니다' 알림 추가
+> TODO: See More Button 표시 animation 추가
+> HOLD: 현재 문제 : useSWR을 통한 데이터 통신으로 인해 element 표시 지연이 발생함 -- Loading page 추가해서 지연 숨기기?
+>> 해결 방안 : category, categoryGroup 데이터를 데이터 통신이 아닌 hard-code로 삽입하기, 그래도 modal page는 client comp로? 추후 좀 더 생각해보기
+
+> HOLD: Landing/modal을 server comp로 유지하고자 하면, pagination state 관리를 url, sessionStorage 등으로 수행해야 함 (url 변경으로 인한 state 유지가 불가능해짐)
+>> But, server comp로 작성할 경우, url 변화에 따른 깜박임 현상이 발생할 것으로 예상되서 client component로 작성함
+>>> TODO: 시도 안 해본 것 : page.tsx의 prop으로 searchParams을 받아서 url param에 pagination state를 유지하면서 modal page 진입해보기(Not : dynamic route parameter)
+>>>> 그래도, 깜박임 현상은 발생할 것으로 예상
 
 
 -- ProductList
@@ -120,10 +139,6 @@
 
 - Component
 -- atoms
---- ProductCard
-> TODO: d.ts 파일에 SearchProduct type 정의하고 가져오기[ref : ProductList page]
-
-
 
 -- molecules
 --- SearchBox
@@ -168,10 +183,7 @@
 > TODO: '알림이 도착했습니다' 0.x초 뒤 display: none으로 설정
 > FIXME: IconWithTextButton 표시될 경우, walker 이미지에 의해 ProductCategory 조작 영역을 침범함
 >> 예상 해결 방법 : 1. 이미지 변경 2. absolute 적용을 통한 box 크기 결정 요인에서 배제 3. clip-path
-> FIXME: type 단언 Type Assertion 제거하도록 수정 [ref : ProductCategroyBox, ProductCategoryGroup]
->> 객체 key들의 union과 pagination 의 number 연산 간 불일치로 인한 문제로 추측 
->>> 해결 예상 방향 : readonly array - tuple & 재정의 { type ProductCategroyPagination, totalPageNumber }
-> HOLD: return 하는 comp 각각에 대해 필요시 메모이제이션(Memoization) 작업 수행
+> HOLD: import? return 하는 comp 각각에 대해 필요시 메모이제이션(Memoization) 작업 수행
 
 -- ProductCardGroupContainer
 > TODO: Product page 접근 방식 현재 Link가 아닌 onClick 이벤트로 container에서 modal tag 뭉치를 추가하는 리렌더링으로 생각 중
