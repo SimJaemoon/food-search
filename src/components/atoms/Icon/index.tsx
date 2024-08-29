@@ -1,5 +1,5 @@
 import Image from 'next/image';
-import { iconData, type IconName } from '@/lib/data/iconData';
+import { iconData, type IconName } from '@/lib/UI/dataset/iconData';
 
 export default function Icon({ iconName }: { iconName: IconName }) {
   return (

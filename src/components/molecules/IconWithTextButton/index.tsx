@@ -1,6 +1,6 @@
 import Link from 'next/link';
 import Icon from '../../atoms/Icon';
-import { iconData, type IconName } from '@/lib/data/iconData';
+import { iconData, type IconName } from '@/lib/UI/dataset/iconData';
 
 export default function IconWithTextButton({
   iconName,

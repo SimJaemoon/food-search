@@ -2,6 +2,8 @@
 - 사용 방법 : clip-path 용 hard-coding tailwindCSS code 를 터미널 log 를 통해 취득
 > clipPathFrameGenerator(landingBoxCoodinates.third.side, 0.5, 'px') [ref : landingBoxCoodinates 데이터 객체]
 
+-- HOLD: y축에 평행한 두 직선의 경우에 대한 계산 문제 존재 >> 기존 구현 흐름을 참고해 처음부터 코드 재작성 예정
+
 
 TODO: 1. 시계 방향으로 좌표 재정렬 기능 추후 추가  2. 4개 좌표를 가진 사각형만 고려했기에 다른 좌표 개수를 재고려해 코드 수정 필요 예상
 
@@ -17,12 +19,12 @@ TODO: 1. 시계 방향으로 좌표 재정렬 기능 추후 추가  2. 4개 좌�
 3. 각 외곽선 직선 함수 구하기(func : innerLineGenerator) [ref : 직선과 직선 사이의 거리 공식 https://ko.wikipedia.org/wiki/%EC%A7%81%EC%84%A0%EA%B3%BC_%EC%A7%81%EC%84%A0_%EC%82%AC%EC%9D%B4%EC%9D%98_%EA%B1%B0%EB%A6%AC]
 > 다중 단위를 사용해 CSS 작성 case 반영(e.g., % 와 px 을 동시 사용)
 > y축에 평행한 경우 예외 처리(e.g., x=2)
------ TODO : 1. frame 너비 단위 error catch 코드 작성하기
+----- TODO: 1. frame 너비 단위 error catch 코드 작성하기
 
 4. 외곽선들 간 교점 구하기(func : intersectionPointGenerator) [ref : 두 직선의 교점 구하기 https://wjs7347.tistory.com/17]
 > 교점 구한 후 y 좌표에 다시 -1 을 곱해 clip-path CSS 용 좌표로 변환
------ TODO : 1. 교점이 존재하지 않는 case에 대해 error catch 코드 작성하기 2. 적절한 타입 좁히기를 적용하지 못 해서 미봉책으로 스파게티 코드와 같이 작성됨 [type 정의가 MECE하지 못해서 문제 발생]
------ FIXME : y축에 평행한 두 직선의 경우에 대한 계산이 문제가 있어 ProductCategoryBox comp 의 측면 외곽선의 어긋남 현상이 발생함 [예상 원인 : 코드, clip-path css 표현 한계]
+----- TODO: 1. 교점이 존재하지 않는 case에 대해 error catch 코드 작성하기 2. 적절한 타입 좁히기를 적용하지 못 해서 미봉책으로 스파게티 코드와 같이 작성됨 [type 정의가 MECE하지 못해서 문제 발생]
+----- FIXME: y축에 평행한 두 직선의 경우에 대한 계산이 문제가 있어 ProductCategoryBox comp 의 측면 외곽선의 어긋남 현상이 발생함 [예상 원인 : 코드, clip-path css 표현 한계]
 
 5. 도출된 외곽선 구성 좌표들을 clip-path CSS 코드로 변환(func : clipPathCSSConverter)
 > 다중 단위에 사용 여부에 따라 서로 다른 CSS 코드 작성 방식 채택
