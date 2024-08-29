@@ -1,5 +1,6 @@
 'use client';
 
+import type { ProductCategory } from '@/lib/data/data';
 import ProductCategoryGroup from '@/components/molecules/ProductCategoryGroup';
 import { useState, useEffect } from 'react';
 
@@ -7,28 +8,25 @@ import IconWithTextButton from '@/components/molecules/IconWithTextButton';
 import TextButton from '@/components/atoms/TextButton';
 import Link from 'next/link';
 
-import {
-  type ProductCategoryBoxPagination,
-  productCategoryBoxTotalPageNumber,
-} from '@/lib/data/productCategoryBoxData';
+export default function ProductCategoryGroupContainer({
+  productCategories,
+}: {
+  productCategories: ProductCategory[];
+}) {
+  const [pageNumber, setPageNumber] = useState(1);
+  const displayedProductCategories = productCategories
+    .sort((a, b) => a.display_order - b.display_order)
+    .slice((pageNumber - 1) * 6, pageNumber * 6);
 
-export default function ProductCategoryGroupContainer() {
-  const [pageNumber, setPageNumber] = useState<ProductCategoryBoxPagination>(1);
+  const totalPageNumber = Math.ceil(productCategories.length / 6);
 
   function handleNextButtonClick() {
-    setPageNumber(
-      (prevPN) =>
-        (prevPN < productCategoryBoxTotalPageNumber
-          ? prevPN + 1
-          : prevPN) as ProductCategoryBoxPagination, // FIXME: type 단언 Type Assertion 제거되도록 수정
-    );
+    setPageNumber((prevPN) => (prevPN < totalPageNumber ? prevPN + 1 : prevPN));
   }
   function handleBackButtonClick() {
-    setPageNumber(
-      (prevPN) =>
-        (prevPN > 1 ? prevPN - 1 : prevPN) as ProductCategoryBoxPagination, // FIXME: type 단언 Type Assertion 제거되도록 수정
-    );
+    setPageNumber((prevPN) => (prevPN > 1 ? prevPN - 1 : prevPN));
   }
+
   // TODO: 데이터 습득 방식에 맞게 각 hard-code 교체 (1. 로그인 상태 2. user 이름 3. 새로운 알림 수신 여부 4. 배송 점포명)
   const isLogin = true;
   const userName = '김홍길동';
@@ -46,6 +44,8 @@ export default function ProductCategoryGroupContainer() {
   return (
     <>
       <ProductCategoryGroup
+        displayedProductCategories={displayedProductCategories}
+        totalPageNumber={totalPageNumber}
         pageNumber={pageNumber}
         handleNextButtonClick={handleNextButtonClick}
         handleBackButtonClick={handleBackButtonClick}

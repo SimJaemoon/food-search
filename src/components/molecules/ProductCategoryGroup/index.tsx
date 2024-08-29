@@ -1,17 +1,18 @@
+import { type ProductCategory } from '@/lib/data/data';
 import Icon from '@/components/atoms/Icon';
 import ProductCategroyBox from '@/components/atoms/ProductCategoryBox';
-import {
-  type ProductCategoryBoxPagination,
-  productCategoryBoxTotalPageNumber,
-} from '@/lib/data/productCategoryBoxData';
-import { iconData } from '@/lib/data/iconData';
+import { iconData } from '@/lib/UI/dataset/iconData';
 
 export default function ProductCategoryGroup({
-  pageNumber = 1,
+  displayedProductCategories,
+  totalPageNumber,
+  pageNumber,
   handleNextButtonClick,
   handleBackButtonClick,
 }: {
-  pageNumber: ProductCategoryBoxPagination;
+  displayedProductCategories: ProductCategory[];
+  totalPageNumber: number;
+  pageNumber: number;
   handleNextButtonClick: () => void;
   handleBackButtonClick: () => void;
 }) {
@@ -25,16 +26,16 @@ export default function ProductCategoryGroup({
         <ol>
           <li>
             <ProductCategroyBox
+              displayedProductCategory={displayedProductCategories[0]}
               rowOrder="firstRow"
               direction="left"
-              pageNumber={pageNumber}
             />
           </li>
           <li>
             <ProductCategroyBox
+              displayedProductCategory={displayedProductCategories[1]}
               rowOrder="firstRow"
               direction="right"
-              pageNumber={pageNumber}
             />
           </li>
         </ol>
@@ -44,16 +45,16 @@ export default function ProductCategoryGroup({
         <ol>
           <li>
             <ProductCategroyBox
+              displayedProductCategory={displayedProductCategories[2]}
               rowOrder="secondRow"
               direction="left"
-              pageNumber={pageNumber}
             />
           </li>
           <li>
             <ProductCategroyBox
+              displayedProductCategory={displayedProductCategories[3]}
               rowOrder="secondRow"
               direction="right"
-              pageNumber={pageNumber}
             />
           </li>
         </ol>
@@ -68,7 +69,7 @@ export default function ProductCategoryGroup({
           <Icon iconName="back" />
         </button>
         <button
-          className={`${pageNumber === productCategoryBoxTotalPageNumber ? 'invisible' : ''} flex w-[20%] items-center justify-center pr-2`}
+          className={`${pageNumber === totalPageNumber ? 'invisible' : ''} flex w-[20%] items-center justify-center pr-2`}
           aria-label={iconData.next.text}
           onClick={handleNextButtonClick}
         >
@@ -80,16 +81,16 @@ export default function ProductCategoryGroup({
         <ol>
           <li>
             <ProductCategroyBox
+              displayedProductCategory={displayedProductCategories[4]}
               rowOrder="thirdRow"
               direction="left"
-              pageNumber={pageNumber}
             />
           </li>
           <li>
             <ProductCategroyBox
+              displayedProductCategory={displayedProductCategories[5]}
               rowOrder="thirdRow"
               direction="right"
-              pageNumber={pageNumber}
             />
           </li>
         </ol>

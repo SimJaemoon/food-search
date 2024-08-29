@@ -1,27 +1,30 @@
+import { type ProductCategory } from '@/lib/data/data';
 import Image from 'next/image';
-import {
-  type ProductCategoryBoxRowOrder,
-  type ProductCategoryBoxDirection,
-  type ProductCategoryBoxPagination,
-  productCategoryBoxData,
-} from '@/lib/data/productCategoryBoxData';
-
 import Link from 'next/link';
 
 export default function ProductCategroyBox({
+  displayedProductCategory,
   rowOrder,
   direction,
-  pageNumber,
 }: {
-  rowOrder: ProductCategoryBoxRowOrder;
-  direction: ProductCategoryBoxDirection;
-  pageNumber: ProductCategoryBoxPagination;
+  displayedProductCategory: ProductCategory;
+  rowOrder: 'firstRow' | 'secondRow' | 'thirdRow';
+  direction: 'left' | 'right';
 }) {
   const reversal =
     direction === 'left' ? '' : direction === 'right' ? '-scale-x-100' : '';
   const textAlignment = rowOrder === 'thirdRow' ? 'left-1/3' : 'left-1/2';
-  if (!productCategoryBoxData[rowOrder][direction][pageNumber].image.url)
-    return <></>;
+
+  const categoryName =
+    displayedProductCategory && displayedProductCategory.category_name;
+
+  const displayedCategoryName =
+    displayedProductCategory &&
+    (rowOrder === 'secondRow'
+      ? categoryName.split(',').join(' / ')
+      : categoryName.split(',').join('\n'));
+
+  if (!displayedProductCategory) return <></>;
 
   return (
     <button
@@ -29,11 +32,8 @@ export default function ProductCategroyBox({
     >
       <Link
         href={{
-          pathname: '/Landing',
-          query: {
-            category:
-              productCategoryBoxData[rowOrder][direction][pageNumber].id,
-          },
+          pathname: `/Landing`,
+          query: { categoryId: displayedProductCategory.category_id },
         }}
         className="h-full w-full"
       >
@@ -41,14 +41,12 @@ export default function ProductCategroyBox({
         <div
           className={`text-label-md absolute z-50 w-full -translate-x-1/2 -translate-y-1/2 whitespace-pre-wrap text-background ${tailwindCSS[rowOrder].categoryName} ${reversal} ${textAlignment}`}
         >
-          {productCategoryBoxData[rowOrder][direction][pageNumber].text}
+          {displayedCategoryName}
         </div>
 
         <Image
-          src={`/product-category/p${pageNumber}/${productCategoryBoxData[rowOrder][direction][pageNumber].image.url}`}
-          alt={
-            productCategoryBoxData[rowOrder][direction][pageNumber].image.alt
-          }
+          src={`/product-category/${displayedProductCategory.category_id}.png`}
+          alt={displayedProductCategory.category_name.replace(',', ' ')}
           fill={true}
           // HOLD: fill 속성만 적용, So sizes prop 없다고 경고 발생
           className={`absolute -left-[57px] top-[67px] ${reversal}`}

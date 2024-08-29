@@ -1,7 +1,11 @@
 import ProductCategoryGroupContainer from '@/components/containers/ProductCategoryGroupContainer';
 import SearchBox from '@/components/molecules/SearchBox';
 
-export default function Landing() {
+import { fetchProductCategories } from '@/lib/data/action';
+
+export default async function Landing() {
+  const productCategories = await fetchProductCategories();
+
   return (
     <>
       <div className="h-[32px] w-full">
@@ -16,7 +20,7 @@ export default function Landing() {
           <div className="h-[63.5%] w-full bg-[#74FF8A]"></div>
         </div>
         {/* 상품 카테고리 목록 */}
-        <ProductCategoryGroupContainer />
+        <ProductCategoryGroupContainer productCategories={productCategories} />
       </main>
     </>
   );
