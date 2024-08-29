@@ -1,19 +1,34 @@
 'use client';
 
-import {
-  productCategoryDetailData,
-  type ProductCategory,
-} from '@/lib/data/productCategoryDetailData';
 import { useSearchParams, useRouter } from 'next/navigation';
+import useSWR, { Fetcher } from 'swr';
+import { type ProductCategoryDetailModal } from '@/lib/data/data';
 import { useState, useRef, useLayoutEffect } from 'react';
 
 import SeeMoreButton from '@/components/molecules/SeeMoreButton';
 
-export default function ProductCategoryDetailModal() {
+const fetcher: Fetcher<ProductCategoryDetailModal[], string> = (...args) =>
+  fetch(...args).then((res) => res.json());
+
+// HOLD: 현재 문제 : useSWR을 통한 데이터 통신으로 인해 element 표시 지연이 발생함 -- Loading page 추가해서 지연 숨기기?
+// > 해결 방안 : category, categoryGroup 데이터를 데이터 통신이 아닌 hard-code로 삽입하기, 그래도 modal page는 client comp로? 추후 좀 더 생각해보기
+
+// HOLD: Landing/modal을 server comp로 유지하고자 하면, pagination state 관리를 url, sessionStorage 등으로 수행해야 함 (url 변경으로 인한 state 유지가 불가능해짐)
+// But, server comp로 작성할 경우, url 변화에 따른 깜박임 현상이 발생할 것으로 예상되서 client component로 작성함
+// TODO: 시도 안 해본 것 : page.tsx의 prop으로 searchParams을 받아서 url param에 pagination state를 유지하면서 modal page 진입해보기(Not : dynamic route parameter)
+// > 그래도, 깜박임 현상은 발생할 것으로 예상
+
+export default function Modal() {
   const searchedParams = useSearchParams();
-  const category = searchedParams.get('category') as ProductCategory;
+  const categoryId = searchedParams.get('categoryId');
+  // TODO: api 데이터 비동기 통신 관련 error, loading 대응 코드 추가하기 + useLayoutEffect
+  const { data: productCategoryGroups } = useSWR(
+    categoryId ? `/api/productCategoryGroups?categoryId=${categoryId}` : null,
+    fetcher,
+  );
+
   const router = useRouter();
-  const [selectedItem, setSelectedItem] = useState<null | number>(null);
+  const [selectedItem, setSelectedItem] = useState<null | string>(null);
   const [overflowDirection, setOverflowDirection] = useState<
     null | 'up' | 'down' | 'both'
   >(null);
@@ -63,7 +78,7 @@ export default function ProductCategoryDetailModal() {
   // eslint-disable-next-line react-hooks/exhaustive-deps
   useLayoutEffect(() => {
     if (!isMountedRef.current) {
-      if (category) {
+      if (categoryId && productCategoryGroups) {
         isMountedRef.current = true;
         if (scrollRef.current) {
           if (scrollRef.current.scrollHeight > scrollRef.current.clientHeight) {
@@ -74,7 +89,7 @@ export default function ProductCategoryDetailModal() {
     }
   });
 
-  if (!category) return <></>;
+  if (!categoryId || !productCategoryGroups) return <></>;
 
   return (
     <div
@@ -91,7 +106,7 @@ export default function ProductCategoryDetailModal() {
           onClick={(e) => e.stopPropagation()}
           className="text-label-lg h-10 w-full border-b-8 border-secondary text-center text-background shadow-figma"
         >
-          {productCategoryDetailData[category].categoryName.join(' / ')}
+          {productCategoryGroups[0].category_id.replace(',', ' / ')}
         </div>
         <div
           onClick={(e) => e.stopPropagation()}
@@ -102,18 +117,18 @@ export default function ProductCategoryDetailModal() {
             onScroll={handleScroll}
             className="h-full w-full overflow-scroll [scroll-behavior:_smooth]"
           >
-            {productCategoryDetailData[category].children.map((v, i) => (
+            {productCategoryGroups.map((v) => (
               <button
-                key={v.groupName}
-                className={`flex h-[13.5%] w-full items-center justify-center border-b-[0.5px] border-secondary text-center ${selectedItem === i ? '' : 'hover:bg-secondary/50'}`}
+                key={v.group_id}
+                className={`flex h-[13.5%] w-full items-center justify-center border-b-[0.5px] border-secondary text-center ${selectedItem === v.group_id ? '' : 'hover:bg-secondary/50'}`}
                 onClick={() => {
-                  setSelectedItem(i);
+                  setSelectedItem(v.group_id);
                 }}
               >
                 <div
-                  className={`flex h-[65%] w-full items-center justify-center ${selectedItem === i ? 'text-label-md bg-secondaryEmphasize text-onSecondaryEmphasize shadow-3' : ''}`}
+                  className={`flex h-[65%] w-full items-center justify-center ${selectedItem === v.group_id ? 'text-label-md bg-secondaryEmphasize text-onSecondaryEmphasize shadow-3' : ''}`}
                 >
-                  {v.groupName}
+                  {v.group_name}
                 </div>
               </button>
             ))}
@@ -145,7 +160,10 @@ export default function ProductCategoryDetailModal() {
         </div>
         <button
           onClick={(e) => {
-            router.push(`/ProductList/${category}/${selectedItem}/0`);
+            // FIXME: 1. item 미선택시 이동 url 문제 해결(with error.tsx) 2. '선택되지 않았습니다' 알림 추가
+            router.push(
+              `/ProductList/${categoryId}/${selectedItem ? selectedItem : productCategoryGroups ? productCategoryGroups[0].group_id : ''}/whole`,
+            );
             e.stopPropagation(); // NOTE: 부모 node의 router.back() 발생 방지 주의
           }}
           className="text-label-lg h-12 w-full rounded-sm bg-secondaryEmphasize text-center leading-[48px] text-onSecondaryEmphasize shadow-figma"
