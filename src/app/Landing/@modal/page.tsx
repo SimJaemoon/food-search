@@ -3,7 +3,7 @@
 import { useSearchParams, useRouter } from 'next/navigation';
 import useSWR, { Fetcher } from 'swr';
 import { type ProductCategoryDetailModal } from '@/lib/data/data';
-import { useState, useRef, useLayoutEffect } from 'react';
+import { useState, useRef, useEffect } from 'react';
 
 import SeeMoreButton from '@/components/molecules/SeeMoreButton';
 
@@ -21,7 +21,7 @@ const fetcher: Fetcher<ProductCategoryDetailModal[], string> = (...args) =>
 export default function Modal() {
   const searchedParams = useSearchParams();
   const categoryId = searchedParams.get('categoryId');
-  // TODO: api 데이터 비동기 통신 관련 error, loading 대응 코드 추가하기 + useLayoutEffect
+  // TODO: [Suspense/Loading page 추가] api 데이터 비동기 통신 관련 error, loading 대응 코드 추가하기
   const { data: productCategoryGroups } = useSWR(
     categoryId ? `/api/productCategoryGroups?categoryId=${categoryId}` : null,
     fetcher,
@@ -32,7 +32,6 @@ export default function Modal() {
   const [overflowDirection, setOverflowDirection] = useState<
     null | 'up' | 'down' | 'both'
   >(null);
-  const isMountedRef = useRef(false);
   const scrollRef = useRef<HTMLDivElement>(null);
 
   function handleScroll() {
@@ -42,8 +41,9 @@ export default function Modal() {
         const overflowType =
           ref.scrollTop === 0
             ? 'down'
-            : ref.scrollTop === ref.scrollHeight - ref.clientHeight
-              ? 'up'
+            : ref.scrollTop > ref.scrollHeight - ref.clientHeight - 2
+              ? // NOTE: -2 을 한 이유는 "ref.scrollTop === ref.scrollHeight - ref.clientHeight" 가 동작하지 않아서 + mobile 환경에서는 정작 동작하는 것으로 확인 [ref : CategoryDetailCarousel comp]
+                'up'
               : 'both';
         setOverflowDirection(overflowType);
       }
@@ -74,44 +74,34 @@ export default function Modal() {
     };
   }
 
-  // NOTE: layout에서 이미 <></}> 로 mount한 상태라서 의존성 배열을 삽입하면 해당 effect는 발생하지 않기에
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  useLayoutEffect(() => {
-    if (!isMountedRef.current) {
-      if (categoryId && productCategoryGroups) {
-        isMountedRef.current = true;
-        if (scrollRef.current) {
-          if (scrollRef.current.scrollHeight > scrollRef.current.clientHeight) {
-            setOverflowDirection('down');
-          }
+  useEffect(() => {
+    if (categoryId && productCategoryGroups) {
+      if (scrollRef.current) {
+        if (scrollRef.current.scrollHeight > scrollRef.current.clientHeight) {
+          setOverflowDirection('down');
         }
       }
     }
-  });
+  }, [categoryId, productCategoryGroups]);
 
   if (!categoryId || !productCategoryGroups) return <></>;
 
   return (
-    <div
-      onClick={() => {
-        setSelectedItem(null);
-        router.back();
-      }}
-      className="absolute bottom-[16px] z-40 h-[calc(100%-32px)] w-[calc(100%-32px)]"
-    >
+    <div className="absolute bottom-[16px] z-40 h-[calc(100%-32px)] w-[calc(100%-32px)]">
       {/* TODO: w,h padding 값 제거 [모든 side 16px] */}
-      <div className="absolute bottom-12 h-[calc(100%-48px-32px-48px)] w-full bg-onBackground/50"></div>
+      <button
+        onClick={() => {
+          setSelectedItem(null);
+          setOverflowDirection(null);
+          router.back();
+        }}
+        className="absolute bottom-12 h-[calc(100%-48px-32px-48px)] w-full bg-onBackground/50"
+      ></button>
       <div className="absolute bottom-[10%] left-1/2 flex h-[72.5%] w-[90%] -translate-x-1/2 flex-col items-center overflow-hidden">
-        <div
-          onClick={(e) => e.stopPropagation()}
-          className="text-label-lg h-10 w-full border-b-8 border-secondary text-center text-background shadow-figma"
-        >
+        <div className="text-label-lg h-10 w-full border-b-8 border-secondary text-center text-background shadow-figma">
           {productCategoryGroups[0].category_id.replace(',', ' / ')}
         </div>
-        <div
-          onClick={(e) => e.stopPropagation()}
-          className="relative h-[calc(100%-40px-48px-16px-32px)] w-[calc(100%-16px)] border-x-[0.5px] border-secondary bg-background/85"
-        >
+        <div className="relative h-[calc(100%-40px-48px-16px-32px)] w-[calc(100%-16px)] border-x-[0.5px] border-secondary bg-background/85">
           <div
             ref={scrollRef}
             onScroll={handleScroll}
@@ -121,8 +111,12 @@ export default function Modal() {
               <button
                 key={v.group_id}
                 className={`flex h-[13.5%] w-full items-center justify-center border-b-[0.5px] border-secondary text-center ${selectedItem === v.group_id ? '' : 'hover:bg-secondary/50'}`}
-                onClick={() => {
-                  setSelectedItem(v.group_id);
+                onClick={(e) => {
+                  setSelectedItem(
+                    (prev) => v.group_id,
+                    // HOLD: item 클릭시 toggle 방식이 맞지만, mobile 상태에서 toggle(null) 되면 hover 색상이 유지되는 문제 때문에 미적용 (prev === v.group_id ? null : v.group_id)
+                  );
+                  e.stopPropagation();
                 }}
               >
                 <div
@@ -134,9 +128,8 @@ export default function Modal() {
             ))}
           </div>
           <div
-            className={`absolute top-[0] z-50 h-[6%] w-full ${overflowDirection === 'up' || overflowDirection === 'both' ? '' : 'hidden'}`}
+            className={`absolute top-[0] z-50 h-[6%] w-full ${overflowDirection === 'up' || overflowDirection === 'both' ? 'visible opacity-100' : 'invisible opacity-0'} transition-opacity duration-300`}
           >
-            {/* TODO: See More Button 표시 animation 추가 */}
             <SeeMoreButton
               type="bar"
               direction="up"
@@ -146,9 +139,8 @@ export default function Modal() {
             />
           </div>
           <div
-            className={`absolute bottom-[0] z-50 h-[6%] w-full ${overflowDirection === 'down' || overflowDirection === 'both' ? '' : 'hidden'}`}
+            className={`absolute bottom-[0] z-50 h-[6%] w-full ${overflowDirection === 'down' || overflowDirection === 'both' ? 'visible opacity-100' : 'invisible opacity-0'} transition-opacity duration-300`}
           >
-            {/* TODO: See More Button 표시 animation 추가 */}
             <SeeMoreButton
               type="bar"
               direction="down"
@@ -160,9 +152,8 @@ export default function Modal() {
         </div>
         <button
           onClick={(e) => {
-            // FIXME: 1. item 미선택시 이동 url 문제 해결(with error.tsx) 2. '선택되지 않았습니다' 알림 추가
             router.push(
-              `/ProductList/${categoryId}/${selectedItem ? selectedItem : productCategoryGroups ? productCategoryGroups[0].group_id : ''}/whole`,
+              `/ProductList/${categoryId}/${selectedItem ? selectedItem : productCategoryGroups[0].group_id}?singleId=whole`,
             );
             e.stopPropagation(); // NOTE: 부모 node의 router.back() 발생 방지 주의
           }}
@@ -172,9 +163,10 @@ export default function Modal() {
         </button>
         <div onClick={(e) => e.stopPropagation()} className="h-4 w-full"></div>
         <button
-          onClick={() => {
+          onClick={(e) => {
             setSelectedItem(null);
             router.back();
+            e.stopPropagation(); // NOTE: 부모 node의 router.back() 발생 방지 주의
           }}
           className="text-label-sm h-8 w-full rounded-sm bg-secondary text-center text-onSecondary shadow-figma"
         >
