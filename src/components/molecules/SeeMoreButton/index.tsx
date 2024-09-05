@@ -11,7 +11,7 @@ export default function SeeMoreButton({
   direction: Direction;
   shapeColor: Color;
   backgroundColor: BackgroundColor;
-  handleClick: () => void;
+  handleClick: (e: React.MouseEvent<HTMLButtonElement>) => void;
 }) {
   return (
     <button
