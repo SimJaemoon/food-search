@@ -1,10 +1,11 @@
 'use client';
 
 import {
-  productCategoryDetailData,
-  type ProductCategory,
-} from '@/lib/data/productCategoryDetailData';
+  type ProductCategoryGroup,
+  type ProductCategorySingle,
+} from '@/lib/data/data';
 
+import { useSearchParams } from 'next/navigation';
 import { useState, useRef, useLayoutEffect, Fragment, useEffect } from 'react';
 
 import TextWithBorderButton, {
@@ -16,21 +17,26 @@ import SeeMoreButton from '../SeeMoreButton';
 // 해당 comp를 호출하는 page를 CSR로 만들어 client fetch를 수행하면 state를 유지하겠지만, SSR의 장점과 url을 통한 접근 방식을 CSR로 다시 설계야할 될 것으로 예상됨
 // 정리 - page를 server comp로 유지하고 싶어 CSR 방법을 사용 X, 그로 인해 selected item을 변경할 때 이전에 선택된 item scroll 위치를 파악하지 못 해 scroll-behavior: smooth 적용 불가
 export default function CategoryDetailCarousel({
-  categoryKey,
-  categoryGroupIndex,
-  categorySingleIndex,
+  categoryId,
+  groupId,
   type,
+  groupData,
+  singleData,
 }: {
-  categoryKey: ProductCategory;
-  categoryGroupIndex: number;
-  categorySingleIndex?: number;
+  categoryId: string;
+  groupId: string;
   type: ButtonType;
+  groupData?: ProductCategoryGroup[];
+  singleData?: ProductCategorySingle[];
 }) {
+  const searchParams = useSearchParams();
+  const singleId = searchParams.get('singleId');
   const [overflowDirection, setOverflowDirection] = useState<
     null | 'left' | 'right' | 'both'
   >(null);
   const scrollRef = useRef<HTMLDivElement>(null);
   const selectedItemRef = useRef<HTMLButtonElement>(null);
+  const isMountedRef = useRef(false);
 
   function handleScroll() {
     const ref = scrollRef.current;
@@ -39,8 +45,9 @@ export default function CategoryDetailCarousel({
         const overflowType =
           ref.scrollLeft === 0
             ? 'right'
-            : ref.scrollLeft === ref.scrollWidth - ref.clientWidth
-              ? 'left'
+            : ref.scrollLeft > ref.scrollWidth - ref.clientWidth - 2
+              ? // NOTE: -2 을 한 이유는 "ref.scrollLeft === ref.scrollWidth - ref.clientWidth" 가 동작하지 않아서 + mobile 환경에서는 정작 동작하는 것으로 확인 [ref : Landing/modal]
+                'left'
               : 'both';
         setOverflowDirection(overflowType);
       }
@@ -56,7 +63,7 @@ export default function CategoryDetailCarousel({
         const scrollableWidth =
           ref.scrollWidth - ref.clientWidth - ref.scrollLeft;
         ref.scrollLeft +=
-          ref.clientWidth < scrollableWidth
+          ref.clientWidth * 0.8 < scrollableWidth
             ? ref.clientWidth * 0.8 // HOLD: 각 item의 좌측면을 가시 영역에 좌측면에 정렬해보기 - 문제 : 각 item의 OffsetLeft 값이 필요
             : scrollableWidth;
       }
@@ -64,52 +71,50 @@ export default function CategoryDetailCarousel({
       if (direction === 'left') {
         const scrollableWidth = ref.scrollLeft;
         ref.scrollLeft -=
-          ref.clientWidth < scrollableWidth
+          ref.clientWidth * 0.8 < scrollableWidth
             ? ref.clientWidth * 0.8 // HOLD: 각 item의 좌측면을 가시 영역에 좌측면에 정렬해보기 - 문제 : 각 item의 OffsetLeft 값이 필요
             : scrollableWidth;
       }
     };
   }
 
-  useLayoutEffect(() => {
+  useEffect(() => {
     const selectedItem = selectedItemRef.current;
     const scrollElement = scrollRef.current;
 
     if (scrollElement) {
       if (selectedItem) {
         if (
+          // NOTE: 선택된 item이 clientWidth를 넘어가면 scroll 해 선택된 item을 좌측면 위치시키는 로직
+          // ---- scrollElement와 selectedItem 구분 주의 [scrollElement.offset 사용시 margin 미포함 주의 -- 현재는 offset 미사용]
           selectedItem.offsetLeft + selectedItem.offsetWidth >
           scrollElement.clientWidth
         ) {
-          const scrollableWidth =
-            scrollElement.scrollWidth -
-            scrollElement.clientWidth -
-            scrollElement.scrollLeft;
-          if (
-            // NOTE: dev 시, 2번 mount되는 현상 회피
-            ![scrollElement.scrollLeft, scrollableWidth].includes(
-              selectedItem.offsetLeft - 12, // NOTE: scrollItem 요소에 적용된 margin-left 12px 을 고려해, item 좌측 끝이 가시 영역에 보여지도록 반영 - 부모 요소를 기준으로 offsetLeft가 측정됨을 반영
-            )
-          ) {
+          // NOTE: dev 시, 2번 mount되는 현상 회피
+          if (!isMountedRef.current) {
+            const scrollableWidth =
+              scrollElement.scrollWidth -
+              scrollElement.clientWidth -
+              scrollElement.scrollLeft;
+
             const moveDistance =
               selectedItem.offsetLeft < scrollableWidth
-                ? selectedItem.offsetLeft - 12
+                ? selectedItem.offsetLeft
                 : scrollableWidth;
             scrollElement.scrollLeft += moveDistance;
+            isMountedRef.current = true;
           }
         }
       }
       if (scrollElement.scrollWidth > scrollElement.clientWidth) {
-        if (scrollElement.scrollWidth > scrollElement.clientWidth) {
-          const overflowType =
-            scrollElement.scrollLeft === 0
-              ? 'right'
-              : scrollElement.scrollLeft ===
-                  scrollElement.scrollWidth - scrollElement.clientWidth
-                ? 'left'
-                : 'both';
-          setOverflowDirection(overflowType);
-        }
+        const overflowType =
+          scrollElement.scrollLeft === 0
+            ? 'right'
+            : scrollElement.scrollLeft ===
+                scrollElement.scrollWidth - scrollElement.clientWidth
+              ? 'left'
+              : 'both';
+        setOverflowDirection(overflowType);
       }
     }
   }, []);
@@ -119,6 +124,10 @@ export default function CategoryDetailCarousel({
     // [문제 : scrollLeft = 0에서 시작해 scroll 됨]
     if (scrollRef.current) scrollRef.current.style.scrollBehavior = 'smooth';
   }, []);
+
+  if (!(groupData || singleData)) return <></>; // HOLD: 404 Not Found error로 대체? -- category 데이터 hard-code로 주입시 코드 재작성 필요
+  if (groupData && groupData.length === 0) return <></>; // HOLD: 404 Not Found error로 대체? -- category 데이터 hard-code로 주입시 코드 재작성 필요
+  if (singleData && singleData.length === 0) return <></>; // HOLD: 404 Not Found error로 대체? -- category 데이터 hard-code로 주입시 코드 재작성 필요
 
   return (
     <div className="relative h-full w-full">
@@ -131,46 +140,52 @@ export default function CategoryDetailCarousel({
         // HOLD: first, last item의 좌측, 우측면의 그림자가 잘리는 느낌을 받음, 착각?
       >
         <div className="flex flex-nowrap items-center justify-between gap-2">
-          {type === 'categoryDetailGroup'
-            ? productCategoryDetailData[categoryKey].children.map((v, i) => (
-                <TextWithBorderButton
-                  key={v.groupName}
-                  textContent={v.groupName}
-                  url={`/ProductList/${categoryKey}/${i}/0`}
-                  type={type}
-                  status={categoryGroupIndex === i ? 'selected' : 'normal'}
-                  ref={categoryGroupIndex === i ? selectedItemRef : null}
-                />
-              ))
-            : productCategoryDetailData[categoryKey].children[
-                categoryGroupIndex
-              ].children.map((v, i) => (
-                <Fragment key={v}>
-                  {/* NOTE: 배열 data의 0 index를 "전체" btn에 할당 */}
-                  {i === 0 && (
-                    <TextWithBorderButton
-                      textContent={'전체'}
-                      url={`/ProductList/${categoryKey}/${categoryGroupIndex}/0`}
-                      type={type}
-                      status={categorySingleIndex === 0 ? 'selected' : 'normal'}
-                      ref={categorySingleIndex === 0 ? selectedItemRef : null}
-                    />
-                  )}
+          {type === 'categoryDetailGroup' &&
+            groupData &&
+            groupData.map((v) => (
+              <TextWithBorderButton
+                key={v.group_id}
+                textContent={v.group_name}
+                // FIXME: 존재하지 않는 group_id, single_id 접근 case : category 데이터를 hard-coding해 존재하지 않는 url에 접근을 차단하는 편이 좋다고 현재 판단 중
+                url={`/ProductList/${categoryId}/${v.group_id}?singleId=whole`}
+                type={type}
+                status={groupId === v.group_id ? 'selected' : 'normal'}
+                ref={groupId === v.group_id ? selectedItemRef : null}
+              />
+            ))}
+          {type === 'categoryDetailSingle' &&
+            singleData &&
+            singleData.map((v, i) => (
+              <Fragment key={v.single_id}>
+                {/* NOTE: 배열 data의 0 index를 "전체" btn에 할당 */}
+                {i === 0 && (
                   <TextWithBorderButton
-                    textContent={v}
-                    url={`/ProductList/${categoryKey}/${categoryGroupIndex}/${i + 1}`}
+                    textContent={'전체'}
+                    // FIXME: 존재하지 않는 group_id, single_id 접근 case : category 데이터를 hard-coding해 존재하지 않는 url에 접근을 차단하는 편이 좋다고 현재 판단 중
+                    url={`/ProductList/${categoryId}/${groupId}?singleId=whole`}
                     type={type}
                     status={
-                      categorySingleIndex === i + 1 ? 'selected' : 'normal'
+                      singleId === 'whole' ||
+                      !singleData.some((v2) => v2.single_id === singleId)
+                        ? 'selected'
+                        : 'normal'
                     }
-                    ref={categorySingleIndex === i + 1 ? selectedItemRef : null}
+                    ref={singleId === 'whole' ? selectedItemRef : null}
                   />
-                </Fragment>
-              ))}
+                )}
+                <TextWithBorderButton
+                  textContent={v.single_name}
+                  url={`/ProductList/${categoryId}/${groupId}?singleId=${v.single_id}`}
+                  type={type}
+                  status={singleId === v.single_id ? 'selected' : 'normal'}
+                  ref={singleId === v.single_id ? selectedItemRef : null}
+                />
+              </Fragment>
+            ))}
         </div>
       </div>
       <div
-        className={`absolute left-[0] top-[0] z-10 h-full w-[5%] ${overflowDirection === 'left' || overflowDirection === 'both' ? '' : 'hidden'}`}
+        className={`absolute left-[0] top-[0] z-10 h-full w-[5%] ${overflowDirection === 'left' || overflowDirection === 'both' ? 'visible opacity-100' : 'invisible opacity-0'} transition-opacity duration-300`}
       >
         <SeeMoreButton
           type="sign"
@@ -181,7 +196,7 @@ export default function CategoryDetailCarousel({
         />
       </div>
       <div
-        className={`absolute right-[0] top-[0] z-10 h-full w-[5%] ${overflowDirection === 'right' || overflowDirection === 'both' ? '' : 'hidden'}`}
+        className={`absolute right-[0] top-[0] z-10 h-full w-[5%] ${overflowDirection === 'right' || overflowDirection === 'both' ? 'visible opacity-100' : 'invisible opacity-0'} transition-opacity duration-300`}
       >
         <SeeMoreButton
           type="sign"
