@@ -43,10 +43,12 @@
 -- Landing
 > TODO: modal - w,h padding 값 제거 [모든 side 16px]
 
+-- Landing/Modal
+> TODO: w,h padding 값 제거 [모든 side 16px]
+
 -- ProductList
 > TODO: 검색어를 통한 page 진입시 nav 가 1줄로 바뀜으로 인한 main tag height의 176px 에 변화 발생 예상됨 OR 2번째 row 공간 그대로 냅두는 방향도 고려
-> HOLD: 매대 박스 전체에 shadow-3 적용할 수 없어서, clip-path를 사용하지 않은 정면에 shadow-figma[Drop Shadow]를 적용함
->> clip-path를 사용한 좌측 측면의 사선에 shadow를 적용하면 clip-path에 의해 잘리는 상황을 해결하지 못 함
+
 
 -- Order
 > layout - TODO: see more bar - both side
@@ -70,6 +72,10 @@
 --- SeeMoreButton
 > HOLD: 현재 png 이미지 색상을 css filter 속성으로 변형했지만, 필요한 색상의 png file을 변형 없이 사용 고려하기
 
+-- ProductListStand
+> HOLD: 매대 박스 전체에 shadow-3 적용할 수 없어서, clip-path를 사용하지 않은 정면에 shadow-figma[Drop Shadow]를 적용함
+>> clip-path를 사용한 좌측 측면의 사선에 shadow를 적용하면 clip-path에 의해 잘리는 상황을 해결하지 못 함
+
 ------------------------
 
 - container
@@ -88,7 +94,10 @@
 - common
 > TODO: Server comp 로 사용되는 Container 에서 fetch 함수를 호출 가능 여부 확인하기(page에서 fetch가 불필요한 건 아님)
 > TODO: 미로그인 상태에서 접근 권한이 없는 페이지 접근시, 자동 routing 구현하기(e.g. '/My' 이동시 미로그인 경우, /Login 페이지로 이동)
-> TODO: api 데이터 비동기 통신 관련 error, loading 대응 코드 추가하기 with nextjs error|loading.tsx  [ ref : lib > action.ts  |  route > seed, productCategoryGroups  |  page > Landing & Landing/Modal ]
+> TODO: [Suspense/Loading page 추가] api 데이터 비동기 통신 관련 error, loading, placeholder-blurDataUrl 대응 코드 추가하기 with nextjs error|loading.tsx  
+>> [ ref : lib > action.ts  |  route > seed, productCategoryGroups  |  page > Landing & Landing/Modal ]
+>> loading.js 작성해 nav - Link prefetch [in production] boundary 제시하기
+
 > TODO: cache 방식 고민하기(route.ts, action.ts, useSWR) e.g., no cache fetch case
 >> sql 함수에 cache 옵션 없기에 해당 route 자체에 대해 cache 방식 결정?
 
@@ -101,6 +110,18 @@
 --- mockProductCategoryData.ts
 > HOLD: 1.  현재는 외부키 FK = productId 중복 X but 서로 다른 row에 중복 할당하는 case 허용 예상   2. product table의 PK인 productId 와 reference 관계임을 sql로 명시하기
 
+--- action.ts
+> TODO: fetchProductCategorySingles 와 묶어서 commit 하는지 확인하기
+> HOLD: api/productCategoryGroups/route.ts 와 부분 중복
+
+--- data.d.ts
+> HOLD: vegetable 용 실제 product data 만들기[데이터 삽입 가로채기]
+> HOLD: vegetable을 제외한 나머지는 mockup image를 삽입 예정
+> HOLD: DB 상 다른 table에 존재해야 하는 속성들을 현재는 병합시킴 (brand_name, review_average_score, review_number, seller_name)
+> HOLD: 현재 상품 설명 문자열만 고려, 추후 image 파일 반영하기 + blurDataUrl
+> FIXME: quantity_value를 상품의 용량 value(e.g., 3500g)이 아닌'상품 재고량'으로 작각해 DB에 seeding함 but 현재는 해당 속성을 사용하지 않아 문제 없음 -- 추후 재작성 필요 [ref: ProductCard]
+> TODO: 판매량 관련 데이터 누락 e.g., 최근 인기순, 전체 판매량순 [ref: ProductListContainer]
+
 ------------------------
 
 - page
@@ -108,21 +129,23 @@
 > TODO: 상품 카테고리 목록 2page 이벤트(swipe OR drag) 대응 interaction 추가
 
 -- Landing/Modal
-> FIXME: 구경가기 btn : 1. item 미선택시 이동 url 문제 해결(with error.tsx) 2. '선택되지 않았습니다' 알림 추가
-> TODO: See More Button 표시 animation 추가
 > HOLD: 현재 문제 : useSWR을 통한 데이터 통신으로 인해 element 표시 지연이 발생함 -- Loading page 추가해서 지연 숨기기?
 >> 해결 방안 : category, categoryGroup 데이터를 데이터 통신이 아닌 hard-code로 삽입하기, 그래도 modal page는 client comp로? 추후 좀 더 생각해보기
-
+> HOLD: item 클릭시 toggle 방식이 맞지만, mobile 상태에서 toggle(null) 되면 hover 색상이 유지되는 문제 때문에 미적용 (prev === v.group_id ? null : v.group_id)
 > HOLD: Landing/modal을 server comp로 유지하고자 하면, pagination state 관리를 url, sessionStorage 등으로 수행해야 함 (url 변경으로 인한 state 유지가 불가능해짐)
 >> But, server comp로 작성할 경우, url 변화에 따른 깜박임 현상이 발생할 것으로 예상되서 client component로 작성함
 >>> TODO: 시도 안 해본 것 : page.tsx의 prop으로 searchParams을 받아서 url param에 pagination state를 유지하면서 modal page 진입해보기(Not : dynamic route parameter)
 >>>> 그래도, 깜박임 현상은 발생할 것으로 예상
+> TODO: [Suspense/Loading page 추가] api 데이터 비동기 통신 관련 error, loading 대응 코드 추가하기 
+>> back()시 찰나에 가운데 사람 클릭시 /My로 이동되는 문제도 존재
+
+
 
 
 -- ProductList
-> TODO: 데이터 fetch로 변경[검색 방식 : 1. params  2. 검색어[기존 categoryGroupId, categorySingleId 목록이 아닌 categoryId 목록을 표시 - 즉, nav를 2줄에서 1줄에 대한 데이터만 취득(UI memo 참고)]]
+> TODO: 검색어 접근 반영하기 : category_name 목록 표시(group_name, single_name이 아닌) (nav 가 2줄 => 1줄로 변경 : UI memo 참고)
 > TODO: 접근 불가능한 url param 값 처리 e.g., fru00it/9999/0 -- error page[미존재 page]
-
+> HOLD: categoryId, groupId가 DB상 존재하지 않는 경우, 불필요한 데이터 통신 방지하려면 category 관련 데이터를 hard-code로 주입하는게 나을 듯
 
 -- Cart
 > TODO: 데이터 주입 - 배송지명, 배송 점포, 상세 주소, 가장 빠른 배송 날짜/시간
@@ -139,6 +162,8 @@
 
 - Component
 -- atoms
+--- ProductCard
+> FIXME: 상품 용량 데이터인 quantity_value를 DB에 재고량으로 착각해 주입한 문제 존재 - 추후 수정 예정 [ref: data.d.ts]
 
 -- molecules
 --- SearchBox
@@ -152,15 +177,21 @@
 > TODO: pagination 의 변수 변화에 따른 image, text 교체시, animation 적용하기
 
 --- CategoryDetailCarousel
-> HOLD: 각 item의 좌측면을 가시 영역에 좌측면에 정렬해보기 - 문제 : 각 item의 OffsetLeft 값이 필요
+> HOLD: 각 item의 좌측면을 가시 영역의 좌측면에 정렬되도록, 각 item을 덩어리 단위로 scroll이 발생하는 방식 - 문제 : 각 item의 OffsetLeft 값이 필요 [ref : ProductCardGroup]
 > HOLD: first, last item의 좌측, 우측면의 그림자가 잘리는 느낌을 받음, 착각?
 > HOLD: see more bar 표시 useLayoutEffct logic이 viewport 크기 조정시 어긋남 - 본래 scroll 있었는데 viewport 크기 증가로 scroll 없어져도 see more bar 그대로 유지됨
 >> viewport 크기 변화를 감지해 useEffect에서 변화에 대응하는 code 추가 고려해보기
-
+> HOLD: 'return <></>' : 404 Not Found error로 대체? -- category 데이터 hard-code로 주입시 코드 재작성 필요
+> FIXME: 존재하지 않는 group_id, single_id 접근 case : category 데이터를 hard-coding해 존재하지 않는 url에 접근을 차단하는 편이 좋다고 현재 판단 중
+> FIXME: SeeMoreButton comp 분리할 수 있는 Container 생성하기 (이유 : state(overflowDirection) 업데이트에 의해 carousel items 또한 리렌더링)
 
 --- ProductCardGroup
-> TODO: 42.5%[카드 크기]-2%[gap] 를 swipe or drag or seemorebar click 시 eventHandler로 css 조작 with animation
-> TODO: 불투명 card를 포함한 4장 card 외 (overflow된 card들의 display: none) OR (visibility: hidden) OR (displayed item 기준 좌우 6개씩만 렌더링) 고려해보기 [if, item 수 999개 경우 Load]
+> HOLD: [desktop-mobile swipe gesture 충돌] 42.5%[카드 크기]-2%[gap] 를 see more button click 시 eventHandler로 css 조작만이 이동 수단인 animation 구현함 <-> swipe, drag 는 mobile, desktop에 동시에 적용하기에 부적절하다고 판단
+>> desktop <-> mobile 간 default drag scroll 지원 유무의 차이로 인해, desktop에 drag scroll 구현을 위한 event listener 부착시 mobile과 충돌하기에 우선 미구현 상태
+> HOLD: 불투명 card를 포함한 4장 card 외 (overflow된 card들의 display: none) OR (visibility: hidden) OR (displayed item 기준 좌우 6개씩만 렌더링) 고려해보기 [if, item 수 999개 경우 Load]
+> HOLD: viewport 크기 조정시 state 에 따른 불투명 card의 위치가 어긋남 e.g., main card 2개 표시 영역에 불투명 카드 표시됨 [ref : CategoryDetailCarousel see more bar 어긋남 현상]
+> HOLD: ± 0.1 을 추가한 이유 - 미봉책 : 각 card 에 할당된 scroll 영역이 서로 겹치는 부분에서 currentCardIndex를 정확히 확정하지 못해 오작동하는 문제 해결
+
 
 -- IconWithBadgeButton
 > NOTE: badgeContent를 context api로 주입할 수 있게 고민하기 [header 를 server comp로 유지하기 위한 분리 방법 고민]
@@ -185,18 +216,12 @@
 >> 예상 해결 방법 : 1. 이미지 변경 2. absolute 적용을 통한 box 크기 결정 요인에서 배제 3. clip-path
 > HOLD: import? return 하는 comp 각각에 대해 필요시 메모이제이션(Memoization) 작업 수행
 
--- ProductCardGroupContainer
-> TODO: Product page 접근 방식 현재 Link가 아닌 onClick 이벤트로 container에서 modal tag 뭉치를 추가하는 리렌더링으로 생각 중
+-- ProductListContainer
+> HOLD: 판매량 관련 데이터 누락되어서 review 수로 우선 대체해 정렬 시도함
 
 -- ProductListStandContainer
-> TODO: pageNumber 획득 방법 : useState 대신 useSearchParams - url을 사용
->> ProductCardGroupContainer 의 "displayedProductCardStartIndex" state value 를 url param을 통해 취득해 두 container를 연동시킬 계획(Instead of Context API)
->> e.g., url param(displayedProductCardStartIndex)을 통해 pageNumber = Math.floor(displayedProductCardStartIndex) + displayedProductCardStartIndex % 2 [0인 경우 page 1로 취급 조건 고려]
->>> HOLD: url param에 page number OR index number 를 사용할지 고민하기 - index number로 param이 작성된다는 건 하나의 card의 위치가 first, second 둘 다 가능함을 의미, 즉 0을 포함한 짝수 index만 first card로 표시되지 않을 수 있음
-> TODO: 정렬 filter 값 저장/취득 방법 : useRouter, useSearchParams
-> TODO: see more sign, blur effect가 "page number cards" 의 eventHandler - inset property 조작에 따라 표시, 비표시 조건 추가
->> Case : 1.left-[0] 2.right-[0] 
-
+> HOLD: 현재 아래 코드로 인해 10개 이상시 border 개수가 page bullet 이동과 불일치 문제 존재
+>> but, 10개 이상 border 생성시 너무 빽빽해짐  &  page bullet을 white band 를 분할한 각 page 할당 영역의 가운데 정렬이라서, item 개수에 따라 bullet 위치 변화함
 
 -- CardReceiptContainer
 > TODO: prop - {cartItems} : ProductCard type과 연동 & cart 담긴 item & 수량 global state로 유지해서 사용
@@ -207,3 +232,12 @@
 >>> 돈과 관련된 데이터 표시 정책 수립 후 수정하기(e.g., 1억 이상 구매 발생시 대처 방법) : 말 줄임표 대신 '999,999,999+' 표시 고려해보기 - 돈이기 때문에 줄임표 사용시 오해 가능성 존재
 >>>> <-> ProductCard comp의 price, unit price는 Product page가 존재하기에 말줄임표로 표시
 > TODO: button 이벤트 핸들러 부착하기 - '품절 제거', '+', '-', 'trashCan', 'See More Sign - Up & Down', '주문하기'
+
+
+
+------------------------
+
+- modal
+-- ProductCardModal
+> FIXME: image carousel 구현하기
+> TODO: 장바구니 담기 handleClick - REST API로 대체하기

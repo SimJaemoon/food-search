@@ -59,7 +59,6 @@ export default function ProductListStand({
             {totalItemNumber > 2 ? (
               <div className="flex h-8 w-full items-center justify-center gap-[3%]">
                 {/* left Sign - See More */}
-
                 <button
                   onClick={handleLeftSeeMoreButtonClick}
                   className={`flex h-full w-8 items-center justify-center [filter:_invert(96%)_sepia(1%)_saturate(3698%)_hue-rotate(226deg)_brightness(115%)_contrast(100%)] ${displayedProductCardStartIndex !== 0 ? 'visible opacity-100' : 'invisible opacity-0'} transition-opacity duration-300`}
