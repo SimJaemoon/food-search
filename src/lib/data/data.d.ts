@@ -37,6 +37,11 @@ export type Product = {
   seller_id: string;
   seller_name: string; // HOLD: DB 상 다른 table에 존재해야 하지만 현재는 병합시킴
   // TODO: 판매량 관련 데이터 누락 e.g., 최근 인기순, 전체 판매량순 [ref: ProductListContainer]
+  // TODO: 현재 data 구조에 품절 관련 데이터가 존재하지 않음
 };
 
 export type ProductWithoutSingleId = Omit<Product, 'single_id'>;
+export type CartProduct = Pick<
+  Product,
+  'product_id' | 'brand_name' | 'product_name' | 'product_price'
+>;
