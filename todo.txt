@@ -49,6 +49,9 @@
 -- ProductList
 > TODO: 검색어를 통한 page 진입시 nav 가 1줄로 바뀜으로 인한 main tag height의 176px 에 변화 발생 예상됨 OR 2번째 row 공간 그대로 냅두는 방향도 고려
 
+-- Cart
+> HOLD: 자식 div("00.00(수) 00시 ~ 00시에 배송 가능 (0일 뒤)")의 하단 shadow가 잘리지 않기 위해 overflow-x-hidden을 적용했지만 y축도 hidden, So overflow-x-clip 사용
+>> 스크롤바 생성과 관련된 문제일수도, 현재는 제대로 이해하지 못 함
 
 -- Order
 > layout - TODO: see more bar - both side
@@ -121,8 +124,15 @@
 > HOLD: 현재 상품 설명 문자열만 고려, 추후 image 파일 반영하기 + blurDataUrl
 > FIXME: quantity_value를 상품의 용량 value(e.g., 3500g)이 아닌'상품 재고량'으로 작각해 DB에 seeding함 but 현재는 해당 속성을 사용하지 않아 문제 없음 -- 추후 재작성 필요 [ref: ProductCard]
 > TODO: 판매량 관련 데이터 누락 e.g., 최근 인기순, 전체 판매량순 [ref: ProductListContainer]
+> TODO: 현재 data 구조에 품절 관련 데이터가 존재하지 않음
 
 ------------------------
+- api
+-- cartProducts
+> HOLD: [추측] template literal tag 방식으로 parameter를 주입하기에 map을 통해 하나의 string을 삽입하는 방식은 동작하지 않아서 생긴 문제
+>> SELECT * FROM product WHERE product_id IN (${singleIds.map((v) => "'" + v + "'").join(', ')})
+
+
 
 - page
 -- Landing
@@ -149,13 +159,15 @@
 
 -- Cart
 > TODO: 데이터 주입 - 배송지명, 배송 점포, 상세 주소, 가장 빠른 배송 날짜/시간
-> TODO: 배송지 변경 Link로 수정하기
+> TODO: 배송지 변경 btn Link-href 수정하기
 
 -- Order
 > TODO: Link, button을 통한 Order 하위 page 이동 설계하기[현재 : index = OrderAddress page]
 > layout - NOTE: order navigation bar = container로 분리 with context api
 > NOTE: 주문 프로세스 중간 난입 대처 방법 1. Order 과정 중간 url에 대해 진입 가로채기  2. 단일 url로 구성해 display: none 활용
 
+-- Order/Layout
+> TODO: '현재 구현 중' 문구 삭제
 
 
 ------------------------
@@ -223,16 +235,19 @@
 > HOLD: 현재 아래 코드로 인해 10개 이상시 border 개수가 page bullet 이동과 불일치 문제 존재
 >> but, 10개 이상 border 생성시 너무 빽빽해짐  &  page bullet을 white band 를 분할한 각 page 할당 영역의 가운데 정렬이라서, item 개수에 따라 bullet 위치 변화함
 
--- CardReceiptContainer
-> TODO: prop - {cartItems} : ProductCard type과 연동 & cart 담긴 item & 수량 global state로 유지해서 사용
-> TODO: 무료배송 문구 교체 : 4만원 - 장바구니 상품들 총 가격 > 0 ? 면 해당 값 표시 : '무료배송이 가능합니다' 
+-- CartReceiptContainer
+> TODO: 현재 구현된 비로그인 상태(sessionStorage)와 로그인 상태(user DB)를 모두 포용하는 코드로 수정 필요
+> TODO: fetch 상태(isLoading, error)에 대응하는 코드 추가
+> TODO: cartProducts fetch 전 상태에 대한 placeholder 삽입(e.g, spinner) -- 현재는 '데이터 가져온느 중'
+> HOLD: row item row click/touch 시 해당 product modal 등장?
+> TODO: 현재 data 구조에 품절 관련 데이터가 존재하지 않음 [ref: data.d.ts]
+> TODO: button 이벤트 핸들러 부착/교체하기 - '품절 제거','주문하기'
 > TODO: edge case 점검 - 모든 grid item이 overflow일 경우, 줄바꿈 or 말줄임 적용 재고려
 >> 수량 : value < 100 로 제한 예상 = 99 이하
 >> 상품명, 가격 : line-clamp-2 break-all
->>> 돈과 관련된 데이터 표시 정책 수립 후 수정하기(e.g., 1억 이상 구매 발생시 대처 방법) : 말 줄임표 대신 '999,999,999+' 표시 고려해보기 - 돈이기 때문에 줄임표 사용시 오해 가능성 존재
+>> 돈과 관련된 데이터 표시 정책 수립 후 수정하기(e.g., 1억 이상 구매 발생시 대처 방법) : 말 줄임표 대신 '999,999,999+' 표시 고려해보기 - 돈이기 때문에 줄임표 사용시 오해 가능성 존재
+>>> HOLD: 1천억까지 두 줄로 표시 가능 "100,000,000,000"
 >>>> <-> ProductCard comp의 price, unit price는 Product page가 존재하기에 말줄임표로 표시
-> TODO: button 이벤트 핸들러 부착하기 - '품절 제거', '+', '-', 'trashCan', 'See More Sign - Up & Down', '주문하기'
-
 
 
 ------------------------
@@ -241,3 +256,4 @@
 -- ProductCardModal
 > FIXME: image carousel 구현하기
 > TODO: 장바구니 담기 handleClick - REST API로 대체하기
+> TODO: modal에 표현되는 addQuantity 값과 cart에 담겨있는 동일한 productId의 quantity 값을 + 해서 표시
