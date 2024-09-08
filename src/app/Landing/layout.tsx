@@ -1,5 +1,6 @@
 import Header from '@/components/organisms/Header';
 import Footer from '@/components/organisms/Footer';
+import { Suspense } from 'react';
 
 export default function LandingLayout({
   children,
@@ -12,7 +13,7 @@ export default function LandingLayout({
     <>
       <Header pageName="Landing" />
       {children}
-      {modal}
+      <Suspense>{modal}</Suspense>
       <Footer />
     </>
   );
