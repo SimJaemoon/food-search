@@ -49,6 +49,8 @@ const tailwindCSS = {
         right: 'border-y-[14px] border-l-[14px] border-y-transparent',
         down: 'border-x-[10px] border-t-[10px] border-x-transparent',
         up: 'border-x-[10px] border-b-[10px] border-x-transparent',
+        smallDown: 'border-x-[7px] border-t-[7px] border-x-transparent',
+        smallUp: 'border-x-[7px] border-b-[7px] border-x-transparent',
       },
     },
     sign: {},
