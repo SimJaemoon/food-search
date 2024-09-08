@@ -53,6 +53,10 @@ export default function OrderLayout({
         {/* TODO: see more bar - both side */}
       </nav>
       {children}
+      {/* TODO: '현재 구현 중' 문구 삭제 */}
+      <div className="text-label-lg absolute bottom-12 left-1/2 flex h-[10%] w-[70%] -translate-x-1/2 -translate-y-1/2 items-center justify-center rounded-lg bg-disabled/50 text-highlight">
+        현재 구현 중
+      </div>
       <Footer />
     </>
   );
