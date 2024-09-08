@@ -87,7 +87,7 @@ export default function Modal() {
   if (!categoryId || !productCategoryGroups) return <></>;
 
   return (
-    <div className="absolute bottom-[16px] z-40 h-[calc(100%-32px)] w-[calc(100%-32px)]">
+    <div className="absolute bottom-[calc(16px+48px)] z-40 h-[calc(100%-32px-48px-32px-48px)] w-[calc(100%-32px)]">
       {/* TODO: w,h padding 값 제거 [모든 side 16px] */}
       <button
         onClick={() => {
@@ -95,9 +95,9 @@ export default function Modal() {
           setOverflowDirection(null);
           router.back();
         }}
-        className="absolute bottom-12 h-[calc(100%-48px-32px-48px)] w-full bg-onBackground/50"
+        className="absolute h-full w-full bg-onBackground/50"
       ></button>
-      <div className="absolute bottom-[10%] left-1/2 flex h-[72.5%] w-[90%] -translate-x-1/2 flex-col items-center overflow-hidden">
+      <div className="absolute bottom-[3%] left-1/2 flex h-[91%] w-[90%] -translate-x-1/2 flex-col items-center overflow-hidden">
         <div className="text-label-lg h-10 w-full border-b-8 border-secondary text-center text-background shadow-figma">
           {productCategoryGroups[0].category_id.replace(',', ' / ')}
         </div>
@@ -105,7 +105,7 @@ export default function Modal() {
           <div
             ref={scrollRef}
             onScroll={handleScroll}
-            className="h-full w-full overflow-scroll [scroll-behavior:_smooth]"
+            className="h-full w-full overflow-scroll scroll-smooth"
           >
             {productCategoryGroups.map((v) => (
               <button
