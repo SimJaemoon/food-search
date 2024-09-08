@@ -5,4 +5,7 @@
     "prettier",
     "plugin:storybook/recommended"
   ]
+  // "rules": {
+  //   "no-unused-vars": "warn"
+  // }
 }
