@@ -5,6 +5,13 @@ import ProductCategoryBox from '.';
 const meta: Meta<typeof ProductCategoryBox> = {
   component: ProductCategoryBox,
   tags: ['autodocs'],
+  args: {
+    displayedProductCategory: {
+      display_order: 1,
+      category_id: 'vegetable',
+      category_name: '채소',
+    },
+  },
 };
 
 export default meta;
@@ -12,7 +19,7 @@ type Story = StoryObj<typeof ProductCategoryBox>;
 
 export const Row1LeftBox: Story = {
   args: {
-    rowOrder: 'first',
+    rowOrder: 'firstRow',
     direction: 'left',
   },
   decorators: [
@@ -26,7 +33,7 @@ export const Row1LeftBox: Story = {
 
 export const Row1RightBox: Story = {
   args: {
-    rowOrder: 'first',
+    rowOrder: 'firstRow',
     direction: 'right',
   },
   decorators: [
@@ -40,7 +47,7 @@ export const Row1RightBox: Story = {
 
 export const Row2LeftBox: Story = {
   args: {
-    rowOrder: 'second',
+    rowOrder: 'secondRow',
     direction: 'left',
   },
   decorators: [
@@ -54,7 +61,7 @@ export const Row2LeftBox: Story = {
 
 export const Row2RightBox: Story = {
   args: {
-    rowOrder: 'second',
+    rowOrder: 'secondRow',
     direction: 'right',
   },
   decorators: [
@@ -68,7 +75,7 @@ export const Row2RightBox: Story = {
 
 export const Row3LeftBox: Story = {
   args: {
-    rowOrder: 'third',
+    rowOrder: 'thirdRow',
     direction: 'left',
   },
   decorators: [
@@ -82,7 +89,7 @@ export const Row3LeftBox: Story = {
 
 export const Row3RightBox: Story = {
   args: {
-    rowOrder: 'third',
+    rowOrder: 'thirdRow',
     direction: 'right',
   },
   decorators: [
