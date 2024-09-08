@@ -54,7 +54,6 @@ export default function ProductCardModal({
 
   function handleSeeMoreButtonClick(direction: 'up' | 'down') {
     return (e: React.MouseEvent<HTMLButtonElement>) => {
-      console.log('clicked');
       const ref = scrollRef.current;
       if (!ref) return;
 
@@ -202,6 +201,7 @@ export default function ProductCardModal({
           </div>
           <button
             // TODO: 장바구니 담기 handleClick - REST API로 대체하기
+            // TODO: modal에 표현되는 addQuantity 값과 cart에 담겨있는 동일한 productId의 quantity 값을 + 해서 표시
             onClick={(e) => {
               const item = {
                 productId: productId,
@@ -232,7 +232,7 @@ export default function ProductCardModal({
 
               setTimeout(() => {
                 setShowsNotification(false);
-              }, 1500);
+              }, 600);
 
               e.stopPropagation();
             }}
