@@ -1,5 +1,6 @@
 'use client';
 
+import Spinner from '@/components/atoms/Spinner';
 import { useRouter } from 'next/navigation';
 import { useRef, useEffect } from 'react';
 
@@ -8,21 +9,18 @@ export default function Splash() {
   const router = useRouter();
 
   useEffect(() => {
-    router.prefetch('/Landing');
-    const timeoutID = setTimeout(() => {
-      if (splashScreenRef.current) {
-        splashScreenRef.current.style.display = 'none';
-      }
-      router.replace('/Landing');
-    }, 3000);
-    return () => clearTimeout(timeoutID);
+    router.replace('/Landing');
   });
 
   return (
     <>
+      {/* FIXME: 삭제 예정 */}
+      <div className="absolute z-10 h-[calc(100%-32px)] w-[calc(100%-32px)]">
+        <Spinner />
+      </div>
       <div
         ref={splashScreenRef}
-        className={`absolute z-50 h-[calc(100%-32px)] w-[calc(100%-32px)]`}
+        className={`absolute h-[calc(100%-32px)] w-[calc(100%-32px)]`}
       >
         {/* 배경 */}
         <div>

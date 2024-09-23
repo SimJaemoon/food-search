@@ -6,6 +6,7 @@ import { type ProductCategoryDetailModal } from '@/lib/data/data';
 import { useState, useRef, useEffect } from 'react';
 
 import SeeMoreButton from '@/components/molecules/SeeMoreButton';
+import Spinner from '@/components/atoms/Spinner';
 
 const fetcher: Fetcher<ProductCategoryDetailModal[], string> = (...args) =>
   fetch(...args).then((res) => res.json());
@@ -84,95 +85,111 @@ export default function Modal() {
     }
   }, [categoryId, productCategoryGroups]);
 
-  if (!categoryId || !productCategoryGroups) return <></>;
+  if (!categoryId) return <></>;
 
   return (
-    <div className="absolute bottom-[calc(16px+48px)] z-40 h-[calc(100%-32px-48px-32px-48px)] w-[calc(100%-32px)]">
-      {/* TODO: w,h padding 값 제거 [모든 side 16px] */}
-      <button
-        onClick={() => {
-          setSelectedItem(null);
-          setOverflowDirection(null);
-          router.back();
-        }}
-        className="absolute h-full w-full bg-onBackground/50"
-      ></button>
-      <div className="absolute bottom-[3%] left-1/2 flex h-[91%] w-[90%] -translate-x-1/2 flex-col items-center overflow-hidden">
-        <div className="text-label-lg h-10 w-full border-b-8 border-secondary text-center text-background shadow-figma">
-          {productCategoryGroups[0].category_id.replace(',', ' / ')}
-        </div>
-        <div className="relative h-[calc(100%-40px-48px-16px-32px)] w-[calc(100%-16px)] border-x-[0.5px] border-secondary bg-background/85">
-          <div
-            ref={scrollRef}
-            onScroll={handleScroll}
-            className="h-full w-full overflow-scroll scroll-smooth"
-          >
-            {productCategoryGroups.map((v) => (
-              <button
-                key={v.group_id}
-                className={`flex h-[13.5%] w-full items-center justify-center border-b-[0.5px] border-secondary text-center ${selectedItem === v.group_id ? '' : 'hover:bg-secondary/50'}`}
-                onClick={(e) => {
-                  setSelectedItem(
-                    (prev) => v.group_id,
-                    // HOLD: item 클릭시 toggle 방식이 맞지만, mobile 상태에서 toggle(null) 되면 hover 색상이 유지되는 문제 때문에 미적용 (prev === v.group_id ? null : v.group_id)
-                  );
-                  e.stopPropagation();
-                }}
-              >
-                <div
-                  className={`flex h-[65%] w-full items-center justify-center ${selectedItem === v.group_id ? 'text-label-md bg-secondaryEmphasize text-onSecondaryEmphasize shadow-3' : ''}`}
-                >
-                  {v.group_name}
-                </div>
-              </button>
-            ))}
-          </div>
-          <div
-            className={`absolute top-[0] z-50 h-[6%] w-full ${overflowDirection === 'up' || overflowDirection === 'both' ? 'visible opacity-100' : 'invisible opacity-0'} transition-opacity duration-300`}
-          >
-            <SeeMoreButton
-              type="bar"
-              direction="up"
-              shapeColor="background"
-              backgroundColor="onBackground"
-              handleClick={handleSeeMoreButtonClick('up')}
-            />
-          </div>
-          <div
-            className={`absolute bottom-[0] z-50 h-[6%] w-full ${overflowDirection === 'down' || overflowDirection === 'both' ? 'visible opacity-100' : 'invisible opacity-0'} transition-opacity duration-300`}
-          >
-            <SeeMoreButton
-              type="bar"
-              direction="down"
-              shapeColor="background"
-              backgroundColor="onBackground"
-              handleClick={handleSeeMoreButtonClick('down')}
-            />
-          </div>
-        </div>
+    <>
+      <div className="absolute bottom-[calc(16px+48px)] z-40 h-[calc(100%-32px-48px-32px-48px)] w-[calc(100%-32px)]">
+        {/* TODO: w,h padding 값 제거 [모든 side 16px] */}
         <button
-          onClick={(e) => {
-            router.push(
-              `/ProductList/${categoryId}/${selectedItem ? selectedItem : productCategoryGroups[0].group_id}?singleId=whole`,
-            );
-            e.stopPropagation(); // NOTE: 부모 node의 router.back() 발생 방지 주의
-          }}
-          className="text-label-lg h-12 w-full rounded-sm bg-secondaryEmphasize text-center leading-[48px] text-onSecondaryEmphasize shadow-figma"
-        >
-          구경가기
-        </button>
-        <div onClick={(e) => e.stopPropagation()} className="h-4 w-full"></div>
-        <button
-          onClick={(e) => {
+          onClick={() => {
             setSelectedItem(null);
+            setOverflowDirection(null);
             router.back();
-            e.stopPropagation(); // NOTE: 부모 node의 router.back() 발생 방지 주의
           }}
-          className="text-label-sm h-8 w-full rounded-sm bg-secondary text-center text-onSecondary shadow-figma"
-        >
-          나가기
-        </button>
+          className="absolute h-full w-full bg-onBackground/50"
+        ></button>
+        <div className="absolute bottom-[3%] left-1/2 flex h-[91%] w-[90%] -translate-x-1/2 flex-col items-center overflow-hidden">
+          <div className="text-label-lg h-10 w-full border-b-8 border-secondary text-center text-background shadow-figma">
+            {productCategoryGroups
+              ? productCategoryGroups[0].category_name.replace(',', ' / ')
+              : ''}
+          </div>
+          <div className="relative h-[calc(100%-40px-48px-16px-32px)] w-[calc(100%-16px)] border-x-[0.5px] border-secondary bg-background/85">
+            {productCategoryGroups ? (
+              <div
+                ref={scrollRef}
+                onScroll={handleScroll}
+                className="h-full w-full overflow-scroll scroll-smooth"
+              >
+                {productCategoryGroups.map((v) => (
+                  <button
+                    key={v.group_id}
+                    className={`flex h-[13.5%] w-full items-center justify-center border-b-[0.5px] border-secondary text-center ${selectedItem === v.group_id ? '' : 'hover:bg-secondary/50'}`}
+                    onClick={(e) => {
+                      setSelectedItem(
+                        (prev) => v.group_id,
+                        // HOLD: item 클릭시 toggle 방식이 맞지만, mobile 상태에서 toggle(null) 되면 hover 색상이 유지되는 문제 때문에 미적용 (prev === v.group_id ? null : v.group_id)
+                      );
+                      e.stopPropagation();
+                    }}
+                  >
+                    <div
+                      className={`flex h-[65%] w-full items-center justify-center ${selectedItem === v.group_id ? 'text-label-md bg-secondaryEmphasize text-onSecondaryEmphasize shadow-3' : ''}`}
+                    >
+                      {v.group_name}
+                    </div>
+                  </button>
+                ))}
+              </div>
+            ) : (
+              <div className="h-full w-full">
+                <Spinner />
+              </div>
+            )}
+            <div
+              className={`absolute top-[0] z-50 h-[6%] w-full ${overflowDirection === 'up' || overflowDirection === 'both' ? 'visible opacity-100' : 'invisible opacity-0'} transition-opacity duration-300`}
+            >
+              <SeeMoreButton
+                type="bar"
+                direction="up"
+                shapeColor="background"
+                backgroundColor="onBackground"
+                handleClick={handleSeeMoreButtonClick('up')}
+              />
+            </div>
+            <div
+              className={`absolute bottom-[0] z-50 h-[6%] w-full ${overflowDirection === 'down' || overflowDirection === 'both' ? 'visible opacity-100' : 'invisible opacity-0'} transition-opacity duration-300`}
+            >
+              <SeeMoreButton
+                type="bar"
+                direction="down"
+                shapeColor="background"
+                backgroundColor="onBackground"
+                handleClick={handleSeeMoreButtonClick('down')}
+              />
+            </div>
+          </div>
+          <button
+            onClick={(e) => {
+              e.stopPropagation(); // NOTE: 부모 node의 router.back() 발생 방지 주의
+
+              if (!productCategoryGroups) return;
+              e.currentTarget.textContent = '이동 중 ...';
+              router.push(
+                `/ProductList/${categoryId}/${selectedItem ? selectedItem : productCategoryGroups[0].group_id}?singleId=whole`,
+              );
+            }}
+            className="text-label-lg h-12 w-full rounded-sm bg-secondaryEmphasize text-center leading-[48px] text-onSecondaryEmphasize shadow-figma"
+          >
+            {productCategoryGroups ? '구경가기' : ''}
+          </button>
+          <div
+            onClick={(e) => e.stopPropagation()}
+            className="h-4 w-full"
+          ></div>
+          <button
+            onClick={(e) => {
+              setSelectedItem(null);
+              router.back();
+              e.stopPropagation(); // NOTE: 부모 node의 router.back() 발생 방지 주의
+            }}
+            className="text-label-sm h-8 w-full rounded-sm bg-secondary text-center text-onSecondary shadow-figma"
+          >
+            나가기
+          </button>
+        </div>
       </div>
-    </div>
+    </>
   );
 }

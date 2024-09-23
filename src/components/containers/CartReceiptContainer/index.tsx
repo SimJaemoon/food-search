@@ -8,6 +8,7 @@ import { type CartProduct } from '@/lib/data/data';
 
 import { useState, useRef, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
+import Spinner from '@/components/atoms/Spinner';
 
 type CartQuantity = { productId: string; quantity: number }[];
 
@@ -124,7 +125,7 @@ export default function CartReceiptContainer() {
         <div className="flex w-3/4 items-center justify-center border-b-[1px] border-secondary bg-background">
           {/* TODO: cartProducts fetch 전 상태에 대한 placeholder 삽입(e.g, spinner) -- 현재는 '데이터 가져온느 중' */}
           {!cartProducts ? (
-            '데이터를 가져오는 중'
+            '장바구니 확인 중'
           ) : cartProductsTotalPrice >= 40000 ? (
             '무료배송이 가능합니다'
           ) : (
@@ -155,9 +156,8 @@ export default function CartReceiptContainer() {
         >
           {cartQuantities &&
             (!cartProducts ? (
-              <div className="text-body-lg flex h-full w-full items-center justify-center">
-                {/* TODO: cartProducts fetch 전 상태에 대한 placeholder 삽입(e.g, spinner) -- 현재는 '데이터 가져온느 중' */}
-                데이터를 가져오는 중
+              <div className="h-full w-full">
+                <Spinner />
               </div>
             ) : (
               cartProducts.map((v) => {
@@ -305,8 +305,8 @@ export default function CartReceiptContainer() {
                 cache: 'no-store',
               });
               alert(
-                '확인 후 Order page(현재 구현 중) 로 이동합니다.\n\n' +
-                  '[학습용] /api/cartProducts 에 POST 한 후 받는 상태 배열\n\n' +
+                '확인시, Order page(현재 구현 중)로 이동합니다.\n\n' +
+                  '/api/cartProducts - POST 결과\n\n' +
                   JSON.stringify((await response.json()).state),
               );
               router.push('/Order');
