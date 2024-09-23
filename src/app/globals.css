@@ -9,7 +9,7 @@
   }
 
   body {
-    @apply text-body-sm relative mx-auto h-screen min-h-[672px] w-full min-w-[360px] max-w-[639px] p-4 text-onBackground;
+    @apply text-body-sm relative mx-auto h-screen min-h-[624px] w-full min-w-[360px] max-w-[639px] p-4 text-onBackground;
   }
 
   .typography-default {
