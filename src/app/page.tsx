@@ -14,7 +14,7 @@ export default function Splash() {
 
   return (
     <>
-      {/* FIXME: 삭제 예정 */}
+      {/* FIXME: Spinner 삭제하기 - 애니메이션 추가 후 */}
       <div className="absolute z-10 h-[calc(100%-32px)] w-[calc(100%-32px)]">
         <Spinner />
       </div>

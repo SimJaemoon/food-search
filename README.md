@@ -13,6 +13,10 @@
 
 <br />
 
+[[작업 중] 컴포넌트 보러 가기(Storybook) ↗](https://66f0d4048382e05e635a8f98-errbiqbgfh.chromatic.com/)
+
+<br />
+
 [디자인 Foundation 보러 가기 ↗](https://www.figma.com/design/eYS9TCDxyCUX8tsLPq5sGO/TP_Foodsearch_%EB%B0%B0%ED%8F%AC_000000?node-id=359-145&t=XrUtWrf96rONdBw5-1)
 
 <br />

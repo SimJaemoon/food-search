@@ -6,6 +6,7 @@
 >> clsx 사용시, Template literals 사용전 항시 공백을 제거할 수 있는지 확인해보기(e.g.,`h-full -(eval 값에 상관없이 공백 항상 포함)- ${}`)
 
 > FIXME: 배포시, body에 적용된 padding(특히 top-bottom) 값 제거하기 [관련 files : Splash page ...]
+>> 본인 모바일 환경에서 배포 사이트 확인시, 주소표시줄로 인해 수직 스크롤 생성되어, 현재 min-h-[624px] 으로 수정 (본래 672px)
 
 > HOLD: vh || dvh 단위 적용 > body + 필요시 main 태그에서만 수정하면 하위 태그들은 반응형으로 작성되서 자동 반영될 것으로 예상
 >> 현재 body에 vh 사용 중(global.css) -- 우측, 하단 스크롤바로 인한 Re-Layout 문제 고려하기
@@ -37,8 +38,7 @@
 
 - page
 -- Splash
-> TODO: Landing으로 넘어갈 때 깜박임 현상 
->> production에서만 router.prefetch('/Landing'); 해당 코드 동작하는 듯 [ref : https://nextjs.org/docs/app/api-reference/components/link#prefetch]
+> FIXME: Spinner 삭제하기 - 애니메이션 추가 후
 
 -- Landing
 > TODO: modal - w,h padding 값 제거 [모든 side 16px]
@@ -160,6 +160,9 @@
 -- Cart
 > TODO: 데이터 주입 - 배송지명, 배송 점포, 상세 주소, 가장 빠른 배송 날짜/시간
 > TODO: 배송지 변경 btn Link-href 수정하기
+> FIXME: F5 를 통한 page refresh 시 "https://nextjs.org/docs/messages/react-hydration-error"
+>> TODO: 최상단 "장바구니" 텍스트 클릭시 State Refresh 정상 작동 확인하기
+
 
 -- Order
 > TODO: Link, button을 통한 Order 하위 page 이동 설계하기[현재 : index = OrderAddress page]
@@ -203,6 +206,9 @@
 > HOLD: 불투명 card를 포함한 4장 card 외 (overflow된 card들의 display: none) OR (visibility: hidden) OR (displayed item 기준 좌우 6개씩만 렌더링) 고려해보기 [if, item 수 999개 경우 Load]
 > HOLD: viewport 크기 조정시 state 에 따른 불투명 card의 위치가 어긋남 e.g., main card 2개 표시 영역에 불투명 카드 표시됨 [ref : CategoryDetailCarousel see more bar 어긋남 현상]
 > HOLD: ± 0.1 을 추가한 이유 - 미봉책 : 각 card 에 할당된 scroll 영역이 서로 겹치는 부분에서 currentCardIndex를 정확히 확정하지 못해 오작동하는 문제 해결
+> FIXME: singleId 가 변화할 때, key는 그대로 유지되기에 card 튀는 현상 발생 가능성 존재 
+>> e.g., 서로 다른 singleId 가 동일한 ProductId 를 각각 보유하고 있을 때
+
 
 
 -- IconWithBadgeButton
@@ -214,6 +220,10 @@
 --- Header
 > TODO: badgeContent State 추가하기 [Header 를 import 하는 Layout 에서 state 주입하는 방식 예상]
 > TODO: 로그인 feat 추가 후 isLogin 변수 수정
+> TODO: XX Mart 클릭시, Landing pagiantion State 초기화하기
+
+--- Footer
+> TODO: XX Mart 클릭시, Landing pagiantion State 초기화하기
 
 
 ------------------------
@@ -227,6 +237,10 @@
 > FIXME: IconWithTextButton 표시될 경우, walker 이미지에 의해 ProductCategory 조작 영역을 침범함
 >> 예상 해결 방법 : 1. 이미지 변경 2. absolute 적용을 통한 box 크기 결정 요인에서 배제 3. clip-path
 > HOLD: import? return 하는 comp 각각에 대해 필요시 메모이제이션(Memoization) 작업 수행
+> FIXME: 다른 page 이동 후 back() 을 통해 돌아올 경우, state 초기화로 인한 pagination 초기화 문제 [ref : ProductCategoryGroupContainer, ProductListContainer]
+>> modal 창은 이전에 표시된 창이 정상적으로 표시되지만, modal을 닫으면 state 초기화된 component가 보임
+>> 예상 해결 방법 : (searchedParams || sessionStorage)-setState 
+
 
 -- ProductListContainer
 > HOLD: 판매량 관련 데이터 누락되어서 review 수로 우선 대체해 정렬 시도함
@@ -238,7 +252,6 @@
 -- CartReceiptContainer
 > TODO: 현재 구현된 비로그인 상태(sessionStorage)와 로그인 상태(user DB)를 모두 포용하는 코드로 수정 필요
 > TODO: fetch 상태(isLoading, error)에 대응하는 코드 추가
-> TODO: cartProducts fetch 전 상태에 대한 placeholder 삽입(e.g, spinner) -- 현재는 '데이터 가져온느 중'
 > HOLD: row item row click/touch 시 해당 product modal 등장?
 > TODO: 현재 data 구조에 품절 관련 데이터가 존재하지 않음 [ref: data.d.ts]
 > TODO: button 이벤트 핸들러 부착/교체하기 - '품절 제거','주문하기'
