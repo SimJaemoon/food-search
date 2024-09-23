@@ -105,6 +105,17 @@ export default function CartReceiptContainer() {
     }
   }, [cartProducts]);
 
+  // NOTE: trash can 버튼을 눌렀을 때, 수직 scroll 발생하지 않는 height가 되서 handleScroll이 실행되지 않아, See More Sign 이 null로 변하지 않는 문제 해결
+  useEffect(() => {
+    if (cartQuantities) {
+      if (scrollRef.current) {
+        if (scrollRef.current.scrollHeight <= scrollRef.current.clientHeight) {
+          setOverflowDirection(null);
+        }
+      }
+    }
+  }, [cartQuantities]);
+
   cartQuantitiesRef.current = cartQuantities;
 
   useEffect(() => {
