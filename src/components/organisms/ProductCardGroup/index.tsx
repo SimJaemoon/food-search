@@ -29,7 +29,7 @@ export default function ProductCardGroup({
   handleRightSeeMoreButtonClick: () => void;
 }) {
   const searchParams = useSearchParams();
-  const sortType = searchParams.get('sortType');
+  const sortType = searchParams?.get('sortType');
   const scrollRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {

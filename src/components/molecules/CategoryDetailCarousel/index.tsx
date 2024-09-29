@@ -6,7 +6,7 @@ import {
 } from '@/lib/data/data';
 
 import { useSearchParams } from 'next/navigation';
-import { useState, useRef, useLayoutEffect, Fragment, useEffect } from 'react';
+import { useState, useRef, Fragment, useEffect } from 'react';
 
 import TextWithBorderButton, {
   type ButtonType,
@@ -30,7 +30,7 @@ export default function CategoryDetailCarousel({
   singleData?: ProductCategorySingle[];
 }) {
   const searchParams = useSearchParams();
-  const singleId = searchParams.get('singleId');
+  const singleId = searchParams?.get('singleId');
   const [overflowDirection, setOverflowDirection] = useState<
     null | 'left' | 'right' | 'both'
   >(null);
