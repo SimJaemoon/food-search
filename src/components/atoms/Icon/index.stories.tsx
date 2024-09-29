@@ -16,6 +16,12 @@ export const Delivery: Story = {
   },
 };
 
+export const Home: Story = {
+  args: {
+    iconName: 'home',
+  },
+};
+
 export const Cart: Story = {
   args: {
     iconName: 'cart',
@@ -25,6 +31,12 @@ export const Cart: Story = {
 export const Person: Story = {
   args: {
     iconName: 'person',
+  },
+};
+
+export const Walker: Story = {
+  args: {
+    iconName: 'walker',
   },
 };
 
@@ -55,5 +67,41 @@ export const CloseCircle: Story = {
 export const Magnifier: Story = {
   args: {
     iconName: 'magnifier',
+  },
+};
+
+export const Next: Story = {
+  args: {
+    iconName: 'next',
+  },
+};
+
+export const KeyboardArrowLeft: Story = {
+  args: {
+    iconName: 'keyboardArrowLeft',
+  },
+};
+
+export const KeyboardArrowRight: Story = {
+  args: {
+    iconName: 'keyboardArrowRight',
+  },
+};
+
+export const SwitchLeft: Story = {
+  args: {
+    iconName: 'switchLeft',
+  },
+};
+
+export const SwitchRight: Story = {
+  args: {
+    iconName: 'switchRight',
+  },
+};
+
+export const TrashCan: Story = {
+  args: {
+    iconName: 'trashCan',
   },
 };
