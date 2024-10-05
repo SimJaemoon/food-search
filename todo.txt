@@ -1,3 +1,8 @@
+[docs]------------------------------------------------------------------------------------------
+> README.md
+>> HOLD: Github에서는 README.md 에서 새창 열기 미지원?
+
+
 [UI]------------------------------------------------------------------------------------------
 
 - common
@@ -182,6 +187,7 @@
 
 -- molecules
 --- SearchBox
+> FIXME: 미구현 부분 조작 방지
 > TODO: url search params input 방식 적용해보기
 > TODO: [CSS => JS 교체 고려] input value.length = 0[html required attr?] || 허용되지 않는 입력값 발생시, border-color[red] & placeholder 교체 
 >> [현 상황] css 가상 클래스를 이용해 4가지 case 구현(1. 비focus + 미입력  2. focus + 미입력  3. focus + 입력내용 유 4. 비focus + 입력내용 유)
@@ -218,18 +224,19 @@
 
 -- organisms
 --- Header
+> FIXME: 미구현 부분 조작 방지
 > TODO: badgeContent State 추가하기 [Header 를 import 하는 Layout 에서 state 주입하는 방식 예상]
 > TODO: 로그인 feat 추가 후 isLogin 변수 수정
-> TODO: XX Mart 클릭시, Landing pagiantion State 초기화하기
 
 --- Footer
-> TODO: XX Mart 클릭시, Landing pagiantion State 초기화하기
+> FIXME: 미구현 부분 조작 방지
 
 
 ------------------------
 
 - container
 -- ProductCategoryGroupContainer
+> FIXME: 미구현 부분 조작 방지
 > TODO: 데이터 습득 방식에 맞게 각 hard-code 교체
 >> 1. 로그인 상태 2. user 이름 3. 새로운 알림 수신 여부 4, 배송 점포명
 >> HOLD: container 에서 page로 끌어올려 server comp로 사용될 가능성이 재고려하기 [e.g., user status, delivery store]
