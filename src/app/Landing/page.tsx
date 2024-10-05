@@ -1,3 +1,5 @@
+import { Suspense } from 'react';
+
 import ProductCategoryGroupContainer from '@/components/containers/ProductCategoryGroupContainer';
 import SearchBox from '@/components/molecules/SearchBox';
 
@@ -20,7 +22,11 @@ export default async function Landing() {
           <div className="h-[63.5%] w-full bg-[#74FF8A]"></div>
         </div>
         {/* 상품 카테고리 목록 */}
-        <ProductCategoryGroupContainer productCategories={productCategories} />
+        <Suspense>
+          <ProductCategoryGroupContainer
+            productCategories={productCategories}
+          />
+        </Suspense>
       </main>
     </>
   );
