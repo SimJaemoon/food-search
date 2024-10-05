@@ -34,6 +34,7 @@ export default function Modal() {
     null | 'up' | 'down' | 'both'
   >(null);
   const scrollRef = useRef<HTMLDivElement>(null);
+  const isPageMovingRef = useRef(false);
 
   function handleScroll() {
     const ref = scrollRef.current;
@@ -164,11 +165,13 @@ export default function Modal() {
             onClick={(e) => {
               e.stopPropagation(); // NOTE: 부모 node의 router.back() 발생 방지 주의
 
-              if (!productCategoryGroups) return;
+              if (!productCategoryGroups || isPageMovingRef.current) return;
               e.currentTarget.textContent = '이동 중 ...';
+              e.currentTarget.style.backgroundColor = '#B0B0B0'; // disabled: '#B0B0B0',
               router.push(
                 `/ProductList/${categoryId}/${selectedItem ? selectedItem : productCategoryGroups[0].group_id}?singleId=whole`,
               );
+              isPageMovingRef.current = true;
             }}
             className="text-label-lg h-12 w-full rounded-sm bg-secondaryEmphasize text-center leading-[48px] text-onSecondaryEmphasize shadow-figma"
           >
