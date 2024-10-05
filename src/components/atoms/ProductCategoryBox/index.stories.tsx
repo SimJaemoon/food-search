@@ -21,6 +21,7 @@ export const Row1LeftBox: Story = {
   args: {
     rowOrder: 'firstRow',
     direction: 'left',
+    pageNumber: 1,
   },
   decorators: [
     (Story) => (
