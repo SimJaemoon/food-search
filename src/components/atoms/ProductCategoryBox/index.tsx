@@ -6,10 +6,12 @@ export default function ProductCategroyBox({
   displayedProductCategory,
   rowOrder,
   direction,
+  pageNumber,
 }: {
   displayedProductCategory: ProductCategory;
   rowOrder: 'firstRow' | 'secondRow' | 'thirdRow';
   direction: 'left' | 'right';
+  pageNumber: number;
 }) {
   const reversal =
     direction === 'left' ? '' : direction === 'right' ? '-scale-x-100' : '';
@@ -33,7 +35,10 @@ export default function ProductCategroyBox({
       <Link
         href={{
           pathname: `/Landing`,
-          query: { categoryId: displayedProductCategory.category_id },
+          query: {
+            pageNumber,
+            categoryId: displayedProductCategory.category_id,
+          },
         }}
         className="h-full w-full"
       >

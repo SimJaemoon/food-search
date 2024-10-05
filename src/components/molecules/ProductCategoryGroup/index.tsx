@@ -29,6 +29,7 @@ export default function ProductCategoryGroup({
               displayedProductCategory={displayedProductCategories[0]}
               rowOrder="firstRow"
               direction="left"
+              pageNumber={pageNumber}
             />
           </li>
           <li>
@@ -36,6 +37,7 @@ export default function ProductCategoryGroup({
               displayedProductCategory={displayedProductCategories[1]}
               rowOrder="firstRow"
               direction="right"
+              pageNumber={pageNumber}
             />
           </li>
         </ol>
@@ -48,6 +50,7 @@ export default function ProductCategoryGroup({
               displayedProductCategory={displayedProductCategories[2]}
               rowOrder="secondRow"
               direction="left"
+              pageNumber={pageNumber}
             />
           </li>
           <li>
@@ -55,6 +58,7 @@ export default function ProductCategoryGroup({
               displayedProductCategory={displayedProductCategories[3]}
               rowOrder="secondRow"
               direction="right"
+              pageNumber={pageNumber}
             />
           </li>
         </ol>
@@ -84,6 +88,7 @@ export default function ProductCategoryGroup({
               displayedProductCategory={displayedProductCategories[4]}
               rowOrder="thirdRow"
               direction="left"
+              pageNumber={pageNumber}
             />
           </li>
           <li>
@@ -91,6 +96,7 @@ export default function ProductCategoryGroup({
               displayedProductCategory={displayedProductCategories[5]}
               rowOrder="thirdRow"
               direction="right"
+              pageNumber={pageNumber}
             />
           </li>
         </ol>
