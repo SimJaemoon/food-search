@@ -14,8 +14,12 @@ export default function Header({
 
   return (
     <header
-      className={`flex h-12 w-full justify-between border-t-[3px] border-primary ${['Landing', 'ProductList', 'Order'].includes(pageName) ? '' : 'border-b-2'}`}
+      className={`relative flex h-12 w-full justify-between border-t-[3px] border-primary ${['Landing', 'ProductList', 'Order'].includes(pageName) ? '' : 'border-b-2'}`}
     >
+      {/* FIXME: 미구현 부분 조작 방지 -- 부모 div relative도 삭제 */}
+      <div
+        className={`text-label-md absolute ${pageName === 'Landing' ? 'left-[108px] w-[calc(100%-108px)]' : 'left-[10%] w-[90%]'} z-50 flex h-full items-center justify-center bg-disabled/80`}
+      ></div>
       {/* column 1 */}
       <div
         className={`flex h-full justify-center ${pageName === 'Landing' ? 'text-title-md w-[108px] text-primary' : 'w-[10%] min-w-[48px]'}`}

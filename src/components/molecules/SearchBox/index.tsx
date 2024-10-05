@@ -12,9 +12,13 @@ export default function SearchBox({
   return (
     // seach box frame
     <div
-      className={`flex h-full w-full justify-center border-primary focus-within:border-primaryEmphasize ${pageCSSObject.bottomBorder} ${pageCSSObject.location}`}
+      className={`relative flex h-full w-full justify-center border-primary focus-within:border-primaryEmphasize ${pageCSSObject.bottomBorder} ${pageCSSObject.location}`}
     >
       {/* search box */}
+      {/* FIXME: 미구현 부분 조작 방지 -- 부모 div relative도 삭제 */}
+      <div
+        className={`text-label-md absolute z-50 flex h-full w-full items-center justify-center bg-disabled/80`}
+      ></div>
       <div
         className={`group flex h-8 w-[90%] items-center justify-between border-primary bg-background focus-within:border-primaryEmphasize ${pageCSSObject.borderWidth} ${pageCSSObject.corner}`}
       >
