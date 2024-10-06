@@ -44,12 +44,11 @@
 ### C. 개발
 
 &nbsp;**1. 화면 구현 :** 컴포넌트를 뼈대(Presentational) 와 동작(Container) 으로 구분하는 설계 방식 채택  
-&emsp;&emsp;<a href="https://medium.com/@dan_abramov/smart-and-dumb-components-7ca2f9a7c7d0" target="_blank">(Dan Abramov(2015), Presentational and Container Components)</a>  
 
-&emsp;&nbsp; ▶ &nbsp;**UI**(Presentational) **:** 컴포넌트 분류를 위해 Atomic Design 참고 <a href="https://atomicdesign.bradfrost.com/chapter-2/" target="_blank">(Brad Frost, Atomic Design Methodology)</a>  
+&emsp;&nbsp; ▶ &nbsp;**UI**(Presentational) **:** 컴포넌트 분류를 위해 Atomic Design 참고 &nbsp;&nbsp;&nbsp;<a href="https://66f0d4048382e05e635a8f98-nlzwzdvqes.chromatic.com/" target="_blank">컴포넌트 보러 가기(Storybook) ↗</a>  
 &emsp;&nbsp; ▶ &nbsp;**Feature**(Container) **:** 데이터 가져오기, State 관리, 애니메이션 구현  
 
-&emsp;&emsp;<a href="https://66f0d4048382e05e635a8f98-nlzwzdvqes.chromatic.com/" target="_blank">컴포넌트 보러 가기(Storybook) ↗</a>
+
 
 <br />
 
