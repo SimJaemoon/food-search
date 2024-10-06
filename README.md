@@ -1,6 +1,6 @@
 ## 프로젝트 주제
 
-### <U>X세대 온라인 식료품 구매 거부감을 해소하기 위한, 새로운 온라인 장보기 경험 설계</U>
+### " X세대 온라인 식료품 구매 거부감을 해소하기 위한, 새로운 온라인 장보기 경험 설계 "
 
 <a href="https://food-search-simjaemoons-projects.vercel.app/" target="_blank">배포된 사이트 보러 가기 ↗</a>
 
