@@ -9,7 +9,9 @@ export default function Splash() {
   const router = useRouter();
 
   useEffect(() => {
-    router.replace('/Landing');
+    setTimeout(() => {
+      router.replace('/Landing');
+    }, 1000);
   });
 
   return (
