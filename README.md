@@ -17,8 +17,10 @@
 
 &nbsp;**2. 문제 인식 :** X세대가 온라인으로 식료품을 구매할 능력은 있지만, 실제 구매 행동으로 이어지지 못하는 문제 상황 포착
 
-&nbsp;**3. 문제 분석 :** 문제와 관련된 대상 분석(Market, Service, User) &nbsp;&nbsp;&nbsp;[기존 서비스 분석 보러 가기 ↗](https://www.figma.com/board/c3zxwpmIW0PFxOXl1Bp9N9/TP-FOODSEARCH_%EB%B0%B0%ED%8F%AC_240922?node-id=1002-6254&t=PvnyjIjxTJhS09VQ-4, "기존 서비스 분석")  
-&emsp;&nbsp; ▶ &nbsp;**Market**(대형마트 - 온라인 - Mobile), **Service**(온라인 장보기), **User**(X세대)
+&nbsp;**3. 문제 분석 :** 문제와 관련된 대상 분석 &nbsp;&nbsp;&nbsp;[기존 서비스 분석 보러 가기 ↗](https://www.figma.com/board/c3zxwpmIW0PFxOXl1Bp9N9/TP-FOODSEARCH_%EB%B0%B0%ED%8F%AC_240922?node-id=1002-6254&t=PvnyjIjxTJhS09VQ-4, "기존 서비스 분석")  
+&emsp;&nbsp; ▶ &nbsp;**Market :** 식료품 구매처 - 온라인 / 대형마트 / Mobile  
+&emsp;&nbsp; ▶ &nbsp;**Service :** 온라인 장보기 - 전형적인 e-커머스 디자인(page Flow, Layout)  
+&emsp;&nbsp; ▶ &nbsp;**User :** X세대 - 서비스 접근성, 기회 요인, 수익성 측면에서 분석  
 
 &nbsp;**4.** (가정) **문제 정의 :** 사용자 조사를 통해 파악한 원인들에 대한 해결 방향 도출  
 &emsp;&nbsp; ▶ &nbsp;**문제 원인 1.** 콘텐츠 과잉 공급&nbsp; **→ &nbsp;해결 방향 :** page 구성 콘텐츠 최소화  
