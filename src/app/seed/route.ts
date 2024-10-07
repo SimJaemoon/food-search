@@ -83,10 +83,10 @@ async function seedProduct() {
 
 export async function GET() {
   try {
-    await client.sql`BEGIN`;
+    // await client.sql`BEGIN`;
     // await seedProductCategory();
     // await seedProduct();
-    await client.sql`COMMIT`;
+    // await client.sql`COMMIT`;
 
     return Response.json({ message: 'Database seeded successfully' });
   } catch (error) {
