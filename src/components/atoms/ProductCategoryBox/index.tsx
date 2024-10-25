@@ -69,7 +69,7 @@ export default function ProductCategroyBox({
             ></div>
             {/* frame content */}
             <div
-              className={`absolute left-[0] top-[0] h-full w-full bg-onBackground opacity-70 ${tailwindCSS[rowOrder].outline.top.frameContentCSS}`}
+              className={`absolute left-[0] top-[0] h-full w-full ${categoryName === '채소' ? 'bg-highlight' : 'bg-onBackground'} opacity-70 ${tailwindCSS[rowOrder].outline.top.frameContentCSS}`}
             ></div>
           </div>
           {/* 정면 */}
