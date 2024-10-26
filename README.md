@@ -4,12 +4,11 @@
 
 <a href="https://food-search-simjaemoons-projects.vercel.app/" target="_blank">배포된 사이트 보러 가기 ↗</a>
 
+<a href="https://github.com/SimJaemoon/food-search/blob/main/document/FOODSEARCH_summary.pdf" target="_blank">프로젝트 보고서 보러 가기 ↗</a> 
+
 <br />
 
 ## 수행 과정
-
-<a href="https://github.com/SimJaemoon/SimJaemoon/blob/main/%ED%8F%AC%ED%8A%B8%ED%8F%B4%EB%A6%AC%EC%98%A4_%EC%8B%AC%EC%9E%AC%EB%AC%B8.pdf" target="_blank">프로젝트 보고서 보러 가기 ↗</a> &emsp;&nbsp;([추후 교체 예정](https://github.com/SimJaemoon/food-search/blob/main/document/TP_FOODSEARCH_Deliver_46_%EC%9E%91%EC%97%85%EC%A4%91.pdf)) 
-
 
 ### <ins>A. 기획 [24.04 ~ 24.06]</ins>
 
