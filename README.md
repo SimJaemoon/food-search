@@ -6,6 +6,8 @@
 
 <a href="https://food-search-simjaemoons-projects.vercel.app/" target="_blank">배포된 사이트 보러 가기 ↗</a>
 
+- 기술 : TypeScript, Next.js, TailwindCSS, Storybook, Vercel Postgres SDK(SQL), SWR
+
 <br />
 
 ## 수행 과정
