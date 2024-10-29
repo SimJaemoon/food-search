@@ -2,9 +2,9 @@
 
 ### " X세대 온라인 식료품 구매 거부감을 해소하기 위한, 새로운 온라인 장보기 경험 설계 "
 
-<a href="https://food-search-simjaemoons-projects.vercel.app/" target="_blank">배포된 사이트 보러 가기 ↗</a>
-
 <a href="https://github.com/SimJaemoon/food-search/blob/main/document/FOODSEARCH_summary.pdf" target="_blank">프로젝트 보고서 보러 가기 ↗</a> 
+
+<a href="https://food-search-simjaemoons-projects.vercel.app/" target="_blank">배포된 사이트 보러 가기 ↗</a>
 
 <br />
 
