@@ -12,7 +12,7 @@
 
 ## 수행 과정
 
-### <ins>A. 기획 [24.04 ~ 24.06]</ins>
+### <ins>A. 기획 [24.04 ~ 06]</ins>
 
 &nbsp;**1. 문제 탐색 :** “식사 Flow” 중 “주문 Process” &nbsp;&nbsp;&nbsp;[식사 Flowchart 보러 가기 ↗](https://www.figma.com/board/c3zxwpmIW0PFxOXl1Bp9N9/TP-FOODSEARCH_%EB%B0%B0%ED%8F%AC_240922?node-id=1002-6249&t=PvnyjIjxTJhS09VQ-4, "식사 Flowchart")
 
@@ -35,7 +35,7 @@
 <br/>
 <br />
 
-### <ins>B. 디자인 [24.06 ~ 24.07]</ins>
+### <ins>B. 디자인 [24.06 ~ 07]</ins>
 
 &nbsp;**1. 콘텐츠 기획 :** 새로운 온라인 장보기 경험을 구성하는 콘텐츠 설계  
 
@@ -54,7 +54,7 @@
 <br/>
 <br />
 
-### <ins>C. 개발 [24.07 ~ ]</ins>
+### <ins>C. 개발 [24.07 ~ 09]</ins>
 
 &nbsp;**1. 화면 구현 :** 컴포넌트를 뼈대(Presentational) 와 동작(Container) 으로 구분하는 설계 방식 채택  
 
